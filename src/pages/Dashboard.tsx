@@ -60,7 +60,7 @@ export default function Dashboard() {
               Índice
             </Button>
           </div>
-          <div className="text-xl font-bold">
+          <div className="text-lg font-bold">
             {activeData?.value.toFixed(2)}
             <span className={cn(
               "ml-2 text-sm",
@@ -101,16 +101,16 @@ export default function Dashboard() {
 
           <div className="col-span-4 space-y-4">
             <Card className="bg-trader-navy border-trader-gray">
-              <CardHeader className="py-2">
-                <CardTitle>Preço Médio</CardTitle>
+              <CardHeader className="py-1">
+                <CardTitle className="text-lg">Preço Médio</CardTitle>
               </CardHeader>
               <CardContent>
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Mini</TableHead>
-                      <TableHead>Cheio</TableHead>
-                      <TableHead>Geral</TableHead>
+                      <TableHead className="text-sm">Mini</TableHead>
+                      <TableHead className="text-sm">Cheio</TableHead>
+                      <TableHead className="text-sm">Geral</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -122,7 +122,7 @@ export default function Dashboard() {
                   </TableBody>
                 </Table>
                 <div className={cn(
-                  "mt-2 text-right",
+                  "mt-2 text-right text-sm",
                   priceData.distance > 10 ? "text-trader-red animate-pulse" : ""
                 )}>
                   Distância do PM: {priceData.distance}
@@ -131,11 +131,11 @@ export default function Dashboard() {
             </Card>
 
             <Card className="bg-trader-navy border-trader-gray">
-              <CardHeader className="py-2">
-                <CardTitle>Termômetro</CardTitle>
+              <CardHeader className="py-1">
+                <CardTitle className="text-lg">Termômetro</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-center">
+                <div className="text-xl font-bold text-center">
                   {activeFilter === 'dolar' ? 'Compra' : 'Neutro'}
                 </div>
               </CardContent>
