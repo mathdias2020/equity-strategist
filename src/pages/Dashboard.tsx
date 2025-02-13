@@ -124,7 +124,7 @@ export default function Dashboard() {
                   </TableBody>
                 </Table>
                 <div className={cn(
-                  "mt-2 text-right text-sm",
+                  "mt-2 text-center text-sm",
                   priceData.distance > 10 ? "text-trader-red animate-pulse" : ""
                 )}>
                   Distância do PM: {priceData.distance}
