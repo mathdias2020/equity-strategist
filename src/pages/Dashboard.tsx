@@ -5,6 +5,7 @@ import Layout from "@/components/Layout";
 import { marketData, portfolioData } from "@/mocks/data";
 import { ArrowDownIcon, ArrowUpIcon } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { cn } from "@/lib/utils";
 
 const chartData = [
   { name: 'Jan', value: 1150000 },
