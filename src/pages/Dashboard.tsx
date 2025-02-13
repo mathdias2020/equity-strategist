@@ -1,9 +1,11 @@
 
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Button } from "@/components/ui/button";
 import Layout from "@/components/Layout";
 import { marketData, portfolioData } from "@/mocks/data";
-import { ArrowDownIcon, ArrowUpIcon } from "lucide-react";
+import { ArrowDownIcon, ArrowUpIcon, DollarSign, TrendingUp } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { cn } from "@/lib/utils";
 
@@ -14,10 +16,62 @@ const chartData = [
   { name: 'Abr', value: 1250000 },
 ];
 
+type FilterType = 'dolar' | 'indice';
+
 export default function Dashboard() {
+  const [activeFilter, setActiveFilter] = useState<FilterType>('dolar');
+
+  // Get active data based on filter
+  const getActiveData = () => {
+    if (activeFilter === 'dolar') {
+      return marketData.currencies.find(c => c.name === 'USD/BRL');
+    } else {
+      return marketData.indices.find(i => i.name === 'IBOV');
+    }
+  };
+
+  const activeData = getActiveData();
+
   return (
     <Layout>
       <div className="grid gap-6">
+        <div className="flex justify-between items-center">
+          <div className="flex gap-2">
+            <Button
+              variant={activeFilter === 'dolar' ? 'default' : 'outline'}
+              className={cn(
+                "gap-2",
+                activeFilter === 'dolar' ? 'bg-trader-green text-black hover:bg-trader-green/90' : ''
+              )}
+              onClick={() => setActiveFilter('dolar')}
+            >
+              <DollarSign className="h-4 w-4" />
+              Dólar
+            </Button>
+            <Button
+              variant={activeFilter === 'indice' ? 'default' : 'outline'}
+              className={cn(
+                "gap-2",
+                activeFilter === 'indice' ? 'bg-trader-green text-black hover:bg-trader-green/90' : ''
+              )}
+              onClick={() => setActiveFilter('indice')}
+            >
+              <TrendingUp className="h-4 w-4" />
+              Índice
+            </Button>
+          </div>
+          <div className="text-xl font-bold">
+            {activeData?.value.toFixed(2)}
+            <span className={cn(
+              "ml-2 text-sm",
+              activeData?.change && activeData.change >= 0 ? "text-trader-green" : "text-trader-red"
+            )}>
+              {activeData?.change && activeData.change >= 0 ? "+" : ""}
+              {activeData?.change}%
+            </span>
+          </div>
+        </div>
+
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           <Card className="bg-trader-navy border-trader-gray">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
