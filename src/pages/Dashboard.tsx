@@ -34,8 +34,8 @@ export default function Dashboard() {
   return (
     <Layout>
       <div className="grid gap-4">
-        <div className="flex justify-between items-center">
-          <div className="flex items-center gap-4">
+        <div className="flex items-center justify-between h-12">
+          <div className="flex items-center space-x-4">
             <div className="flex gap-2">
               <Button
                 variant={activeFilter === 'dolar' ? 'default' : 'outline'}
@@ -144,7 +144,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mt-4">
           <Card className="bg-trader-navy border-trader-gray">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-sm font-medium">
