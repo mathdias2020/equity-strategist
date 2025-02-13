@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -36,39 +35,41 @@ export default function Dashboard() {
     <Layout>
       <div className="grid gap-4">
         <div className="flex justify-between items-center">
-          <div className="flex gap-2">
-            <Button
-              variant={activeFilter === 'dolar' ? 'default' : 'outline'}
-              className={cn(
-                "gap-2",
-                activeFilter === 'dolar' ? 'bg-trader-green text-black hover:bg-trader-green/90' : ''
-              )}
-              onClick={() => setActiveFilter('dolar')}
-            >
-              <DollarSign className="h-4 w-4" />
-              Dólar
-            </Button>
-            <Button
-              variant={activeFilter === 'indice' ? 'default' : 'outline'}
-              className={cn(
-                "gap-2",
-                activeFilter === 'indice' ? 'bg-trader-green text-black hover:bg-trader-green/90' : ''
-              )}
-              onClick={() => setActiveFilter('indice')}
-            >
-              <TrendingUp className="h-4 w-4" />
-              Índice
-            </Button>
-          </div>
-          <div className="text-lg font-bold">
-            {activeData?.value.toFixed(2)}
-            <span className={cn(
-              "ml-2 text-sm",
-              activeData?.change && activeData.change >= 0 ? "text-trader-green" : "text-trader-red"
-            )}>
-              {activeData?.change && activeData.change >= 0 ? "+" : ""}
-              {activeData?.change}%
-            </span>
+          <div className="flex items-center gap-4">
+            <div className="flex gap-2">
+              <Button
+                variant={activeFilter === 'dolar' ? 'default' : 'outline'}
+                className={cn(
+                  "gap-2",
+                  activeFilter === 'dolar' ? 'bg-trader-green text-black hover:bg-trader-green/90' : ''
+                )}
+                onClick={() => setActiveFilter('dolar')}
+              >
+                <DollarSign className="h-4 w-4" />
+                Dólar
+              </Button>
+              <Button
+                variant={activeFilter === 'indice' ? 'default' : 'outline'}
+                className={cn(
+                  "gap-2",
+                  activeFilter === 'indice' ? 'bg-trader-green text-black hover:bg-trader-green/90' : ''
+                )}
+                onClick={() => setActiveFilter('indice')}
+              >
+                <TrendingUp className="h-4 w-4" />
+                Índice
+              </Button>
+            </div>
+            <div className="text-lg font-bold">
+              {activeData?.value.toFixed(2)}
+              <span className={cn(
+                "ml-2 text-sm",
+                activeData?.change && activeData.change >= 0 ? "text-trader-green" : "text-trader-red"
+              )}>
+                {activeData?.change && activeData.change >= 0 ? "+" : ""}
+                {activeData?.change}%
+              </span>
+            </div>
           </div>
         </div>
 
