@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -102,23 +103,23 @@ export default function Dashboard() {
 
           <div className="col-span-4 space-y-4">
             <Card className="bg-trader-navy border-trader-gray">
-              <CardHeader className="py-1">
+              <CardHeader className="pb-2">
                 <CardTitle className="text-lg">Preço Médio</CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="pt-0">
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead className="text-sm">Mini</TableHead>
-                      <TableHead className="text-sm">Cheio</TableHead>
-                      <TableHead className="text-sm">Geral</TableHead>
+                      <TableHead className="text-sm h-8 py-0">Mini</TableHead>
+                      <TableHead className="text-sm h-8 py-0">Cheio</TableHead>
+                      <TableHead className="text-sm h-8 py-0">Geral</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     <TableRow>
-                      <TableCell>{priceData.mini.buy}</TableCell>
-                      <TableCell>{priceData.full.buy}</TableCell>
-                      <TableCell>{priceData.general.buy}</TableCell>
+                      <TableCell className="py-2">{priceData.mini.buy}</TableCell>
+                      <TableCell className="py-2">{priceData.full.buy}</TableCell>
+                      <TableCell className="py-2">{priceData.general.buy}</TableCell>
                     </TableRow>
                   </TableBody>
                 </Table>
@@ -132,11 +133,11 @@ export default function Dashboard() {
             </Card>
 
             <Card className="bg-trader-navy border-trader-gray">
-              <CardHeader className="py-1">
+              <CardHeader className="pb-2">
                 <CardTitle className="text-lg">Termômetro</CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="text-xl font-bold text-center">
+              <CardContent className="pt-0">
+                <div className="text-xl font-bold text-center py-2">
                   {activeFilter === 'dolar' ? 'Compra' : 'Neutro'}
                 </div>
               </CardContent>
