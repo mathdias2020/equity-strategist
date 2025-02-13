@@ -1,4 +1,3 @@
-
 export const marketData = {
   indices: [
     { name: "IBOV", value: 127842.51, change: 0.82 },
@@ -18,11 +17,8 @@ export const marketData = {
 };
 
 export const flowData = [
-  { time: "09:30", buyers: 125, sells: 85 },
-  { time: "10:00", buyers: 145, sells: 95 },
-  { time: "10:30", buyers: 165, sells: 105 },
-  { time: "11:00", buyers: 185, sells: 115 },
-  { time: "11:30", buyers: 205, sells: 125 },
+  { player: "Institucional", position: "Comprado", minutes30: "+2500" },
+  { player: "Varejo", position: "Vendido", minutes30: "-1800" }
 ];
 
 export const portfolioData = {

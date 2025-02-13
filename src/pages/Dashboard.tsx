@@ -34,7 +34,7 @@ export default function Dashboard() {
 
   return (
     <Layout>
-      <div className="grid gap-6">
+      <div className="grid gap-4">
         <div className="flex justify-between items-center">
           <div className="flex gap-2">
             <Button
@@ -69,6 +69,77 @@ export default function Dashboard() {
               {activeData?.change && activeData.change >= 0 ? "+" : ""}
               {activeData?.change}%
             </span>
+          </div>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+          <Card className="col-span-3 bg-trader-navy border-trader-gray">
+            <CardHeader>
+              <CardTitle>Fluxo</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Player</TableHead>
+                    <TableHead>Posição</TableHead>
+                    <TableHead>30 minutos</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {flowData.map((flow, index) => (
+                    <TableRow key={index}>
+                      <TableCell>{flow.player}</TableCell>
+                      <TableCell>{flow.position}</TableCell>
+                      <TableCell>{flow.minutes30}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+
+          <div className="col-span-4 space-y-4">
+            <Card className="bg-trader-navy border-trader-gray">
+              <CardHeader className="py-2">
+                <CardTitle>Preço Médio</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Mini</TableHead>
+                      <TableHead>Cheio</TableHead>
+                      <TableHead>Geral</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    <TableRow>
+                      <TableCell>{priceData.mini.buy}</TableCell>
+                      <TableCell>{priceData.full.buy}</TableCell>
+                      <TableCell>{priceData.general.buy}</TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+                <div className={cn(
+                  "mt-2 text-right",
+                  priceData.distance > 10 ? "text-trader-red animate-pulse" : ""
+                )}>
+                  Distância do PM: {priceData.distance}
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-trader-navy border-trader-gray">
+              <CardHeader className="py-2">
+                <CardTitle>Termômetro</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold text-center">
+                  {activeFilter === 'dolar' ? 'Compra' : 'Neutro'}
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
 
@@ -113,81 +184,6 @@ export default function Dashboard() {
             </CardContent>
           </Card>
         </div>
-
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-          <Card className="col-span-4 bg-trader-navy border-trader-gray">
-            <CardHeader>
-              <CardTitle>Preço Médio</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Tipo</TableHead>
-                    <TableHead>Mini</TableHead>
-                    <TableHead>Cheio</TableHead>
-                    <TableHead>Geral</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  <TableRow>
-                    <TableCell>Compra</TableCell>
-                    <TableCell>{priceData.mini.buy}</TableCell>
-                    <TableCell>{priceData.full.buy}</TableCell>
-                    <TableCell>{priceData.general.buy}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>Venda</TableCell>
-                    <TableCell>{priceData.mini.sell}</TableCell>
-                    <TableCell>{priceData.full.sell}</TableCell>
-                    <TableCell>{priceData.general.sell}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell colSpan={3}>Distância do PM</TableCell>
-                    <TableCell>{priceData.distance}</TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </CardContent>
-          </Card>
-
-          <Card className="col-span-3 bg-trader-navy border-trader-gray">
-            <CardHeader>
-              <CardTitle>Fluxo</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Tipo</TableHead>
-                    <TableHead>Institucional</TableHead>
-                    <TableHead>Varejo</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {flowData.map((flow, index) => (
-                    <TableRow key={flow.time}>
-                      <TableCell>{flow.time}</TableCell>
-                      <TableCell>{flow.buyers}</TableCell>
-                      <TableCell>{flow.sells}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </CardContent>
-          </Card>
-        </div>
-
-        <Card className="bg-trader-navy border-trader-gray">
-          <CardHeader>
-            <CardTitle>Termômetro</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-center">
-              {activeFilter === 'dolar' ? 'Compra' : 'Neutro'}
-            </div>
-          </CardContent>
-        </Card>
       </div>
     </Layout>
   );
