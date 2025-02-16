@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -82,7 +81,7 @@ export default function Dashboard() {
             <CardContent>
               <Table>
                 <TableHeader>
-                  <TableRow className="border-b border-trader-gray">
+                  <TableRow className="border-b-2 border-trader-gray">
                     <TableHead className="text-trader-green font-medium py-3">Player</TableHead>
                     <TableHead className="text-trader-green font-medium py-3">Posição</TableHead>
                     <TableHead className="text-trader-green font-medium py-3">30 minutos</TableHead>
@@ -109,7 +108,7 @@ export default function Dashboard() {
               <CardContent className="pt-0">
                 <Table>
                   <TableHeader>
-                    <TableRow className="border-b border-trader-gray">
+                    <TableRow className="border-b-2 border-trader-gray">
                       <TableHead className="text-trader-green font-medium text-sm h-8 py-0">Mini</TableHead>
                       <TableHead className="text-trader-green font-medium text-sm h-8 py-0">Cheio</TableHead>
                       <TableHead className="text-trader-green font-medium text-sm h-8 py-0">Geral</TableHead>
