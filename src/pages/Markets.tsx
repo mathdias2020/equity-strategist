@@ -1,3 +1,4 @@
+
 import Layout from "@/components/Layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { marketData } from "@/mocks/data";
@@ -27,9 +28,10 @@ const MarketSection = ({ title, items }: MarketSectionProps) => (
     <CardContent className="space-y-2">
       {items.map((item) => (
         <div key={item.name} className="space-y-1">
-          <div className="flex justify-between text-sm">
-            <span className="text-gray-300">{item.name}</span>
+          <div className="flex justify-between text-xs">
+            <span className="text-gray-400">{item.name}</span>
             <span className={cn(
+              "text-xs",
               item.change >= 0 ? "text-trader-green" : "text-trader-red"
             )}>
               {item.value.toFixed(2)}
@@ -42,7 +44,7 @@ const MarketSection = ({ title, items }: MarketSectionProps) => (
                 style={{ width: `${(item.percentile || 50)}%` }}
               />
             </div>
-            <span className="text-xs text-gray-300">
+            <span className="text-xs text-gray-400">
               {item.change >= 0 ? "+" : ""}{item.change}%
             </span>
           </div>
