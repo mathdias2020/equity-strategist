@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/components/ui/use-toast";
+import { Separator } from "@/components/ui/separator";
 
 type APIConfig = {
   [key: string]: string;
@@ -23,9 +24,19 @@ export default function APIConfig() {
     const savedConfigs = localStorage.getItem('api-configs');
     return savedConfigs ? JSON.parse(savedConfigs) : {
       dashboard: {
-        priceData: '',
+        // Fluxo Institucional
+        fluxoInstitucionalPosicao: '',
+        fluxoInstitucional30min: '',
+        // Fluxo Varejo
+        fluxoVarejoPosicao: '',
+        fluxoVarejo30min: '',
+        // Preço Médio
+        precoMedioMini: '',
+        precoMedioCheio: '',
+        precoMedioGeral: '',
+        // Outros dados do dashboard
         portfolioData: '',
-        flowData: '',
+        otherFlowData: '',
       },
       flow: {
         orderFlow: '',
@@ -71,16 +82,153 @@ export default function APIConfig() {
           </TabsList>
 
           <TabsContent value="dashboard">
-            <ConfigSection
-              title="Dashboard"
-              config={configs.dashboard}
-              fields={{
-                priceData: "Dados de Preços",
-                portfolioData: "Dados do Portfólio",
-                flowData: "Dados de Fluxo",
-              }}
-              onSave={(newConfig) => handleSave("dashboard", newConfig)}
-            />
+            <Card className="bg-trader-navy border-trader-gray">
+              <CardHeader>
+                <CardTitle className="text-lg font-bold text-trader-green">
+                  Configuração: Dashboard
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <form onSubmit={(e) => {
+                  e.preventDefault();
+                  handleSave("dashboard", configs.dashboard);
+                }} className="space-y-6">
+                  <div className="space-y-4">
+                    <h3 className="text-md font-semibold text-trader-green">Fluxo Institucional</h3>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="fluxoInstitucionalPosicao" className="text-gray-300">
+                          API Posição
+                        </Label>
+                        <Input
+                          id="fluxoInstitucionalPosicao"
+                          value={configs.dashboard.fluxoInstitucionalPosicao}
+                          onChange={(e) => setConfigs(prev => ({
+                            ...prev,
+                            dashboard: { ...prev.dashboard, fluxoInstitucionalPosicao: e.target.value }
+                          }))}
+                          className="bg-black border-trader-gray text-white"
+                          placeholder="Digite o endpoint para Posição Institucional"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="fluxoInstitucional30min" className="text-gray-300">
+                          API 30 minutos
+                        </Label>
+                        <Input
+                          id="fluxoInstitucional30min"
+                          value={configs.dashboard.fluxoInstitucional30min}
+                          onChange={(e) => setConfigs(prev => ({
+                            ...prev,
+                            dashboard: { ...prev.dashboard, fluxoInstitucional30min: e.target.value }
+                          }))}
+                          className="bg-black border-trader-gray text-white"
+                          placeholder="Digite o endpoint para 30 minutos Institucional"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <Separator className="my-4 bg-trader-gray/20" />
+
+                  <div className="space-y-4">
+                    <h3 className="text-md font-semibold text-trader-green">Fluxo Varejo</h3>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="fluxoVarejoPosicao" className="text-gray-300">
+                          API Posição
+                        </Label>
+                        <Input
+                          id="fluxoVarejoPosicao"
+                          value={configs.dashboard.fluxoVarejoPosicao}
+                          onChange={(e) => setConfigs(prev => ({
+                            ...prev,
+                            dashboard: { ...prev.dashboard, fluxoVarejoPosicao: e.target.value }
+                          }))}
+                          className="bg-black border-trader-gray text-white"
+                          placeholder="Digite o endpoint para Posição Varejo"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="fluxoVarejo30min" className="text-gray-300">
+                          API 30 minutos
+                        </Label>
+                        <Input
+                          id="fluxoVarejo30min"
+                          value={configs.dashboard.fluxoVarejo30min}
+                          onChange={(e) => setConfigs(prev => ({
+                            ...prev,
+                            dashboard: { ...prev.dashboard, fluxoVarejo30min: e.target.value }
+                          }))}
+                          className="bg-black border-trader-gray text-white"
+                          placeholder="Digite o endpoint para 30 minutos Varejo"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <Separator className="my-4 bg-trader-gray/20" />
+
+                  <div className="space-y-4">
+                    <h3 className="text-md font-semibold text-trader-green">Preço Médio</h3>
+                    <div className="grid grid-cols-3 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="precoMedioMini" className="text-gray-300">
+                          API Mini
+                        </Label>
+                        <Input
+                          id="precoMedioMini"
+                          value={configs.dashboard.precoMedioMini}
+                          onChange={(e) => setConfigs(prev => ({
+                            ...prev,
+                            dashboard: { ...prev.dashboard, precoMedioMini: e.target.value }
+                          }))}
+                          className="bg-black border-trader-gray text-white"
+                          placeholder="Digite o endpoint para Preço Mini"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="precoMedioCheio" className="text-gray-300">
+                          API Cheio
+                        </Label>
+                        <Input
+                          id="precoMedioCheio"
+                          value={configs.dashboard.precoMedioCheio}
+                          onChange={(e) => setConfigs(prev => ({
+                            ...prev,
+                            dashboard: { ...prev.dashboard, precoMedioCheio: e.target.value }
+                          }))}
+                          className="bg-black border-trader-gray text-white"
+                          placeholder="Digite o endpoint para Preço Cheio"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="precoMedioGeral" className="text-gray-300">
+                          API Geral
+                        </Label>
+                        <Input
+                          id="precoMedioGeral"
+                          value={configs.dashboard.precoMedioGeral}
+                          onChange={(e) => setConfigs(prev => ({
+                            ...prev,
+                            dashboard: { ...prev.dashboard, precoMedioGeral: e.target.value }
+                          }))}
+                          className="bg-black border-trader-gray text-white"
+                          placeholder="Digite o endpoint para Preço Geral"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <Button 
+                    type="submit"
+                    className="w-full bg-trader-green text-black hover:bg-trader-green/90"
+                  >
+                    Salvar Configurações
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
           </TabsContent>
 
           <TabsContent value="flow">
@@ -182,3 +330,4 @@ const ConfigSection = ({ title, config, fields, onSave }: ConfigSectionProps) =>
     </Card>
   );
 };
+
