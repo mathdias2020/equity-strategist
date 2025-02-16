@@ -1,4 +1,3 @@
-
 import Layout from "@/components/Layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { marketData } from "@/mocks/data";
@@ -15,7 +14,7 @@ type MarketSectionProps = {
 };
 
 const MarketSection = ({ title, items }: MarketSectionProps) => (
-  <Card className="bg-trader-navy border-trader-gray">
+  <Card className="bg-black border-trader-gray">
     <CardHeader className="flex flex-row items-center justify-between pb-2">
       <CardTitle className="text-lg font-bold text-trader-green">{title}</CardTitle>
       <span className={cn(
