@@ -25,7 +25,7 @@ const MarketSection = ({ title, items }: MarketSectionProps) => (
         {items[0]?.change >= 0 ? "+" : ""}{items[0]?.change}%
       </span>
     </CardHeader>
-    <CardContent className="space-y-2">
+    <CardContent className="space-y-2 pt-4">
       {items.map((item) => (
         <div key={item.name} className="space-y-1">
           <div className="flex justify-between text-xs">
@@ -93,7 +93,7 @@ export default function Markets() {
 
   return (
     <Layout>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {regions.map((region) => (
           <MarketSection
             key={region.title}
