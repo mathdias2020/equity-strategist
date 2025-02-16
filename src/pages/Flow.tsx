@@ -10,7 +10,7 @@ export default function Flow() {
       <div className="grid gap-6">
         <Card className="bg-trader-navy border-trader-gray">
           <CardHeader>
-            <CardTitle>Fluxo de Ordens</CardTitle>
+            <CardTitle className="text-lg font-bold text-trader-green">Fluxo de Ordens</CardTitle>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={400}>
@@ -31,31 +31,31 @@ export default function Flow() {
         <div className="grid gap-4 md:grid-cols-3">
           <Card className="bg-trader-navy border-trader-gray">
             <CardHeader>
-              <CardTitle>Pressão Compradora</CardTitle>
+              <CardTitle className="text-lg font-bold text-trader-green">Pressão Compradora</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-trader-green">65%</div>
-              <p className="text-xs text-muted-foreground">+5% em relação a média</p>
+              <p className="text-xs text-gray-300">+5% em relação a média</p>
             </CardContent>
           </Card>
 
           <Card className="bg-trader-navy border-trader-gray">
             <CardHeader>
-              <CardTitle>Pressão Vendedora</CardTitle>
+              <CardTitle className="text-lg font-bold text-trader-green">Pressão Vendedora</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-trader-red">35%</div>
-              <p className="text-xs text-muted-foreground">-5% em relação a média</p>
+              <p className="text-xs text-gray-300">-5% em relação a média</p>
             </CardContent>
           </Card>
 
           <Card className="bg-trader-navy border-trader-gray">
             <CardHeader>
-              <CardTitle>Volume Total</CardTitle>
+              <CardTitle className="text-lg font-bold text-trader-green">Volume Total</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-trader-yellow">R$ 2.5B</div>
-              <p className="text-xs text-muted-foreground">+12% acima da média</p>
+              <p className="text-xs text-gray-300">+12% acima da média</p>
             </CardContent>
           </Card>
         </div>

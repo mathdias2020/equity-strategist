@@ -1,8 +1,6 @@
-
 import Layout from "@/components/Layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { marketData } from "@/mocks/data";
-import { ArrowDownIcon, ArrowUpIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type MarketSectionProps = {
@@ -18,7 +16,7 @@ type MarketSectionProps = {
 const MarketSection = ({ title, items }: MarketSectionProps) => (
   <Card className="bg-trader-navy border-trader-gray">
     <CardHeader className="flex flex-row items-center justify-between pb-2">
-      <CardTitle className="text-sm font-medium">{title}</CardTitle>
+      <CardTitle className="text-lg font-bold text-trader-green">{title}</CardTitle>
       <span className={cn(
         "text-xs",
         items[0]?.change >= 0 ? "text-trader-green" : "text-trader-red"
@@ -30,7 +28,7 @@ const MarketSection = ({ title, items }: MarketSectionProps) => (
       {items.map((item) => (
         <div key={item.name} className="space-y-1">
           <div className="flex justify-between text-sm">
-            <span>{item.name}</span>
+            <span className="text-gray-300">{item.name}</span>
             <span className={cn(
               item.change >= 0 ? "text-trader-green" : "text-trader-red"
             )}>
@@ -44,7 +42,7 @@ const MarketSection = ({ title, items }: MarketSectionProps) => (
                 style={{ width: `${(item.percentile || 50)}%` }}
               />
             </div>
-            <span className="text-xs text-muted-foreground">
+            <span className="text-xs text-gray-300">
               {item.change >= 0 ? "+" : ""}{item.change}%
             </span>
           </div>
