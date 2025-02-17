@@ -41,14 +41,14 @@ export default function Layout({ children }: LayoutProps) {
       <div className="min-h-screen w-full flex bg-trader-dark text-white">
         <Sidebar className="border-r border-trader-gray">
           <SidebarContent>
-            <div className="py-4 flex flex-col h-full">
-              <div className="flex items-center justify-between px-4 mb-8">
-                <h1 className="text-xl font-bold">
+            <div className="py-6 flex flex-col h-full">
+              <div className="flex items-center justify-between px-6 mb-8">
+                <h1 className="text-2xl font-bold">
                   <span className="text-gradient">Trader</span> Banqueiro
                 </h1>
               </div>
               <SidebarGroup>
-                <SidebarGroupLabel>Menu</SidebarGroupLabel>
+                <SidebarGroupLabel className="px-6 text-sm">Menu</SidebarGroupLabel>
                 <SidebarGroupContent>
                   <SidebarMenu>
                     {menuItems.map((item) => (
@@ -57,7 +57,7 @@ export default function Layout({ children }: LayoutProps) {
                           <a
                             href={item.href}
                             className={cn(
-                              "flex items-center gap-3 px-3 py-2 rounded-lg transition-colors",
+                              "flex items-center gap-3 px-6 py-3 rounded-lg transition-colors",
                               location.pathname === item.href
                                 ? "bg-trader-navy text-trader-green"
                                 : "hover:bg-trader-navy/50"
@@ -81,7 +81,7 @@ export default function Layout({ children }: LayoutProps) {
                           <a
                             href="/api"
                             className={cn(
-                              "flex items-center gap-3 px-3 py-2 rounded-lg transition-colors",
+                              "flex items-center gap-3 px-6 py-3 rounded-lg transition-colors",
                               location.pathname === "/api"
                                 ? "bg-trader-navy text-trader-green"
                                 : "hover:bg-trader-navy/50"
@@ -99,10 +99,8 @@ export default function Layout({ children }: LayoutProps) {
             </div>
           </SidebarContent>
         </Sidebar>
-        <main className="flex-1 min-h-screen p-4 md:p-6 overflow-auto">
-          <div className="container mx-auto">
-            {children}
-          </div>
+        <main className="flex-1 min-h-screen p-6 md:p-8 overflow-auto">
+          {children}
         </main>
       </div>
     </SidebarProvider>
