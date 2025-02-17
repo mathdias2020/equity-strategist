@@ -89,6 +89,52 @@ export default function Markets() {
         { name: "COPPER", value: 4.7845, change: 1.70, percentile: 65 },
       ]
     },
+    {
+      title: "DX",
+      items: [
+        { name: "DX", value: 104.23, change: 0.45, percentile: 60 },
+        { name: "USD/EUR", value: 0.9234, change: -0.32, percentile: 45 },
+        { name: "USD/JPY", value: 151.23, change: 0.78, percentile: 75 },
+        { name: "USD/GBP", value: 0.7923, change: -0.15, percentile: 40 },
+        { name: "USD/CAD", value: 1.3545, change: 0.25, percentile: 55 },
+        { name: "USD/SEK", value: 10.4523, change: 0.42, percentile: 65 },
+        { name: "USD/CHF", value: 0.8823, change: -0.18, percentile: 35 },
+      ]
+    },
+    {
+      title: "EMERGENTES",
+      items: [
+        { name: "USD/BRL", value: 4.9823, change: -0.45, percentile: 35 },
+        { name: "USD/MXN", value: 17.2345, change: -0.28, percentile: 40 },
+        { name: "USD/ZAR", value: 18.9234, change: 0.65, percentile: 70 },
+        { name: "USD/CNY", value: 7.2345, change: 0.15, percentile: 55 },
+        { name: "USD/TRY", value: 31.2345, change: 1.23, percentile: 85 },
+        { name: "USD/INR", value: 83.1234, change: 0.34, percentile: 60 },
+        { name: "USD/RUB", value: 92.3456, change: 0.87, percentile: 75 },
+        { name: "USD/HUF", value: 356.234, change: 0.45, percentile: 65 },
+        { name: "USD/PLN", value: 4.0123, change: -0.23, percentile: 45 },
+        { name: "USD/CZK", value: 23.1234, change: 0.12, percentile: 50 },
+        { name: "USD/IDR", value: 15723.45, change: 0.56, percentile: 70 },
+      ]
+    },
+    {
+      title: "JUROS BR",
+      items: [
+        { name: "DIF27", value: 10.45, change: -0.15, percentile: 40 },
+        { name: "DIF29", value: 10.78, change: -0.23, percentile: 35 },
+        { name: "DIF31", value: 11.12, change: -0.18, percentile: 45 },
+        { name: "DIF33", value: 11.45, change: -0.25, percentile: 30 },
+        { name: "DIF35", value: 11.67, change: -0.20, percentile: 38 },
+      ]
+    },
+    {
+      title: "JUROS EUA",
+      items: [
+        { name: "US2Y", value: 4.45, change: 0.12, percentile: 65 },
+        { name: "US10Y", value: 4.23, change: 0.08, percentile: 60 },
+        { name: "US30Y", value: 4.35, change: 0.05, percentile: 55 },
+      ]
+    },
   ];
 
   return (
