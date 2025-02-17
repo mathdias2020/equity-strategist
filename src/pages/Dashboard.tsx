@@ -1,13 +1,16 @@
+
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/Layout";
-import { marketData, portfolioData, flowData } from "@/mocks/data";
+import { marketData, portfolioData } from "@/mocks/data";
 import { ArrowDownIcon, ArrowUpIcon, DollarSign, TrendingUp } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { cn } from "@/lib/utils";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { useEndpointTesting } from "@/hooks/useEndpointTesting";
+import { useEffect, useState } from "react";
 
 const priceData = {
   mini: { buy: 5478.50, sell: 5479.50 },
@@ -18,8 +21,38 @@ const priceData = {
 
 type FilterType = 'dolar' | 'indice';
 
+const flowData = [
+  {
+    player: "Institucional",
+    position: "-3016682945",
+    minutes30: "Vendedor"
+  },
+  {
+    player: "Varejo",
+    position: "Comprado",
+    minutes30: "Comprador"
+  }
+];
+
 export default function Dashboard() {
   const [activeFilter, setActiveFilter] = useState<FilterType>('dolar');
+  const [institutionalValue, setInstitutionalValue] = useState<string>("");
+  const { testEndpoint } = useEndpointTesting();
+
+  useEffect(() => {
+    const endpoint = {
+      url: "flow/institutional/position",
+      method: "GET" as const,
+      jsonPath: "foreignDolarAcum",
+      isEditing: false
+    };
+
+    testEndpoint(endpoint).then((value) => {
+      if (value !== undefined) {
+        setInstitutionalValue(value.toString());
+      }
+    });
+  }, []);
 
   const getActiveData = () => {
     if (activeFilter === 'dolar') {
@@ -88,13 +121,16 @@ export default function Dashboard() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {flowData.map((flow, index) => (
-                    <TableRow key={index} className="border-b border-trader-gray/20">
-                      <TableCell className="py-2 text-gray-300">{flow.player}</TableCell>
-                      <TableCell className="py-2 text-gray-300">{flow.position}</TableCell>
-                      <TableCell className="py-2 text-gray-300">{flow.minutes30}</TableCell>
-                    </TableRow>
-                  ))}
+                  <TableRow className="border-b border-trader-gray/20">
+                    <TableCell className="py-2 text-gray-300">Institucional</TableCell>
+                    <TableCell className="py-2 text-gray-300">{institutionalValue || "-"}</TableCell>
+                    <TableCell className="py-2 text-gray-300">Vendedor</TableCell>
+                  </TableRow>
+                  <TableRow className="border-b border-trader-gray/20">
+                    <TableCell className="py-2 text-gray-300">Varejo</TableCell>
+                    <TableCell className="py-2 text-gray-300">Comprado</TableCell>
+                    <TableCell className="py-2 text-gray-300">Comprador</TableCell>
+                  </TableRow>
                 </TableBody>
               </Table>
             </CardContent>

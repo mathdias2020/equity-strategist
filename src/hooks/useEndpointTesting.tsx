@@ -65,6 +65,8 @@ export const useEndpointTesting = () => {
         description: toastDescription,
       });
 
+      return extractedValue;
+
     } catch (error) {
       toast({
         title: "Erro ao testar endpoint",
@@ -81,4 +83,3 @@ export const useEndpointTesting = () => {
     isLoading
   };
 };
-
