@@ -1,4 +1,3 @@
-
 import { APIConfig } from "@/types/api-config";
 
 export const defaultConfigs = {
@@ -34,6 +33,32 @@ export const defaultConfigs = {
     com_wti: { dolar: '', indice: '' },
     com_gold: { dolar: '', indice: '' },
     com_copper: { dolar: '', indice: '' },
+    dx_index: { dolar: '', indice: '' },
+    dx_usdeur: { dolar: '', indice: '' },
+    dx_usdjpy: { dolar: '', indice: '' },
+    dx_usdgbp: { dolar: '', indice: '' },
+    dx_usdcad: { dolar: '', indice: '' },
+    dx_usdsek: { dolar: '', indice: '' },
+    dx_usdchf: { dolar: '', indice: '' },
+    em_usdbrl: { dolar: '', indice: '' },
+    em_usdmxn: { dolar: '', indice: '' },
+    em_usdzar: { dolar: '', indice: '' },
+    em_usdcny: { dolar: '', indice: '' },
+    em_usdtry: { dolar: '', indice: '' },
+    em_usdinr: { dolar: '', indice: '' },
+    em_usdrub: { dolar: '', indice: '' },
+    em_usdhuf: { dolar: '', indice: '' },
+    em_usdpln: { dolar: '', indice: '' },
+    em_usdczk: { dolar: '', indice: '' },
+    em_usdidr: { dolar: '', indice: '' },
+    br_dif27: { dolar: '', indice: '' },
+    br_dif29: { dolar: '', indice: '' },
+    br_dif31: { dolar: '', indice: '' },
+    br_dif33: { dolar: '', indice: '' },
+    br_dif35: { dolar: '', indice: '' },
+    us_2y: { dolar: '', indice: '' },
+    us_10y: { dolar: '', indice: '' },
+    us_30y: { dolar: '', indice: '' },
   },
   ai: {
     suggestions: { dolar: '', indice: '' },
@@ -75,6 +100,52 @@ export const marketTables = {
       { name: "COPPER", key: "com_copper" },
     ],
   },
+  dx: {
+    name: "DX",
+    assets: [
+      { name: "DX", key: "dx_index" },
+      { name: "USD/EUR", key: "dx_usdeur" },
+      { name: "USD/JPY", key: "dx_usdjpy" },
+      { name: "USD/GBP", key: "dx_usdgbp" },
+      { name: "USD/CAD", key: "dx_usdcad" },
+      { name: "USD/SEK", key: "dx_usdsek" },
+      { name: "USD/CHF", key: "dx_usdchf" },
+    ],
+  },
+  emergentes: {
+    name: "Emergentes",
+    assets: [
+      { name: "USD/BRL", key: "em_usdbrl" },
+      { name: "USD/MXN", key: "em_usdmxn" },
+      { name: "USD/ZAR", key: "em_usdzar" },
+      { name: "USD/CNY", key: "em_usdcny" },
+      { name: "USD/TRY", key: "em_usdtry" },
+      { name: "USD/INR", key: "em_usdinr" },
+      { name: "USD/RUB", key: "em_usdrub" },
+      { name: "USD/HUF", key: "em_usdhuf" },
+      { name: "USD/PLN", key: "em_usdpln" },
+      { name: "USD/CZK", key: "em_usdczk" },
+      { name: "USD/IDR", key: "em_usdidr" },
+    ],
+  },
+  jurosbr: {
+    name: "Juros BR",
+    assets: [
+      { name: "DIF27", key: "br_dif27" },
+      { name: "DIF29", key: "br_dif29" },
+      { name: "DIF31", key: "br_dif31" },
+      { name: "DIF33", key: "br_dif33" },
+      { name: "DIF35", key: "br_dif35" },
+    ],
+  },
+  juroseua: {
+    name: "Juros EUA",
+    assets: [
+      { name: "US2Y", key: "us_2y" },
+      { name: "US10Y", key: "us_10y" },
+      { name: "US30Y", key: "us_30y" },
+    ],
+  },
 };
 
 export const sectionFields = {
@@ -102,4 +173,3 @@ export const sectionFields = {
     analysis: "Análise de Mercado",
   },
 };
-
