@@ -31,9 +31,13 @@ export default function APIConfig() {
     const savedConfigs = localStorage.getItem('api-configs');
     return savedConfigs ? JSON.parse(savedConfigs) : {
       dashboard: {
-        priceData: { dolar: '', indice: '' },
-        portfolioData: { dolar: '', indice: '' },
-        flowData: { dolar: '', indice: '' },
+        flowInstitutionalPosition: { dolar: '', indice: '' },
+        flowInstitutional30Min: { dolar: '', indice: '' },
+        flowRetailPosition: { dolar: '', indice: '' },
+        flowRetail30Min: { dolar: '', indice: '' },
+        priceMini: { dolar: '', indice: '' },
+        priceFull: { dolar: '', indice: '' },
+        priceGeneral: { dolar: '', indice: '' },
       },
       flow: {
         orderFlow: { dolar: '', indice: '' },
@@ -110,9 +114,13 @@ export default function APIConfig() {
               config={configs.dashboard}
               activeFilter={activeFilter}
               fields={{
-                priceData: "Dados de Preços",
-                portfolioData: "Dados do Portfólio",
-                flowData: "Dados de Fluxo",
+                flowInstitutionalPosition: "Fluxo Institucional - Posição",
+                flowInstitutional30Min: "Fluxo Institucional - 30 minutos",
+                flowRetailPosition: "Fluxo Varejo - Posição",
+                flowRetail30Min: "Fluxo Varejo - 30 minutos",
+                priceMini: "Preço Médio - Mini",
+                priceFull: "Preço Médio - Cheio",
+                priceGeneral: "Preço Médio - Geral",
               }}
               onSave={(newConfig) => handleSave("dashboard", newConfig)}
             />
@@ -224,3 +232,4 @@ const ConfigSection = ({ title, config, activeFilter, fields, onSave }: ConfigSe
     </Card>
   );
 };
+
