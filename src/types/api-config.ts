@@ -1,40 +1,18 @@
 
+export type EndpointConfig = {
+  url: string;
+  method: 'GET' | 'POST';
+  jsonPath: string;
+  isEditing: boolean;
+};
+
+export type FilterConfig = {
+  dolar: EndpointConfig;
+  indice: EndpointConfig;
+};
+
 export type APIConfig = {
-  [key: string]: {
-    dolar: {
-      url: string;
-      method: 'GET' | 'POST';
-      isEditing?: boolean;
-    };
-    indice: {
-      url: string;
-      method: 'GET' | 'POST';
-      isEditing?: boolean;
-    };
-  };
-};
-
-export type BaseUrlConfig = {
-  baseUrl: string;
-};
-
-export type MarketEndpoint = {
-  name: string;
-  endpoint: {
-    dolar: {
-      url: string;
-      method: 'GET' | 'POST';
-    };
-    indice: {
-      url: string;
-      method: 'GET' | 'POST';
-    };
-  };
-};
-
-export type MarketTableConfig = {
-  name: string;
-  assets: MarketEndpoint[];
+  [key: string]: FilterConfig;
 };
 
 export type ActiveFilter = 'dolar' | 'indice';
@@ -49,13 +27,12 @@ export interface ConfigSectionProps {
   onSave: (config: APIConfig) => void;
 }
 
-export interface AIOperation {
-  tipo: string;
-  ativo: string;
-  modelo: 'Fluxo' | 'AI';
-  horario: string;
-  preco: number;
-  alvo: number;
-  resultado: string;
-}
+export type MarketEndpoint = {
+  key: string;
+  name: string;
+};
 
+export type MarketTableConfig = {
+  name: string;
+  assets: MarketEndpoint[];
+};

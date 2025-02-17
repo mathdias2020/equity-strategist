@@ -16,11 +16,13 @@ export const useMarketConfig = (
         dolar: { 
           url: initialConfig[key]?.dolar?.url || '', 
           method: initialConfig[key]?.dolar?.method || 'GET',
+          jsonPath: initialConfig[key]?.dolar?.jsonPath || '',
           isEditing: false 
         },
         indice: { 
           url: initialConfig[key]?.indice?.url || '', 
           method: initialConfig[key]?.indice?.method || 'GET',
+          jsonPath: initialConfig[key]?.indice?.jsonPath || '',
           isEditing: false 
         }
       };
@@ -36,6 +38,19 @@ export const useMarketConfig = (
         [activeFilter]: {
           ...prev[key][activeFilter],
           url: value
+        }
+      }
+    }));
+  };
+
+  const handleJsonPathChange = (key: string, value: string) => {
+    setLocalConfig(prev => ({
+      ...prev,
+      [key]: {
+        ...prev[key],
+        [activeFilter]: {
+          ...prev[key][activeFilter],
+          jsonPath: value
         }
       }
     }));
@@ -118,6 +133,7 @@ export const useMarketConfig = (
   return {
     localConfig,
     handleUrlChange,
+    handleJsonPathChange,
     handleMethodChange,
     toggleEditing,
     testEndpoint,
