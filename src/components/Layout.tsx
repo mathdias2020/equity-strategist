@@ -1,7 +1,7 @@
 
 import { useLocation } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { SidebarProvider, Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarProvider, Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuItem, SidebarMenuButton } from "@/components/ui/sidebar";
 import { BarChart3, Brain, LayoutDashboard, Menu, Settings2, TrendingUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -38,7 +38,7 @@ export default function Layout({ children }: LayoutProps) {
 
   return (
     <SidebarProvider defaultOpen={!isMobile}>
-      <div className="min-h-screen w-full flex flex-col md:flex-row bg-trader-dark text-white">
+      <div className="min-h-screen w-full flex bg-trader-dark text-white">
         <Sidebar className="border-r border-trader-gray">
           <SidebarContent>
             <div className="py-4 flex flex-col h-full">
@@ -46,11 +46,6 @@ export default function Layout({ children }: LayoutProps) {
                 <h1 className="text-xl font-bold">
                   <span className="text-gradient">Trader</span> Banqueiro
                 </h1>
-                {isMobile && (
-                  <SidebarTrigger>
-                    <Menu className="h-6 w-6" />
-                  </SidebarTrigger>
-                )}
               </div>
               <SidebarGroup>
                 <SidebarGroupLabel>Menu</SidebarGroupLabel>
