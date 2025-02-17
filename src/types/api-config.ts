@@ -36,3 +36,13 @@ export type MarketTableConfig = {
   name: string;
   assets: MarketEndpoint[];
 };
+
+export type AIOperation = {
+  tipo: "Compra" | "Venda";
+  ativo: string;
+  modelo: string;
+  horario: string;
+  preco: number;
+  alvo: number;
+  resultado: string;
+};
