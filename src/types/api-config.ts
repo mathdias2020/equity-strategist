@@ -1,8 +1,16 @@
 
 export type APIConfig = {
   [key: string]: {
-    dolar: string;
-    indice: string;
+    dolar: {
+      url: string;
+      method: 'GET' | 'POST';
+      isEditing?: boolean;
+    };
+    indice: {
+      url: string;
+      method: 'GET' | 'POST';
+      isEditing?: boolean;
+    };
   };
 };
 
@@ -13,8 +21,14 @@ export type BaseUrlConfig = {
 export type MarketEndpoint = {
   name: string;
   endpoint: {
-    dolar: string;
-    indice: string;
+    dolar: {
+      url: string;
+      method: 'GET' | 'POST';
+    };
+    indice: {
+      url: string;
+      method: 'GET' | 'POST';
+    };
   };
 };
 
@@ -44,3 +58,4 @@ export interface AIOperation {
   alvo: number;
   resultado: string;
 }
+

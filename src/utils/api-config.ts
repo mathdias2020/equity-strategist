@@ -2,72 +2,252 @@ import { APIConfig } from "@/types/api-config";
 
 export const defaultConfigs = {
   dashboard: {
-    flowInstitutionalPosition: { dolar: '', indice: '' },
-    flowInstitutional30Min: { dolar: '', indice: '' },
-    flowRetailPosition: { dolar: '', indice: '' },
-    flowRetail30Min: { dolar: '', indice: '' },
-    priceMini: { dolar: '', indice: '' },
-    priceFull: { dolar: '', indice: '' },
-    priceGeneral: { dolar: '', indice: '' },
+    flowInstitutionalPosition: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    flowInstitutional30Min: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    flowRetailPosition: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    flowRetail30Min: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    priceMini: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    priceFull: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    priceGeneral: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
   },
   flow: {
-    institutionalPosition: { dolar: '', indice: '' },
-    institutional30Min: { dolar: '', indice: '' },
-    retailPosition: { dolar: '', indice: '' },
-    retail30Min: { dolar: '', indice: '' },
-    priceMini: { dolar: '', indice: '' },
-    priceFull: { dolar: '', indice: '' },
-    priceGeneral: { dolar: '', indice: '' },
+    institutionalPosition: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    institutional30Min: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    retailPosition: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    retail30Min: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    priceMini: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    priceFull: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    priceGeneral: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
   },
   markets: {
-    usa_sp500: { dolar: '', indice: '' },
-    usa_nasdaq: { dolar: '', indice: '' },
-    usa_dowjones: { dolar: '', indice: '' },
-    usa_vix: { dolar: '', indice: '' },
-    br_usdbrl: { dolar: '', indice: '' },
-    br_indfut: { dolar: '', indice: '' },
-    br_brl10y: { dolar: '', indice: '' },
-    eu_stoxx600: { dolar: '', indice: '' },
-    eu_dax: { dolar: '', indice: '' },
-    eu_ftse100: { dolar: '', indice: '' },
-    com_wti: { dolar: '', indice: '' },
-    com_gold: { dolar: '', indice: '' },
-    com_copper: { dolar: '', indice: '' },
-    dx_index: { dolar: '', indice: '' },
-    dx_usdeur: { dolar: '', indice: '' },
-    dx_usdjpy: { dolar: '', indice: '' },
-    dx_usdgbp: { dolar: '', indice: '' },
-    dx_usdcad: { dolar: '', indice: '' },
-    dx_usdsek: { dolar: '', indice: '' },
-    dx_usdchf: { dolar: '', indice: '' },
-    em_usdbrl: { dolar: '', indice: '' },
-    em_usdmxn: { dolar: '', indice: '' },
-    em_usdzar: { dolar: '', indice: '' },
-    em_usdcny: { dolar: '', indice: '' },
-    em_usdtry: { dolar: '', indice: '' },
-    em_usdinr: { dolar: '', indice: '' },
-    em_usdrub: { dolar: '', indice: '' },
-    em_usdhuf: { dolar: '', indice: '' },
-    em_usdpln: { dolar: '', indice: '' },
-    em_usdczk: { dolar: '', indice: '' },
-    em_usdidr: { dolar: '', indice: '' },
-    br_dif27: { dolar: '', indice: '' },
-    br_dif29: { dolar: '', indice: '' },
-    br_dif31: { dolar: '', indice: '' },
-    br_dif33: { dolar: '', indice: '' },
-    br_dif35: { dolar: '', indice: '' },
-    us_2y: { dolar: '', indice: '' },
-    us_10y: { dolar: '', indice: '' },
-    us_30y: { dolar: '', indice: '' },
+    usa_sp500: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    usa_nasdaq: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    usa_dowjones: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    usa_vix: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    br_usdbrl: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    br_indfut: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    br_brl10y: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    eu_stoxx600: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    eu_dax: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    eu_ftse100: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    com_wti: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    com_gold: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    com_copper: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    dx_index: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    dx_usdeur: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    dx_usdjpy: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    dx_usdgbp: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    dx_usdcad: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    dx_usdsek: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    dx_usdchf: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    em_usdbrl: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    em_usdmxn: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    em_usdzar: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    em_usdcny: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    em_usdtry: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    em_usdinr: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    em_usdrub: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    em_usdhuf: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    em_usdpln: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    em_usdczk: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    em_usdidr: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    br_dif27: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    br_dif29: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    br_dif31: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    br_dif33: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    br_dif35: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    us_2y: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    us_10y: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    us_30y: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
   },
   ai: {
-    operationType: { dolar: '', indice: '' },
-    operationAsset: { dolar: '', indice: '' },
-    operationTime: { dolar: '', indice: '' },
-    operationPrice: { dolar: '', indice: '' },
-    operationTarget: { dolar: '', indice: '' },
-    operationResult: { dolar: '', indice: '' },
-    analysis: { dolar: '', indice: '' },
+    operationType: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    operationAsset: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    operationTime: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    operationPrice: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    operationTarget: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    operationResult: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
+    analysis: { 
+      dolar: { url: '', method: 'GET', isEditing: false }, 
+      indice: { url: '', method: 'GET', isEditing: false } 
+    },
   },
 };
 
