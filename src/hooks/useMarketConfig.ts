@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, ReactNode } from "react";
 import { APIConfig, ActiveFilter } from "@/types/api-config";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -91,7 +91,7 @@ export const useMarketConfig = (
           <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
             <code className="text-white">{JSON.stringify(data, null, 2)}</code>
           </pre>
-        ),
+        ) as ReactNode,
       });
     } catch (error) {
       toast({

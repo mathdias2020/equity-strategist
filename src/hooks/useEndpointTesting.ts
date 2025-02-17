@@ -1,5 +1,6 @@
 
 import { useToast } from "@/hooks/use-toast";
+import { ReactNode } from "react";
 
 interface EndpointConfig {
   url: string;
@@ -46,7 +47,7 @@ export const useEndpointTesting = () => {
           <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
             <code className="text-white">{JSON.stringify(data, null, 2)}</code>
           </pre>
-        ),
+        ) as ReactNode,
       });
     } catch (error) {
       console.error('Erro ao testar endpoint:', error);
