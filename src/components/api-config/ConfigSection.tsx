@@ -2,18 +2,9 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { APIConfig, ConfigSectionProps } from "@/types/api-config";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Eye, Pencil } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { EndpointField } from "./EndpointField";
 
 export const ConfigSection = ({ title, config, activeFilter, fields, onSave }: ConfigSectionProps) => {
   const { toast } = useToast();
@@ -101,7 +92,6 @@ export const ConfigSection = ({ title, config, activeFilter, fields, onSave }: C
       const data = await response.json();
       console.log('Resposta da API:', data);
       
-      // Verificação específica para o endpoint detailedPosition
       if (endpoint.url.includes('detailedPosition')) {
         if (!Array.isArray(data)) {
           throw new Error('Resposta da API não é um array como esperado');
@@ -147,54 +137,19 @@ export const ConfigSection = ({ title, config, activeFilter, fields, onSave }: C
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
           {Object.entries(fields).map(([key, label]) => (
-            <div key={key} className="space-y-2">
-              <Label htmlFor={key} className="text-gray-300">
-                API {label} - {activeFilter === 'dolar' ? 'Dólar' : 'Índice'}
-              </Label>
-              <div className="flex gap-2">
-                <div className="flex-1">
-                  <Input
-                    id={key}
-                    value={localConfig[key]?.[activeFilter]?.url || ''}
-                    onChange={(e) => handleUrlChange(key, e.target.value)}
-                    className="bg-black border-trader-gray text-white"
-                    placeholder={`Digite o endpoint para ${label} (${activeFilter === 'dolar' ? 'Dólar' : 'Índice'})`}
-                    disabled={!localConfig[key]?.[activeFilter]?.isEditing}
-                  />
-                </div>
-                <Select
-                  value={localConfig[key]?.[activeFilter]?.method || 'GET'}
-                  onValueChange={(value: 'GET' | 'POST') => handleMethodChange(key, value)}
-                  disabled={!localConfig[key]?.[activeFilter]?.isEditing}
-                >
-                  <SelectTrigger className="w-[100px] bg-black border-trader-gray text-white">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="GET">GET</SelectItem>
-                    <SelectItem value="POST">POST</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="icon"
-                  onClick={() => toggleEditing(key)}
-                  className="border-trader-gray text-trader-green hover:text-trader-green/90"
-                >
-                  <Pencil className="h-4 w-4" />
-                </Button>
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="icon"
-                  onClick={() => testEndpoint(key)}
-                  className="border-trader-gray text-trader-green hover:text-trader-green/90"
-                >
-                  <Eye className="h-4 w-4" />
-                </Button>
-              </div>
-            </div>
+            <EndpointField
+              key={key}
+              id={key}
+              label={label}
+              url={localConfig[key]?.[activeFilter]?.url || ''}
+              method={localConfig[key]?.[activeFilter]?.method || 'GET'}
+              isEditing={localConfig[key]?.[activeFilter]?.isEditing || false}
+              onUrlChange={(value) => handleUrlChange(key, value)}
+              onMethodChange={(value) => handleMethodChange(key, value)}
+              onToggleEdit={() => toggleEditing(key)}
+              onTest={() => testEndpoint(key)}
+              filterType={activeFilter}
+            />
           ))}
           <Button 
             type="submit"
