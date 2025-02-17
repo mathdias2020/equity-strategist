@@ -7,13 +7,21 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/components/ui/use-toast";
+import { cn } from "@/lib/utils";
+import { DollarSign, TrendingUp } from "lucide-react";
 
 type APIConfig = {
-  [key: string]: string;
+  [key: string]: {
+    dolar: string;
+    indice: string;
+  };
 };
+
+type ActiveFilter = 'dolar' | 'indice';
 
 export default function APIConfig() {
   const { toast } = useToast();
+  const [activeFilter, setActiveFilter] = useState<ActiveFilter>('dolar');
   const [configs, setConfigs] = useState<{
     dashboard: APIConfig;
     flow: APIConfig;
@@ -23,23 +31,23 @@ export default function APIConfig() {
     const savedConfigs = localStorage.getItem('api-configs');
     return savedConfigs ? JSON.parse(savedConfigs) : {
       dashboard: {
-        priceData: '',
-        portfolioData: '',
-        flowData: '',
+        priceData: { dolar: '', indice: '' },
+        portfolioData: { dolar: '', indice: '' },
+        flowData: { dolar: '', indice: '' },
       },
       flow: {
-        orderFlow: '',
-        pressureData: '',
-        volumeData: '',
+        orderFlow: { dolar: '', indice: '' },
+        pressureData: { dolar: '', indice: '' },
+        volumeData: { dolar: '', indice: '' },
       },
       markets: {
-        indices: '',
-        currencies: '',
-        commodities: '',
+        indices: { dolar: '', indice: '' },
+        currencies: { dolar: '', indice: '' },
+        commodities: { dolar: '', indice: '' },
       },
       ai: {
-        suggestions: '',
-        analysis: '',
+        suggestions: { dolar: '', indice: '' },
+        analysis: { dolar: '', indice: '' },
       },
     };
   });
@@ -60,7 +68,33 @@ export default function APIConfig() {
   return (
     <Layout>
       <div className="space-y-6">
-        <h1 className="text-2xl font-bold text-trader-green">Configuração de APIs</h1>
+        <div className="flex items-center justify-between">
+          <h1 className="text-2xl font-bold text-trader-green">Configuração de APIs</h1>
+          <div className="flex gap-2">
+            <Button
+              variant={activeFilter === 'dolar' ? 'default' : 'outline'}
+              className={cn(
+                "gap-2",
+                activeFilter === 'dolar' ? 'bg-trader-green text-black hover:bg-trader-green/90' : ''
+              )}
+              onClick={() => setActiveFilter('dolar')}
+            >
+              <DollarSign className="h-4 w-4" />
+              Dólar
+            </Button>
+            <Button
+              variant={activeFilter === 'indice' ? 'default' : 'outline'}
+              className={cn(
+                "gap-2",
+                activeFilter === 'indice' ? 'bg-trader-green text-black hover:bg-trader-green/90' : ''
+              )}
+              onClick={() => setActiveFilter('indice')}
+            >
+              <TrendingUp className="h-4 w-4" />
+              Índice
+            </Button>
+          </div>
+        </div>
         
         <Tabs defaultValue="dashboard" className="w-full">
           <TabsList className="grid w-full grid-cols-4">
@@ -74,6 +108,7 @@ export default function APIConfig() {
             <ConfigSection
               title="Dashboard"
               config={configs.dashboard}
+              activeFilter={activeFilter}
               fields={{
                 priceData: "Dados de Preços",
                 portfolioData: "Dados do Portfólio",
@@ -87,6 +122,7 @@ export default function APIConfig() {
             <ConfigSection
               title="Fluxo"
               config={configs.flow}
+              activeFilter={activeFilter}
               fields={{
                 orderFlow: "Fluxo de Ordens",
                 pressureData: "Dados de Pressão",
@@ -100,6 +136,7 @@ export default function APIConfig() {
             <ConfigSection
               title="Mercados"
               config={configs.markets}
+              activeFilter={activeFilter}
               fields={{
                 indices: "Índices",
                 currencies: "Moedas",
@@ -113,6 +150,7 @@ export default function APIConfig() {
             <ConfigSection
               title="Inteligência Artificial"
               config={configs.ai}
+              activeFilter={activeFilter}
               fields={{
                 suggestions: "Sugestões",
                 analysis: "Análise de Mercado",
@@ -129,17 +167,21 @@ export default function APIConfig() {
 type ConfigSectionProps = {
   title: string;
   config: APIConfig;
+  activeFilter: ActiveFilter;
   fields: { [key: string]: string };
   onSave: (config: APIConfig) => void;
 };
 
-const ConfigSection = ({ title, config, fields, onSave }: ConfigSectionProps) => {
+const ConfigSection = ({ title, config, activeFilter, fields, onSave }: ConfigSectionProps) => {
   const [localConfig, setLocalConfig] = useState<APIConfig>(config);
 
   const handleChange = (key: string, value: string) => {
     setLocalConfig((prev) => ({
       ...prev,
-      [key]: value,
+      [key]: {
+        ...prev[key],
+        [activeFilter]: value,
+      }
     }));
   };
 
@@ -160,14 +202,14 @@ const ConfigSection = ({ title, config, fields, onSave }: ConfigSectionProps) =>
           {Object.entries(fields).map(([key, label]) => (
             <div key={key} className="space-y-2">
               <Label htmlFor={key} className="text-gray-300">
-                API {label}
+                API {label} - {activeFilter === 'dolar' ? 'Dólar' : 'Índice'}
               </Label>
               <Input
                 id={key}
-                value={localConfig[key] || ''}
+                value={localConfig[key]?.[activeFilter] || ''}
                 onChange={(e) => handleChange(key, e.target.value)}
                 className="bg-black border-trader-gray text-white"
-                placeholder={`Digite o endpoint para ${label}`}
+                placeholder={`Digite o endpoint para ${label} (${activeFilter === 'dolar' ? 'Dólar' : 'Índice'})`}
               />
             </div>
           ))}
