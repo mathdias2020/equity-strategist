@@ -6,6 +6,10 @@ export type APIConfig = {
   };
 };
 
+export type BaseUrlConfig = {
+  baseUrl: string;
+};
+
 export type MarketEndpoint = {
   name: string;
   endpoint: {
