@@ -7,7 +7,14 @@ import { useConfigState } from "@/hooks/useConfigState";
 import { useEndpointTesting } from "@/hooks/useEndpointTesting";
 
 export const ConfigSection = ({ title, config, activeFilter, fields, onSave }: ConfigSectionProps) => {
-  const { localConfig, handleUrlChange, handleMethodChange, toggleEditing, prepareConfigForSave } = useConfigState(config);
+  const { 
+    localConfig, 
+    handleUrlChange, 
+    handleJsonPathChange, 
+    handleMethodChange, 
+    toggleEditing, 
+    prepareConfigForSave 
+  } = useConfigState(config);
   const { testEndpoint } = useEndpointTesting();
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -36,9 +43,11 @@ export const ConfigSection = ({ title, config, activeFilter, fields, onSave }: C
               id={key}
               label={label}
               url={localConfig[key]?.[activeFilter]?.url || ''}
+              jsonPath={localConfig[key]?.[activeFilter]?.jsonPath || ''}
               method={localConfig[key]?.[activeFilter]?.method || 'GET'}
               isEditing={localConfig[key]?.[activeFilter]?.isEditing || false}
               onUrlChange={(value) => handleUrlChange(key, activeFilter, value)}
+              onJsonPathChange={(value) => handleJsonPathChange(key, activeFilter, value)}
               onMethodChange={(value) => handleMethodChange(key, activeFilter, value)}
               onToggleEdit={() => toggleEditing(key, activeFilter)}
               onTest={() => handleTestEndpoint(key)}

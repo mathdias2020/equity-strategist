@@ -21,6 +21,7 @@ export const MarketConfigSection = ({
   const {
     localConfig,
     handleUrlChange,
+    handleJsonPathChange,
     handleMethodChange,
     toggleEditing,
     testEndpoint,
@@ -45,6 +46,7 @@ export const MarketConfigSection = ({
                 config={localConfig}
                 activeFilter={activeFilter}
                 onUrlChange={handleUrlChange}
+                onJsonPathChange={handleJsonPathChange}
                 onMethodChange={handleMethodChange}
                 onToggleEdit={toggleEditing}
                 onTest={testEndpoint}

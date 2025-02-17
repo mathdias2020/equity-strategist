@@ -14,6 +14,7 @@ interface MarketAccordionItemProps {
   config: APIConfig;
   activeFilter: ActiveFilter;
   onUrlChange: (key: string, value: string) => void;
+  onJsonPathChange: (key: string, value: string) => void;
   onMethodChange: (key: string, value: 'GET' | 'POST') => void;
   onToggleEdit: (key: string) => void;
   onTest: (key: string) => void;
@@ -25,6 +26,7 @@ export const MarketAccordionItem = ({
   config,
   activeFilter,
   onUrlChange,
+  onJsonPathChange,
   onMethodChange,
   onToggleEdit,
   onTest,
@@ -41,10 +43,12 @@ export const MarketAccordionItem = ({
             assetKey={asset.key}
             assetName={asset.name}
             url={config[asset.key]?.[activeFilter]?.url || ''}
+            jsonPath={config[asset.key]?.[activeFilter]?.jsonPath || ''}
             method={config[asset.key]?.[activeFilter]?.method || 'GET'}
             isEditing={config[asset.key]?.[activeFilter]?.isEditing || false}
             activeFilter={activeFilter}
             onUrlChange={onUrlChange}
+            onJsonPathChange={onJsonPathChange}
             onMethodChange={onMethodChange}
             onToggleEdit={onToggleEdit}
             onTest={onTest}
@@ -54,4 +58,3 @@ export const MarketAccordionItem = ({
     </AccordionItem>
   );
 };
-
