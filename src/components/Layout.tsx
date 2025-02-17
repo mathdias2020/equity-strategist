@@ -1,8 +1,7 @@
 
 import { useLocation } from "react-router-dom";
-import { useIsMobile } from "@/hooks/use-mobile";
 import { SidebarProvider, Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuItem, SidebarMenuButton } from "@/components/ui/sidebar";
-import { BarChart3, Brain, LayoutDashboard, Menu, Settings2, TrendingUp } from "lucide-react";
+import { BarChart3, Brain, LayoutDashboard, Settings2, TrendingUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface LayoutProps {
@@ -34,21 +33,18 @@ const menuItems = [
 
 export default function Layout({ children }: LayoutProps) {
   const location = useLocation();
-  const isMobile = useIsMobile();
 
   return (
-    <SidebarProvider defaultOpen={!isMobile}>
-      <div className="min-h-screen w-full flex bg-trader-dark text-white">
-        <Sidebar className="border-r border-trader-gray">
+    <SidebarProvider>
+      <div className="min-h-screen flex w-full bg-trader-dark text-white">
+        <Sidebar>
           <SidebarContent>
-            <div className="py-6 flex flex-col h-full">
-              <div className="flex items-center justify-between px-6 mb-8">
-                <h1 className="text-2xl font-bold">
-                  <span className="text-gradient">Trader</span> Banqueiro
-                </h1>
-              </div>
+            <div className="py-4 flex flex-col h-full">
+              <h1 className="text-xl font-bold text-center mb-8">
+                <span className="text-gradient">Trader</span> Banqueiro
+              </h1>
               <SidebarGroup>
-                <SidebarGroupLabel className="px-6 text-sm">Menu</SidebarGroupLabel>
+                <SidebarGroupLabel>Menu</SidebarGroupLabel>
                 <SidebarGroupContent>
                   <SidebarMenu>
                     {menuItems.map((item) => (
@@ -57,7 +53,7 @@ export default function Layout({ children }: LayoutProps) {
                           <a
                             href={item.href}
                             className={cn(
-                              "flex items-center gap-3 px-6 py-3 rounded-lg transition-colors",
+                              "flex items-center gap-3 px-3 py-2 rounded-lg transition-colors",
                               location.pathname === item.href
                                 ? "bg-trader-navy text-trader-green"
                                 : "hover:bg-trader-navy/50"
@@ -81,7 +77,7 @@ export default function Layout({ children }: LayoutProps) {
                           <a
                             href="/api"
                             className={cn(
-                              "flex items-center gap-3 px-6 py-3 rounded-lg transition-colors",
+                              "flex items-center gap-3 px-3 py-2 rounded-lg transition-colors",
                               location.pathname === "/api"
                                 ? "bg-trader-navy text-trader-green"
                                 : "hover:bg-trader-navy/50"
@@ -99,9 +95,7 @@ export default function Layout({ children }: LayoutProps) {
             </div>
           </SidebarContent>
         </Sidebar>
-        <main className="flex-1 min-h-screen p-4 overflow-auto">
-          {children}
-        </main>
+        <main className="flex-1 p-6">{children}</main>
       </div>
     </SidebarProvider>
   );

@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -34,9 +33,9 @@ export default function Dashboard() {
 
   return (
     <Layout>
-      <div className="grid gap-6 mx-auto max-w-7xl">
+      <div className="grid gap-4">
         <div className="flex items-center justify-between h-12">
-          <div className="flex items-center gap-6">
+          <div className="flex items-center space-x-4">
             <div className="flex gap-2">
               <Button
                 variant={activeFilter === 'dolar' ? 'default' : 'outline'}
@@ -61,10 +60,10 @@ export default function Dashboard() {
                 Índice
               </Button>
             </div>
-            <div className="text-2xl font-bold">
+            <div className="text-lg font-bold">
               {activeData?.value.toFixed(2)}
               <span className={cn(
-                "ml-2 text-lg",
+                "ml-2 text-sm",
                 activeData?.change && activeData.change >= 0 ? "text-trader-green" : "text-trader-red"
               )}>
                 {activeData?.change && activeData.change >= 0 ? "+" : ""}
@@ -74,26 +73,26 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
           <Card className="col-span-3 bg-trader-navy border-trader-gray">
             <CardHeader>
-              <CardTitle className="text-xl font-bold text-trader-green">Fluxo</CardTitle>
+              <CardTitle className="text-lg font-bold text-trader-green">Fluxo</CardTitle>
             </CardHeader>
             <CardContent>
               <Table>
                 <TableHeader>
                   <TableRow className="border-b-2 border-trader-gray">
-                    <TableHead className="text-trader-green font-medium py-4">Player</TableHead>
-                    <TableHead className="text-trader-green font-medium py-4">Posição</TableHead>
-                    <TableHead className="text-trader-green font-medium py-4">30 minutos</TableHead>
+                    <TableHead className="text-trader-green font-medium py-3">Player</TableHead>
+                    <TableHead className="text-trader-green font-medium py-3">Posição</TableHead>
+                    <TableHead className="text-trader-green font-medium py-3">30 minutos</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {flowData.map((flow, index) => (
                     <TableRow key={index} className="border-b border-trader-gray/20">
-                      <TableCell className="py-3 text-gray-300">{flow.player}</TableCell>
-                      <TableCell className="py-3 text-gray-300">{flow.position}</TableCell>
-                      <TableCell className="py-3 text-gray-300">{flow.minutes30}</TableCell>
+                      <TableCell className="py-2 text-gray-300">{flow.player}</TableCell>
+                      <TableCell className="py-2 text-gray-300">{flow.position}</TableCell>
+                      <TableCell className="py-2 text-gray-300">{flow.minutes30}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -101,28 +100,30 @@ export default function Dashboard() {
             </CardContent>
           </Card>
 
-          <div className="col-span-4 space-y-6">
+          <div className="col-span-4 space-y-4">
             <Card className="bg-trader-navy border-trader-gray">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-xl font-bold text-trader-green">Preço Médio</CardTitle>
+              <CardHeader className="pb-2">
+                <CardTitle className="text-lg font-bold text-trader-green">Preço Médio</CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-3 gap-6">
-                  <div>
-                    <div className="text-trader-green font-medium mb-2">Mini</div>
-                    <div className="text-xl font-semibold text-gray-300">{priceData.mini.buy}</div>
-                  </div>
-                  <div>
-                    <div className="text-trader-green font-medium mb-2">Cheio</div>
-                    <div className="text-xl font-semibold text-gray-300">{priceData.full.buy}</div>
-                  </div>
-                  <div>
-                    <div className="text-trader-green font-medium mb-2">Geral</div>
-                    <div className="text-xl font-semibold text-gray-300">{priceData.general.buy}</div>
-                  </div>
-                </div>
+              <CardContent className="pt-0">
+                <Table>
+                  <TableHeader>
+                    <TableRow className="border-b-2 border-trader-gray">
+                      <TableHead className="text-trader-green font-medium text-sm h-8 py-0">Mini</TableHead>
+                      <TableHead className="text-trader-green font-medium text-sm h-8 py-0">Cheio</TableHead>
+                      <TableHead className="text-trader-green font-medium text-sm h-8 py-0">Geral</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    <TableRow>
+                      <TableCell className="py-2 text-gray-300">{priceData.mini.buy}</TableCell>
+                      <TableCell className="py-2 text-gray-300">{priceData.full.buy}</TableCell>
+                      <TableCell className="py-2 text-gray-300">{priceData.general.buy}</TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
                 <div className={cn(
-                  "mt-4 text-center text-sm",
+                  "mt-2 text-center text-sm",
                   priceData.distance > 10 ? "text-trader-red animate-pulse" : "text-gray-300"
                 )}>
                   Distância do PM: {priceData.distance}
@@ -131,11 +132,11 @@ export default function Dashboard() {
             </Card>
 
             <Card className="bg-trader-navy border-trader-gray">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-xl font-bold text-trader-green">Termômetro</CardTitle>
+              <CardHeader className="pb-2">
+                <CardTitle className="text-lg font-bold text-trader-green">Termômetro</CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold text-center py-4 text-gray-300">
+              <CardContent className="pt-0">
+                <div className="text-xl font-bold text-center py-2 text-gray-300">
                   {activeFilter === 'dolar' ? 'Compra' : 'Neutro'}
                 </div>
               </CardContent>
@@ -143,10 +144,10 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mt-4">
           <Card className="bg-trader-navy border-trader-gray">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-base font-medium">
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-sm font-medium">
                 {activeFilter === 'dolar' ? 'Índice' : 'Dólar'}
               </CardTitle>
             </CardHeader>
@@ -160,24 +161,24 @@ export default function Dashboard() {
             </CardContent>
           </Card>
           <Card className="bg-trader-navy border-trader-gray">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-base font-medium">Média DI</CardTitle>
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-sm font-medium">Média DI</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">13.15%</div>
             </CardContent>
           </Card>
           <Card className="bg-trader-navy border-trader-gray">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-base font-medium">EUA</CardTitle>
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-sm font-medium">EUA</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">4927.12</div>
             </CardContent>
           </Card>
           <Card className="bg-trader-navy border-trader-gray">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-base font-medium">Europa</CardTitle>
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-sm font-medium">Europa</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">15982.34</div>

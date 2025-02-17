@@ -4,10 +4,9 @@ import Layout from "@/components/Layout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/components/ui/use-toast";
 import { ConfigSection } from "@/components/api-config/ConfigSection";
-import { MarketConfigSection } from "@/components/api-config/MarketConfigSection";
 import { FilterButtons } from "@/components/api-config/FilterButtons";
-import { defaultConfigs, defaultMarketTables, sectionFields } from "@/utils/api-config";
-import { APIConfig, ActiveFilter, MarketTable } from "@/types/api-config";
+import { defaultConfigs, sectionFields } from "@/utils/api-config";
+import { APIConfig, ActiveFilter } from "@/types/api-config";
 
 export default function APIConfigPage() {
   const { toast } = useToast();
@@ -22,11 +21,6 @@ export default function APIConfigPage() {
     return savedConfigs ? JSON.parse(savedConfigs) : defaultConfigs;
   });
 
-  const [marketTables, setMarketTables] = useState<MarketTable[]>(() => {
-    const savedTables = localStorage.getItem('market-tables');
-    return savedTables ? JSON.parse(savedTables) : defaultMarketTables;
-  });
-
   const handleSave = (section: string, newConfig: APIConfig) => {
     const updatedConfigs = {
       ...configs,
@@ -37,15 +31,6 @@ export default function APIConfigPage() {
     toast({
       title: "Configurações salvas",
       description: `As configurações de ${section} foram atualizadas com sucesso.`,
-    });
-  };
-
-  const handleMarketTablesSave = (newTables: MarketTable[]) => {
-    setMarketTables(newTables);
-    localStorage.setItem('market-tables', JSON.stringify(newTables));
-    toast({
-      title: "Configurações salvas",
-      description: "As configurações de mercados foram atualizadas com sucesso.",
     });
   };
 
@@ -86,11 +71,12 @@ export default function APIConfigPage() {
           </TabsContent>
 
           <TabsContent value="markets">
-            <MarketConfigSection
+            <ConfigSection
               title="Mercados"
-              tables={marketTables}
+              config={configs.markets}
               activeFilter={activeFilter}
-              onSave={handleMarketTablesSave}
+              fields={sectionFields.markets}
+              onSave={(newConfig) => handleSave("markets", newConfig)}
             />
           </TabsContent>
 
