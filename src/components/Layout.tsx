@@ -99,7 +99,7 @@ export default function Layout({ children }: LayoutProps) {
             </div>
           </SidebarContent>
         </Sidebar>
-        <main className="flex-1 min-h-screen p-6 md:p-8 overflow-auto">
+        <main className="flex-1 min-h-screen p-4 overflow-auto">
           {children}
         </main>
       </div>
