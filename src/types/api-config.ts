@@ -6,6 +6,19 @@ export type APIConfig = {
   };
 };
 
+export type MarketEndpoint = {
+  name: string;
+  endpoint: {
+    dolar: string;
+    indice: string;
+  };
+};
+
+export type MarketTableConfig = {
+  name: string;
+  assets: MarketEndpoint[];
+};
+
 export type ActiveFilter = 'dolar' | 'indice';
 
 export type ConfigSectionFields = { [key: string]: string };

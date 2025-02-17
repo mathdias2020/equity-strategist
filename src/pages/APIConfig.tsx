@@ -4,6 +4,7 @@ import Layout from "@/components/Layout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/components/ui/use-toast";
 import { ConfigSection } from "@/components/api-config/ConfigSection";
+import { MarketConfigSection } from "@/components/api-config/MarketConfigSection";
 import { FilterButtons } from "@/components/api-config/FilterButtons";
 import { defaultConfigs, sectionFields } from "@/utils/api-config";
 import { APIConfig, ActiveFilter } from "@/types/api-config";
@@ -71,11 +72,9 @@ export default function APIConfigPage() {
           </TabsContent>
 
           <TabsContent value="markets">
-            <ConfigSection
-              title="Mercados"
+            <MarketConfigSection
               config={configs.markets}
               activeFilter={activeFilter}
-              fields={sectionFields.markets}
               onSave={(newConfig) => handleSave("markets", newConfig)}
             />
           </TabsContent>
