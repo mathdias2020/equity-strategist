@@ -61,7 +61,12 @@ export const defaultConfigs = {
     us_30y: { dolar: '', indice: '' },
   },
   ai: {
-    suggestions: { dolar: '', indice: '' },
+    operationType: { dolar: '', indice: '' },
+    operationAsset: { dolar: '', indice: '' },
+    operationTime: { dolar: '', indice: '' },
+    operationPrice: { dolar: '', indice: '' },
+    operationTarget: { dolar: '', indice: '' },
+    operationResult: { dolar: '', indice: '' },
     analysis: { dolar: '', indice: '' },
   },
 };
@@ -169,7 +174,12 @@ export const sectionFields = {
   },
   markets: marketTables,
   ai: {
-    suggestions: "Sugestões",
+    operationType: "Tipo de Operação",
+    operationAsset: "Ativo",
+    operationTime: "Horário",
+    operationPrice: "Preço",
+    operationTarget: "Alvo",
+    operationResult: "Resultado",
     analysis: "Análise de Mercado",
   },
 };

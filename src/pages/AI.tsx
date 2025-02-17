@@ -4,9 +4,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Brain } from "lucide-react";
+import { AIOperation } from "@/types/api-config";
 
-// Mock data for operations
-const operations = [
+// Mock data for operations - will be replaced with API data when model is 'AI'
+const operations: AIOperation[] = [
   {
     tipo: "Compra",
     ativo: "Índice",

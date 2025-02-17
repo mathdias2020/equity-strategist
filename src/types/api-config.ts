@@ -31,3 +31,12 @@ export interface ConfigSectionProps {
   onSave: (config: APIConfig) => void;
 }
 
+export interface AIOperation {
+  tipo: string;
+  ativo: string;
+  modelo: 'Fluxo' | 'AI';
+  horario: string;
+  preco: number;
+  alvo: number;
+  resultado: string;
+}
