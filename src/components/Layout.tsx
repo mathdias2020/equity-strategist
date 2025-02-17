@@ -38,8 +38,8 @@ export default function Layout({ children }: LayoutProps) {
 
   return (
     <SidebarProvider>
-      <div className="min-h-screen flex w-full bg-trader-dark text-white">
-        <Sidebar defaultCollapsed={isMobile} className="border-r border-trader-gray">
+      <div className="min-h-screen w-full flex flex-col md:flex-row bg-trader-dark text-white">
+        <Sidebar collapsed={isMobile} className="border-r border-trader-gray">
           <SidebarContent>
             <div className="py-4 flex flex-col h-full">
               <div className="flex items-center justify-between px-4 mb-8">
@@ -104,8 +104,8 @@ export default function Layout({ children }: LayoutProps) {
             </div>
           </SidebarContent>
         </Sidebar>
-        <main className="flex-1 p-4 md:p-6 overflow-auto">
-          <div className="max-w-7xl mx-auto">
+        <main className="flex-1 min-h-screen p-4 md:p-6 overflow-auto">
+          <div className="container mx-auto">
             {children}
           </div>
         </main>
