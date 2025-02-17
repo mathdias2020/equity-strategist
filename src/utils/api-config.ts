@@ -1,5 +1,5 @@
 
-import { APIConfig } from "@/types/api-config";
+import { APIConfig, MarketTable } from "@/types/api-config";
 
 export const defaultConfigs = {
   dashboard: {
@@ -31,6 +31,46 @@ export const defaultConfigs = {
   },
 };
 
+export const defaultMarketTables: MarketTable[] = [
+  {
+    id: "eua",
+    name: "EUA",
+    endpoints: [
+      { name: "S&P 500", endpoint: { dolar: '', indice: '' } },
+      { name: "NASDAQ", endpoint: { dolar: '', indice: '' } },
+      { name: "DOW JONES", endpoint: { dolar: '', indice: '' } },
+      { name: "VIX", endpoint: { dolar: '', indice: '' } },
+    ],
+  },
+  {
+    id: "brasil",
+    name: "BRASIL",
+    endpoints: [
+      { name: "USD/BRL", endpoint: { dolar: '', indice: '' } },
+      { name: "INDFUT", endpoint: { dolar: '', indice: '' } },
+      { name: "BRL10Y", endpoint: { dolar: '', indice: '' } },
+    ],
+  },
+  {
+    id: "europa",
+    name: "EUROPA",
+    endpoints: [
+      { name: "STOXX 600", endpoint: { dolar: '', indice: '' } },
+      { name: "DAX", endpoint: { dolar: '', indice: '' } },
+      { name: "FTSE 100", endpoint: { dolar: '', indice: '' } },
+    ],
+  },
+  {
+    id: "commodities",
+    name: "COMMODITIES",
+    endpoints: [
+      { name: "WTI OIL", endpoint: { dolar: '', indice: '' } },
+      { name: "GOLD", endpoint: { dolar: '', indice: '' } },
+      { name: "COPPER", endpoint: { dolar: '', indice: '' } },
+    ],
+  },
+];
+
 export const sectionFields = {
   dashboard: {
     flowInstitutionalPosition: "Fluxo Institucional - Posição",
@@ -60,3 +100,4 @@ export const sectionFields = {
     analysis: "Análise de Mercado",
   },
 };
+
