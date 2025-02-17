@@ -1,8 +1,9 @@
 
 import { Button } from "@/components/ui/button";
-import { DollarSign, TrendingUp } from "lucide-react";
+import { DollarSign, TrendingUp, Settings2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ActiveFilter } from "@/types/api-config";
+import { useNavigate } from "react-router-dom";
 
 interface FilterButtonsProps {
   activeFilter: ActiveFilter;
@@ -10,6 +11,8 @@ interface FilterButtonsProps {
 }
 
 export const FilterButtons = ({ activeFilter, onFilterChange }: FilterButtonsProps) => {
+  const navigate = useNavigate();
+
   return (
     <div className="flex gap-2">
       <Button
@@ -34,7 +37,13 @@ export const FilterButtons = ({ activeFilter, onFilterChange }: FilterButtonsPro
         <TrendingUp className="h-4 w-4" />
         Índice
       </Button>
+      <Button
+        variant="outline"
+        className="gap-2"
+        onClick={() => navigate('/api-base-config')}
+      >
+        <Settings2 className="h-4 w-4" />
+      </Button>
     </div>
   );
 };
-

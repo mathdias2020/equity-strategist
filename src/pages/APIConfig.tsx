@@ -7,17 +7,11 @@ import { ConfigSection } from "@/components/api-config/ConfigSection";
 import { MarketConfigSection } from "@/components/api-config/MarketConfigSection";
 import { FilterButtons } from "@/components/api-config/FilterButtons";
 import { defaultConfigs, sectionFields } from "@/utils/api-config";
-import { APIConfig, ActiveFilter, BaseUrlConfig } from "@/types/api-config";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { APIConfig, ActiveFilter } from "@/types/api-config";
 
 export default function APIConfigPage() {
   const { toast } = useToast();
   const [activeFilter, setActiveFilter] = useState<ActiveFilter>('dolar');
-  const [baseUrl, setBaseUrl] = useState<string>(() => {
-    return localStorage.getItem('api-base-url') || '';
-  });
   const [configs, setConfigs] = useState<{
     dashboard: APIConfig;
     flow: APIConfig;
@@ -41,14 +35,6 @@ export default function APIConfigPage() {
     });
   };
 
-  const handleBaseUrlSave = () => {
-    localStorage.setItem('api-base-url', baseUrl);
-    toast({
-      title: "URL Base salva",
-      description: "A URL base da API foi atualizada com sucesso.",
-    });
-  };
-
   return (
     <Layout>
       <div className="space-y-6">
@@ -56,30 +42,6 @@ export default function APIConfigPage() {
           <h1 className="text-2xl font-bold text-trader-green">Configuração de APIs</h1>
           <FilterButtons activeFilter={activeFilter} onFilterChange={setActiveFilter} />
         </div>
-
-        <Card className="bg-trader-navy border-trader-gray">
-          <CardHeader>
-            <CardTitle className="text-lg font-bold text-trader-green">
-              URL Base da API
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex gap-4">
-              <Input
-                value={baseUrl}
-                onChange={(e) => setBaseUrl(e.target.value)}
-                className="bg-black border-trader-gray text-white flex-1"
-                placeholder="Digite a URL base da API (ex: https://api.exemplo.com)"
-              />
-              <Button 
-                onClick={handleBaseUrlSave}
-                className="bg-trader-green text-black hover:bg-trader-green/90"
-              >
-                Salvar
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
         
         <Tabs defaultValue="dashboard" className="w-full">
           <TabsList className="grid w-full grid-cols-4">
