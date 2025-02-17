@@ -85,13 +85,15 @@ export const useMarketConfig = (
       });
       const data = await response.json();
       
+      const toastDescription = (
+        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+        </pre>
+      );
+      
       toast({
         title: "Retorno do Endpoint",
-        description: (
-          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-            <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-          </pre>
-        ) as ReactNode,
+        description: toastDescription,
       });
     } catch (error) {
       toast({
