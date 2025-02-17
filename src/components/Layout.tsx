@@ -37,9 +37,9 @@ export default function Layout({ children }: LayoutProps) {
   const isMobile = useIsMobile();
 
   return (
-    <SidebarProvider>
+    <SidebarProvider defaultOpen={!isMobile}>
       <div className="min-h-screen w-full flex flex-col md:flex-row bg-trader-dark text-white">
-        <Sidebar collapsed={isMobile} className="border-r border-trader-gray">
+        <Sidebar className="border-r border-trader-gray">
           <SidebarContent>
             <div className="py-4 flex flex-col h-full">
               <div className="flex items-center justify-between px-4 mb-8">
