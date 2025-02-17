@@ -5,12 +5,12 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { MarketTable } from "@/utils/api-config/market-tables";
+import { marketTables } from "@/utils/api-config";
 import { APIConfig, ActiveFilter } from "@/types/api-config";
 
 interface MarketAccordionItemProps {
   tableKey: string;
-  table: MarketTable;
+  table: typeof marketTables[keyof typeof marketTables];
   config: APIConfig;
   activeFilter: ActiveFilter;
   onUrlChange: (key: string, value: string) => void;
@@ -54,3 +54,4 @@ export const MarketAccordionItem = ({
     </AccordionItem>
   );
 };
+
