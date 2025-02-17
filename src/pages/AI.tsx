@@ -1,86 +1,119 @@
 
 import Layout from "@/components/Layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { aiSuggestions } from "@/mocks/data";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Brain } from "lucide-react";
 
+// Mock data for operations
+const operations = [
+  {
+    tipo: "Compra",
+    ativo: "Índice",
+    modelo: "Fluxo",
+    horario: "10:30",
+    preco: 120500,
+    alvo: 121000,
+    resultado: "+500"
+  },
+  {
+    tipo: "Venda",
+    ativo: "Dólar",
+    modelo: "AI",
+    horario: "11:45",
+    preco: 4.98,
+    alvo: 4.95,
+    resultado: ""
+  }
+];
+
+// Mock data for analysis
+const marketAnalysis = {
+  title: "Análise de Mercado - 26/03/2024",
+  content: `O mercado apresenta tendência de alta no curto prazo, com suporte importante próximo aos 127.000 pontos. O fluxo comprador institucional permanece forte, especialmente em papéis ligados ao setor financeiro e commodities.
+
+Pontos de atenção:
+- Resistência técnica em 129.500 pontos
+- Vencimento de opções na próxima semana
+- Dados de inflação dos EUA na quinta-feira
+
+Recomendamos cautela nas operações de day trade, priorizando operações no sentido da tendência de alta com stops ajustados.`
+};
+
 export default function AI() {
-  const getConfidenceColor = (confidence: number) => {
-    if (confidence >= 0.8) return "text-trader-green";
-    if (confidence >= 0.6) return "text-trader-yellow";
-    return "text-trader-red";
-  };
-
-  const getActionColor = (action: string) => {
-    if (action === "Compra") return "text-trader-green";
-    if (action === "Venda") return "text-trader-red";
-    return "text-trader-yellow";
-  };
-
   return (
     <Layout>
       <div className="grid gap-6">
         <div className="flex items-center gap-4">
           <Brain className="h-8 w-8 text-trader-green" />
-          <h1 className="text-2xl font-bold text-trader-green">Análise de Inteligência Artificial</h1>
+          <h1 className="text-2xl font-bold text-trader-green">Inteligência Artificial</h1>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {aiSuggestions.map((suggestion) => (
-            <Card key={suggestion.asset} className="bg-trader-navy border-trader-gray">
+        <Tabs defaultValue="operations" className="space-y-4">
+          <TabsList className="grid w-full max-w-[400px] grid-cols-2 mx-auto">
+            <TabsTrigger value="operations">Operações</TabsTrigger>
+            <TabsTrigger value="analysis">Análise</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="operations">
+            <Card className="bg-trader-navy border-trader-gray">
               <CardHeader>
-                <CardTitle className="flex items-center justify-between text-lg font-bold">
-                  <span className="text-trader-green">{suggestion.asset}</span>
-                  <span className={getActionColor(suggestion.action)}>
-                    {suggestion.action}
-                  </span>
+                <CardTitle className="text-lg font-bold text-trader-green">
+                  Operações
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  <div>
-                    <div className="text-sm text-gray-300 mb-1">Confiança</div>
-                    <div className={`text-lg font-bold ${getConfidenceColor(suggestion.confidence)}`}>
-                      {(suggestion.confidence * 100).toFixed(0)}%
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-sm text-gray-300 mb-1">Motivo</div>
-                    <p className="text-sm text-gray-300">{suggestion.reason}</p>
-                  </div>
+                <div className="rounded-md border border-trader-gray">
+                  <Table>
+                    <TableHeader>
+                      <TableRow className="hover:bg-trader-gray/20">
+                        <TableHead className="text-trader-green">Tipo</TableHead>
+                        <TableHead className="text-trader-green">Ativo</TableHead>
+                        <TableHead className="text-trader-green">Modelo</TableHead>
+                        <TableHead className="text-trader-green">Horário</TableHead>
+                        <TableHead className="text-trader-green">Preço</TableHead>
+                        <TableHead className="text-trader-green">Alvo</TableHead>
+                        <TableHead className="text-trader-green">Resultado</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {operations.map((op, index) => (
+                        <TableRow key={index} className="hover:bg-trader-gray/20">
+                          <TableCell className={op.tipo === "Compra" ? "text-trader-green" : "text-trader-red"}>
+                            {op.tipo}
+                          </TableCell>
+                          <TableCell className="text-gray-300">{op.ativo}</TableCell>
+                          <TableCell className="text-gray-300">{op.modelo}</TableCell>
+                          <TableCell className="text-gray-300">{op.horario}</TableCell>
+                          <TableCell className="text-gray-300">{op.preco}</TableCell>
+                          <TableCell className="text-gray-300">{op.alvo}</TableCell>
+                          <TableCell className={op.resultado.startsWith("+") ? "text-trader-green" : "text-trader-red"}>
+                            {op.resultado}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
                 </div>
               </CardContent>
             </Card>
-          ))}
-        </div>
+          </TabsContent>
 
-        <Card className="bg-trader-navy border-trader-gray">
-          <CardHeader>
-            <CardTitle className="text-lg font-bold text-trader-green">Análise de Mercado</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <p className="text-gray-300">
-                O mercado apresenta tendência de alta, com forte pressão compradora nos principais ativos do índice. 
-                Os indicadores técnicos sugerem continuidade do movimento atual, com suporte próximo aos 127.000 pontos.
-              </p>
-              <div className="grid gap-4 md:grid-cols-3">
-                <div className="bg-trader-gray/20 p-4 rounded-lg">
-                  <div className="text-sm text-gray-300 mb-1">Tendência Geral</div>
-                  <div className="text-lg font-bold text-trader-green">Alta</div>
+          <TabsContent value="analysis">
+            <Card className="bg-trader-navy border-trader-gray">
+              <CardHeader>
+                <CardTitle className="text-lg font-bold text-trader-green">
+                  {marketAnalysis.title}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4 text-gray-300 whitespace-pre-line">
+                  {marketAnalysis.content}
                 </div>
-                <div className="bg-trader-gray/20 p-4 rounded-lg">
-                  <div className="text-sm text-gray-300 mb-1">Força Relativa</div>
-                  <div className="text-lg font-bold text-trader-yellow">Neutra</div>
-                </div>
-                <div className="bg-trader-gray/20 p-4 rounded-lg">
-                  <div className="text-sm text-gray-300 mb-1">Volatilidade</div>
-                  <div className="text-lg font-bold text-trader-red">Alta</div>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
       </div>
     </Layout>
   );
