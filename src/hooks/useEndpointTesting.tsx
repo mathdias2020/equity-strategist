@@ -26,8 +26,33 @@ export const useEndpointTesting = () => {
       });
       const data = await response.json();
       
-      // Tenta extrair o valor usando o jsonPath se especificado
-      const extractedValue = endpoint.jsonPath ? get(data, endpoint.jsonPath) : data;
+      // Adiciona logs detalhados para debug
+      console.log('Dados completos da API:', data);
+      console.log('JSON Path configurado:', endpoint.jsonPath);
+      
+      let extractedValue = data;
+      if (endpoint.jsonPath) {
+        extractedValue = get(data, endpoint.jsonPath);
+        if (extractedValue === undefined) {
+          console.log('Valor não encontrado no caminho especificado. Tentando primeiro elemento se for array...');
+          // Se for um array e o valor não for encontrado, tenta pegar do primeiro elemento
+          if (Array.isArray(data) && data.length > 0) {
+            extractedValue = get(data[0], endpoint.jsonPath);
+          }
+        }
+      }
+      
+      console.log('Valor extraído:', extractedValue);
+      
+      // Se ainda for undefined, mostra mensagem de erro
+      if (extractedValue === undefined) {
+        toast({
+          title: "Aviso",
+          description: "Valor não encontrado no caminho JSON especificado.",
+          variant: "destructive",
+        });
+        return;
+      }
       
       const toastDescription = (
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
@@ -39,11 +64,6 @@ export const useEndpointTesting = () => {
         title: "Retorno do Endpoint",
         description: toastDescription,
       });
-
-      // Adiciona log para debug
-      console.log('Dados completos:', data);
-      console.log('JSON Path:', endpoint.jsonPath);
-      console.log('Valor extraído:', extractedValue);
 
     } catch (error) {
       toast({
