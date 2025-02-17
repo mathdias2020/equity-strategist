@@ -1,4 +1,6 @@
+
 import * as React from "react"
+import { Slot } from "@radix-ui/react-slot"
 import { cn } from "@/lib/utils"
 
 export const SidebarGroup = React.forwardRef<
@@ -76,17 +78,21 @@ export const SidebarMenuItem = React.forwardRef<
 })
 SidebarMenuItem.displayName = "SidebarMenuItem"
 
-export const SidebarMenuButton = React.forwardRef<
-  HTMLButtonElement,
-  React.ComponentProps<"button">
->(({ className, ...props }, ref) => {
-  return (
-    <button
-      ref={ref}
-      data-sidebar="menu-button"
-      className={cn("flex items-center w-full", className)}
-      {...props}
-    />
-  )
-})
+interface SidebarMenuButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  asChild?: boolean
+}
+
+export const SidebarMenuButton = React.forwardRef<HTMLButtonElement, SidebarMenuButtonProps>(
+  ({ className, asChild = false, ...props }, ref) => {
+    const Comp = asChild ? Slot : "button"
+    return (
+      <Comp
+        ref={ref}
+        data-sidebar="menu-button"
+        className={cn("flex items-center w-full", className)}
+        {...props}
+      />
+    )
+  }
+)
 SidebarMenuButton.displayName = "SidebarMenuButton"
