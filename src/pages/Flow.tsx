@@ -5,11 +5,16 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
 import { Button } from "@/components/ui/button";
-import { DollarSign, TrendingUp } from "lucide-react";
+import { DollarSign, TrendingUp, Calendar } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { flowData } from "@/mocks/data";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar as CalendarComponent } from "@/components/ui/calendar";
+import { format } from "date-fns";
 
 type FilterType = 'dolar' | 'indice';
+type ChartType = 'line' | 'bar';
+type PositionFilter = 'institutional' | 'retail' | 'both';
 
 const priceData = {
   mini: { buy: 5478.50, sell: 5479.50 },
@@ -18,20 +23,47 @@ const priceData = {
   distance: 12.5
 };
 
-// Dados simulados para o gráfico de evolução
-const evolutionData = [
-  { time: "09:00", institutional: 1500, retail: -800 },
-  { time: "10:00", institutional: 2200, retail: -1200 },
-  { time: "11:00", institutional: 2800, retail: -1500 },
-  { time: "12:00", institutional: 3200, retail: -1800 },
-  { time: "13:00", institutional: 2500, retail: -2100 },
-  { time: "14:00", institutional: 1800, retail: -2400 },
-  { time: "15:00", institutional: 1200, retail: -2800 },
-  { time: "16:00", institutional: 800, retail: -3200 },
-];
+// Dados simulados para o gráfico de evolução (intervalo de 1 minuto)
+const generateMinuteData = () => {
+  const data = [];
+  for (let hour = 9; hour <= 17; hour++) {
+    for (let minute = 0; minute < 60; minute++) {
+      const time = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+      data.push({
+        time,
+        institutional: Math.random() * 4000 - 2000,
+        retail: Math.random() * -3000 + 1500,
+      });
+    }
+  }
+  return data;
+};
+
+// Dados simulados para o gráfico de barras (intervalo de 5 minutos)
+const generateBarData = () => {
+  const data = [];
+  for (let hour = 9; hour <= 17; hour++) {
+    for (let minute = 0; minute < 60; minute += 5) {
+      const time = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+      data.push({
+        time,
+        institutional: Math.random() * 400 - 200,
+        retail: Math.random() * -300 + 150,
+      });
+    }
+  }
+  return data;
+};
 
 export default function Flow() {
   const [activeFilter, setActiveFilter] = useState<FilterType>('dolar');
+  const [chartType, setChartType] = useState<ChartType>('line');
+  const [positionFilter, setPositionFilter] = useState<PositionFilter>('both');
+  const [date, setDate] = useState<Date>(new Date());
+  
+  const lineData = generateMinuteData();
+  const barData = generateBarData();
+  const chartData = chartType === 'line' ? lineData : barData;
 
   return (
     <Layout>
@@ -126,32 +158,132 @@ export default function Flow() {
         {/* Gráfico de Evolução */}
         <Card className="bg-trader-navy border-trader-gray">
           <CardHeader>
-            <CardTitle className="text-lg font-bold text-trader-green">Evolução das Posições</CardTitle>
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-lg font-bold text-trader-green">Evolução das Posições</CardTitle>
+              <div className="flex items-center gap-2">
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button variant="outline" className="gap-2">
+                      <Calendar className="h-4 w-4" />
+                      {format(date, 'dd/MM/yyyy')}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0">
+                    <CalendarComponent
+                      mode="single"
+                      selected={date}
+                      onSelect={(date) => date && setDate(date)}
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
+              </div>
+            </div>
+            <div className="flex justify-between items-center mt-4">
+              <div className="flex gap-2">
+                <Button
+                  variant={positionFilter === 'institutional' ? 'default' : 'outline'}
+                  onClick={() => setPositionFilter('institutional')}
+                  className={cn(
+                    positionFilter === 'institutional' ? 'bg-trader-green text-black hover:bg-trader-green/90' : ''
+                  )}
+                >
+                  Institucional
+                </Button>
+                <Button
+                  variant={positionFilter === 'retail' ? 'default' : 'outline'}
+                  onClick={() => setPositionFilter('retail')}
+                  className={cn(
+                    positionFilter === 'retail' ? 'bg-trader-green text-black hover:bg-trader-green/90' : ''
+                  )}
+                >
+                  Varejo
+                </Button>
+                <Button
+                  variant={positionFilter === 'both' ? 'default' : 'outline'}
+                  onClick={() => setPositionFilter('both')}
+                  className={cn(
+                    positionFilter === 'both' ? 'bg-trader-green text-black hover:bg-trader-green/90' : ''
+                  )}
+                >
+                  Ambos
+                </Button>
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  variant={chartType === 'line' ? 'default' : 'outline'}
+                  onClick={() => setChartType('line')}
+                  className={cn(
+                    chartType === 'line' ? 'bg-trader-green text-black hover:bg-trader-green/90' : ''
+                  )}
+                >
+                  Linha
+                </Button>
+                <Button
+                  variant={chartType === 'bar' ? 'default' : 'outline'}
+                  onClick={() => setChartType('bar')}
+                  className={cn(
+                    chartType === 'bar' ? 'bg-trader-green text-black hover:bg-trader-green/90' : ''
+                  )}
+                >
+                  Barra
+                </Button>
+              </div>
+            </div>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={400}>
-              <LineChart data={evolutionData}>
-                <XAxis dataKey="time" stroke="#888888" />
-                <YAxis stroke="#888888" />
-                <Tooltip 
-                  contentStyle={{ background: "#1A1F2C", border: "1px solid #2D3748" }}
-                  labelStyle={{ color: "#fff" }}
-                />
-                <Line 
-                  type="monotone" 
-                  dataKey="institutional" 
-                  name="Institucional" 
-                  stroke="#00FF88" 
-                  strokeWidth={2} 
-                />
-                <Line 
-                  type="monotone" 
-                  dataKey="retail" 
-                  name="Varejo" 
-                  stroke="#FF4444" 
-                  strokeWidth={2} 
-                />
-              </LineChart>
+              {chartType === 'line' ? (
+                <LineChart data={chartData}>
+                  <XAxis dataKey="time" stroke="#888888" />
+                  <YAxis stroke="#888888" />
+                  <Tooltip 
+                    contentStyle={{ background: "#1A1F2C", border: "1px solid #2D3748" }}
+                    labelStyle={{ color: "#fff" }}
+                  />
+                  {(positionFilter === 'institutional' || positionFilter === 'both') && (
+                    <Line 
+                      type="monotone" 
+                      dataKey="institutional" 
+                      name="Institucional" 
+                      stroke="#00FF88" 
+                      strokeWidth={2} 
+                    />
+                  )}
+                  {(positionFilter === 'retail' || positionFilter === 'both') && (
+                    <Line 
+                      type="monotone" 
+                      dataKey="retail" 
+                      name="Varejo" 
+                      stroke="#FF4444" 
+                      strokeWidth={2} 
+                    />
+                  )}
+                </LineChart>
+              ) : (
+                <BarChart data={chartData}>
+                  <XAxis dataKey="time" stroke="#888888" />
+                  <YAxis stroke="#888888" />
+                  <Tooltip 
+                    contentStyle={{ background: "#1A1F2C", border: "1px solid #2D3748" }}
+                    labelStyle={{ color: "#fff" }}
+                  />
+                  {(positionFilter === 'institutional' || positionFilter === 'both') && (
+                    <Bar 
+                      dataKey="institutional" 
+                      name="Institucional" 
+                      fill="#00FF88" 
+                    />
+                  )}
+                  {(positionFilter === 'retail' || positionFilter === 'both') && (
+                    <Bar 
+                      dataKey="retail" 
+                      name="Varejo" 
+                      fill="#FF4444" 
+                    />
+                  )}
+                </BarChart>
+              )}
             </ResponsiveContainer>
           </CardContent>
         </Card>
