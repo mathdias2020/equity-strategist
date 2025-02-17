@@ -1,7 +1,8 @@
 
 import { useLocation } from "react-router-dom";
-import { SidebarProvider, Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuItem, SidebarMenuButton } from "@/components/ui/sidebar";
-import { BarChart3, Brain, LayoutDashboard, Settings2, TrendingUp } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { SidebarProvider, Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarTrigger } from "@/components/ui/sidebar";
+import { BarChart3, Brain, LayoutDashboard, Menu, Settings2, TrendingUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface LayoutProps {
@@ -33,16 +34,24 @@ const menuItems = [
 
 export default function Layout({ children }: LayoutProps) {
   const location = useLocation();
+  const isMobile = useIsMobile();
 
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full bg-trader-dark text-white">
-        <Sidebar>
+        <Sidebar defaultCollapsed={isMobile} className="border-r border-trader-gray">
           <SidebarContent>
             <div className="py-4 flex flex-col h-full">
-              <h1 className="text-xl font-bold text-center mb-8">
-                <span className="text-gradient">Trader</span> Banqueiro
-              </h1>
+              <div className="flex items-center justify-between px-4 mb-8">
+                <h1 className="text-xl font-bold">
+                  <span className="text-gradient">Trader</span> Banqueiro
+                </h1>
+                {isMobile && (
+                  <SidebarTrigger>
+                    <Menu className="h-6 w-6" />
+                  </SidebarTrigger>
+                )}
+              </div>
               <SidebarGroup>
                 <SidebarGroupLabel>Menu</SidebarGroupLabel>
                 <SidebarGroupContent>
@@ -95,7 +104,11 @@ export default function Layout({ children }: LayoutProps) {
             </div>
           </SidebarContent>
         </Sidebar>
-        <main className="flex-1 p-6">{children}</main>
+        <main className="flex-1 p-4 md:p-6 overflow-auto">
+          <div className="max-w-7xl mx-auto">
+            {children}
+          </div>
+        </main>
       </div>
     </SidebarProvider>
   );
