@@ -1,179 +1,184 @@
 
+import { useState } from "react";
 import Layout from "@/components/Layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/components/ui/use-toast";
+
+type APIConfig = {
+  [key: string]: string;
+};
 
 export default function APIConfig() {
   const { toast } = useToast();
-  const [apis, setApis] = useState({
-    dashboard: {
-      dolar: localStorage.getItem('api_dashboard_dolar') || '',
-      indice: localStorage.getItem('api_dashboard_indice') || '',
-    },
-    flow: {
-      dolar: localStorage.getItem('api_flow_dolar') || '',
-      indice: localStorage.getItem('api_flow_indice') || '',
-    },
-    ai: {
-      dolar: localStorage.getItem('api_ai_dolar') || '',
-      indice: localStorage.getItem('api_ai_indice') || '',
-    },
-    averagePrice: localStorage.getItem('api_average_price') || '',
+  const [configs, setConfigs] = useState<{
+    dashboard: APIConfig;
+    flow: APIConfig;
+    markets: APIConfig;
+    ai: APIConfig;
+  }>(() => {
+    const savedConfigs = localStorage.getItem('api-configs');
+    return savedConfigs ? JSON.parse(savedConfigs) : {
+      dashboard: {
+        priceData: '',
+        portfolioData: '',
+        flowData: '',
+      },
+      flow: {
+        orderFlow: '',
+        pressureData: '',
+        volumeData: '',
+      },
+      markets: {
+        indices: '',
+        currencies: '',
+        commodities: '',
+      },
+      ai: {
+        suggestions: '',
+        analysis: '',
+      },
+    };
   });
 
-  const handleSave = () => {
-    // Dashboard APIs
-    localStorage.setItem('api_dashboard_dolar', apis.dashboard.dolar);
-    localStorage.setItem('api_dashboard_indice', apis.dashboard.indice);
-    
-    // Flow APIs
-    localStorage.setItem('api_flow_dolar', apis.flow.dolar);
-    localStorage.setItem('api_flow_indice', apis.flow.indice);
-    
-    // AI APIs
-    localStorage.setItem('api_ai_dolar', apis.ai.dolar);
-    localStorage.setItem('api_ai_indice', apis.ai.indice);
-    
-    // Average Price API
-    localStorage.setItem('api_average_price', apis.averagePrice);
-
+  const handleSave = (section: string, newConfig: APIConfig) => {
+    const updatedConfigs = {
+      ...configs,
+      [section]: newConfig,
+    };
+    setConfigs(updatedConfigs);
+    localStorage.setItem('api-configs', JSON.stringify(updatedConfigs));
     toast({
-      title: "Configuração salva",
-      description: "As URLs das APIs foram atualizadas com sucesso.",
+      title: "Configurações salvas",
+      description: `As configurações de ${section} foram atualizadas com sucesso.`,
     });
   };
 
   return (
     <Layout>
       <div className="space-y-6">
-        <Card className="bg-trader-navy border-trader-gray">
-          <CardHeader>
-            <CardTitle className="text-trader-green">Dashboard</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="dashboard-dolar">API Dólar</Label>
-              <Input
-                id="dashboard-dolar"
-                value={apis.dashboard.dolar}
-                onChange={(e) => setApis(prev => ({
-                  ...prev,
-                  dashboard: { ...prev.dashboard, dolar: e.target.value }
-                }))}
-                className="bg-trader-gray/20 border-trader-gray text-gray-300"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="dashboard-indice">API Índice</Label>
-              <Input
-                id="dashboard-indice"
-                value={apis.dashboard.indice}
-                onChange={(e) => setApis(prev => ({
-                  ...prev,
-                  dashboard: { ...prev.dashboard, indice: e.target.value }
-                }))}
-                className="bg-trader-gray/20 border-trader-gray text-gray-300"
-              />
-            </div>
-          </CardContent>
-        </Card>
+        <h1 className="text-2xl font-bold text-trader-green">Configuração de APIs</h1>
+        
+        <Tabs defaultValue="dashboard" className="w-full">
+          <TabsList className="grid w-full grid-cols-4">
+            <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
+            <TabsTrigger value="flow">Fluxo</TabsTrigger>
+            <TabsTrigger value="markets">Mercados</TabsTrigger>
+            <TabsTrigger value="ai">IA</TabsTrigger>
+          </TabsList>
 
-        <Card className="bg-trader-navy border-trader-gray">
-          <CardHeader>
-            <CardTitle className="text-trader-green">Fluxo</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="flow-dolar">API Dólar</Label>
-              <Input
-                id="flow-dolar"
-                value={apis.flow.dolar}
-                onChange={(e) => setApis(prev => ({
-                  ...prev,
-                  flow: { ...prev.flow, dolar: e.target.value }
-                }))}
-                className="bg-trader-gray/20 border-trader-gray text-gray-300"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="flow-indice">API Índice</Label>
-              <Input
-                id="flow-indice"
-                value={apis.flow.indice}
-                onChange={(e) => setApis(prev => ({
-                  ...prev,
-                  flow: { ...prev.flow, indice: e.target.value }
-                }))}
-                className="bg-trader-gray/20 border-trader-gray text-gray-300"
-              />
-            </div>
-          </CardContent>
-        </Card>
+          <TabsContent value="dashboard">
+            <ConfigSection
+              title="Dashboard"
+              config={configs.dashboard}
+              fields={{
+                priceData: "Dados de Preços",
+                portfolioData: "Dados do Portfólio",
+                flowData: "Dados de Fluxo",
+              }}
+              onSave={(newConfig) => handleSave("dashboard", newConfig)}
+            />
+          </TabsContent>
 
-        <Card className="bg-trader-navy border-trader-gray">
-          <CardHeader>
-            <CardTitle className="text-trader-green">Inteligência Artificial</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="ai-dolar">API Dólar</Label>
-              <Input
-                id="ai-dolar"
-                value={apis.ai.dolar}
-                onChange={(e) => setApis(prev => ({
-                  ...prev,
-                  ai: { ...prev.ai, dolar: e.target.value }
-                }))}
-                className="bg-trader-gray/20 border-trader-gray text-gray-300"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="ai-indice">API Índice</Label>
-              <Input
-                id="ai-indice"
-                value={apis.ai.indice}
-                onChange={(e) => setApis(prev => ({
-                  ...prev,
-                  ai: { ...prev.ai, indice: e.target.value }
-                }))}
-                className="bg-trader-gray/20 border-trader-gray text-gray-300"
-              />
-            </div>
-          </CardContent>
-        </Card>
+          <TabsContent value="flow">
+            <ConfigSection
+              title="Fluxo"
+              config={configs.flow}
+              fields={{
+                orderFlow: "Fluxo de Ordens",
+                pressureData: "Dados de Pressão",
+                volumeData: "Dados de Volume",
+              }}
+              onSave={(newConfig) => handleSave("flow", newConfig)}
+            />
+          </TabsContent>
 
-        <Card className="bg-trader-navy border-trader-gray">
-          <CardHeader>
-            <CardTitle className="text-trader-green">Preço Médio</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              <Label htmlFor="average-price">API</Label>
-              <Input
-                id="average-price"
-                value={apis.averagePrice}
-                onChange={(e) => setApis(prev => ({
-                  ...prev,
-                  averagePrice: e.target.value
-                }))}
-                className="bg-trader-gray/20 border-trader-gray text-gray-300"
-              />
-            </div>
-          </CardContent>
-        </Card>
+          <TabsContent value="markets">
+            <ConfigSection
+              title="Mercados"
+              config={configs.markets}
+              fields={{
+                indices: "Índices",
+                currencies: "Moedas",
+                commodities: "Commodities",
+              }}
+              onSave={(newConfig) => handleSave("markets", newConfig)}
+            />
+          </TabsContent>
 
-        <Button 
-          onClick={handleSave}
-          className="w-full bg-trader-green text-black hover:bg-trader-green/90"
-        >
-          Salvar Configurações
-        </Button>
+          <TabsContent value="ai">
+            <ConfigSection
+              title="Inteligência Artificial"
+              config={configs.ai}
+              fields={{
+                suggestions: "Sugestões",
+                analysis: "Análise de Mercado",
+              }}
+              onSave={(newConfig) => handleSave("ai", newConfig)}
+            />
+          </TabsContent>
+        </Tabs>
       </div>
     </Layout>
   );
 }
 
+type ConfigSectionProps = {
+  title: string;
+  config: APIConfig;
+  fields: { [key: string]: string };
+  onSave: (config: APIConfig) => void;
+};
+
+const ConfigSection = ({ title, config, fields, onSave }: ConfigSectionProps) => {
+  const [localConfig, setLocalConfig] = useState<APIConfig>(config);
+
+  const handleChange = (key: string, value: string) => {
+    setLocalConfig((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSave(localConfig);
+  };
+
+  return (
+    <Card className="bg-trader-navy border-trader-gray">
+      <CardHeader>
+        <CardTitle className="text-lg font-bold text-trader-green">
+          Configuração: {title}
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {Object.entries(fields).map(([key, label]) => (
+            <div key={key} className="space-y-2">
+              <Label htmlFor={key} className="text-gray-300">
+                API {label}
+              </Label>
+              <Input
+                id={key}
+                value={localConfig[key] || ''}
+                onChange={(e) => handleChange(key, e.target.value)}
+                className="bg-black border-trader-gray text-white"
+                placeholder={`Digite o endpoint para ${label}`}
+              />
+            </div>
+          ))}
+          <Button 
+            type="submit"
+            className="w-full bg-trader-green text-black hover:bg-trader-green/90"
+          >
+            Salvar Configurações
+          </Button>
+        </form>
+      </CardContent>
+    </Card>
+  );
+};
