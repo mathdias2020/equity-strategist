@@ -12,11 +12,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Pencil } from "lucide-react";
+import { Eye, Pencil } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
 
 export const ConfigSection = ({ title, config, activeFilter, fields, onSave }: ConfigSectionProps) => {
+  const { toast } = useToast();
   const [localConfig, setLocalConfig] = useState<APIConfig>(() => {
-    // Initialize with isEditing set to false for all fields
     const initialConfig = { ...config };
     Object.keys(initialConfig).forEach(key => {
       initialConfig[key] = {
@@ -74,9 +75,43 @@ export const ConfigSection = ({ title, config, activeFilter, fields, onSave }: C
     }));
   };
 
+  const testEndpoint = async (key: string) => {
+    const endpoint = localConfig[key][activeFilter];
+    if (!endpoint.url) {
+      toast({
+        title: "Erro",
+        description: "URL do endpoint não configurada.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      const baseUrl = localStorage.getItem('api-base-url') || 'http://api.traderbanqueiro.com.br/';
+      const response = await fetch(`${baseUrl}${endpoint.url}`, {
+        method: endpoint.method,
+      });
+      const data = await response.json();
+      
+      toast({
+        title: "Retorno do Endpoint",
+        description: (
+          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+            <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+          </pre>
+        ),
+      });
+    } catch (error) {
+      toast({
+        title: "Erro ao testar endpoint",
+        description: `Erro: ${error instanceof Error ? error.message : 'Erro desconhecido'}`,
+        variant: "destructive",
+      });
+    }
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Set all isEditing to false when saving
     const configToSave = { ...localConfig };
     Object.keys(configToSave).forEach(key => {
       configToSave[key].dolar.isEditing = false;
@@ -133,6 +168,15 @@ export const ConfigSection = ({ title, config, activeFilter, fields, onSave }: C
                 >
                   <Pencil className="h-4 w-4" />
                 </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="icon"
+                  onClick={() => testEndpoint(key)}
+                  className="border-trader-gray text-trader-green hover:text-trader-green/90"
+                >
+                  <Eye className="h-4 w-4" />
+                </Button>
               </div>
             </div>
           ))}
@@ -147,4 +191,3 @@ export const ConfigSection = ({ title, config, activeFilter, fields, onSave }: C
     </Card>
   );
 };
-
