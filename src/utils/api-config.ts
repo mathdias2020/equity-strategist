@@ -12,9 +12,13 @@ export const defaultConfigs = {
     priceGeneral: { dolar: '', indice: '' },
   },
   flow: {
-    orderFlow: { dolar: '', indice: '' },
-    pressureData: { dolar: '', indice: '' },
-    volumeData: { dolar: '', indice: '' },
+    institutionalPosition: { dolar: '', indice: '' },
+    institutional30Min: { dolar: '', indice: '' },
+    retailPosition: { dolar: '', indice: '' },
+    retail30Min: { dolar: '', indice: '' },
+    priceMini: { dolar: '', indice: '' },
+    priceFull: { dolar: '', indice: '' },
+    priceGeneral: { dolar: '', indice: '' },
   },
   markets: {
     indices: { dolar: '', indice: '' },
@@ -38,9 +42,13 @@ export const sectionFields = {
     priceGeneral: "Preço Médio - Geral",
   },
   flow: {
-    orderFlow: "Fluxo de Ordens",
-    pressureData: "Dados de Pressão",
-    volumeData: "Dados de Volume",
+    institutionalPosition: "Fluxo Institucional - Posição",
+    institutional30Min: "Fluxo Institucional - 30 minutos",
+    retailPosition: "Fluxo Varejo - Posição",
+    retail30Min: "Fluxo Varejo - 30 minutos",
+    priceMini: "Preço Médio - Mini",
+    priceFull: "Preço Médio - Cheio",
+    priceGeneral: "Preço Médio - Geral",
   },
   markets: {
     indices: "Índices",
@@ -52,4 +60,3 @@ export const sectionFields = {
     analysis: "Análise de Mercado",
   },
 };
-
