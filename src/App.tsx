@@ -12,6 +12,7 @@ import Flow from "./pages/Flow";
 import Markets from "./pages/Markets";
 import AI from "./pages/AI";
 import APIConfig from "./pages/APIConfig";
+import APIBaseConfig from "./pages/APIBaseConfig";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ const App = () => (
           <Route path="/markets" element={<Markets />} />
           <Route path="/ai" element={<AI />} />
           <Route path="/api" element={<APIConfig />} />
+          <Route path="/api-base-config" element={<APIBaseConfig />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
