@@ -75,16 +75,32 @@ export default function Layout({ children }: LayoutProps) {
                       <SidebarMenuItem>
                         <SidebarMenuButton asChild>
                           <a
-                            href="/api"
+                            href="/api-dolar"
                             className={cn(
                               "flex items-center gap-3 px-3 py-2 rounded-lg transition-colors",
-                              location.pathname === "/api"
+                              location.pathname === "/api-dolar"
                                 ? "bg-trader-navy text-trader-green"
                                 : "hover:bg-trader-navy/50"
                             )}
                           >
                             <Settings2 className="h-5 w-5" />
-                            <span>API</span>
+                            <span>API Dólar</span>
+                          </a>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                      <SidebarMenuItem>
+                        <SidebarMenuButton asChild>
+                          <a
+                            href="/api-indice"
+                            className={cn(
+                              "flex items-center gap-3 px-3 py-2 rounded-lg transition-colors",
+                              location.pathname === "/api-indice"
+                                ? "bg-trader-navy text-trader-green"
+                                : "hover:bg-trader-navy/50"
+                            )}
+                          >
+                            <Settings2 className="h-5 w-5" />
+                            <span>API Índice</span>
                           </a>
                         </SidebarMenuButton>
                       </SidebarMenuItem>
