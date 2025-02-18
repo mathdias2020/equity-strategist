@@ -1,9 +1,8 @@
 
-import { useState } from 'react';
+import { useState } from "react";
 
 export const useEndpointData = () => {
-  const [data, setData] = useState<any>(null);
-
+  const [data] = useState<any>(null);
   return { data };
 };
 

@@ -10,15 +10,9 @@ interface PriceCardProps {
 }
 
 export const PriceCard = ({ activeFilter }: PriceCardProps) => {
-  const { data: miniPrice } = useEndpointData(
-    activeFilter === 'dolar' ? 'price-mini-dolar' : 'price-mini-indice'
-  );
-  const { data: fullPrice } = useEndpointData(
-    activeFilter === 'dolar' ? 'price-full-dolar' : 'price-full-indice'
-  );
-  const { data: generalPrice } = useEndpointData(
-    activeFilter === 'dolar' ? 'price-general-dolar' : 'price-general-indice'
-  );
+  const { data: miniPrice } = useEndpointData();
+  const { data: fullPrice } = useEndpointData();
+  const { data: generalPrice } = useEndpointData();
 
   const formatValue = (value: any, placeholder: number) => {
     if (value === undefined || value === null) {

@@ -9,14 +9,8 @@ interface FlowCardProps {
 }
 
 export const FlowCard = ({ activeFilter }: FlowCardProps) => {
-  const { data: institutionalPosition } = useEndpointData(
-    activeFilter === 'dolar' ? 'institutional-position' : 'institutional-indice',
-    false
-  );
-  const { data: retailPosition } = useEndpointData(
-    activeFilter === 'dolar' ? 'retail-position' : 'retail-indice',
-    false
-  );
+  const { data: institutionalPosition } = useEndpointData();
+  const { data: retailPosition } = useEndpointData();
 
   const formatValue = (value: any, placeholder: number) => {
     if (value === undefined || value === null) {

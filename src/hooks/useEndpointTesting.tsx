@@ -1,11 +1,12 @@
 
-import { useState } from 'react';
-
 export const useEndpointTesting = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const testEndpoint = () => {
+    console.log('Testing endpoint...');
+  };
 
   return {
-    isLoading
+    isLoading: false,
+    testEndpoint
   };
 };
 
