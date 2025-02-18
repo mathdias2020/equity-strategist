@@ -72,11 +72,16 @@ export const useEndpointTesting = () => {
       
       let extractedValue = data;
       if (endpoint.jsonPath) {
-        extractedValue = get(data, endpoint.jsonPath);
-        if (extractedValue === undefined) {
-          console.log('Valor não encontrado no caminho especificado. Tentando primeiro elemento se for array...');
-          if (Array.isArray(data) && data.length > 0) {
-            extractedValue = get(data[0], endpoint.jsonPath);
+        const paths = endpoint.jsonPath.split('+').map(p => p.trim());
+        
+        for (const path of paths) {
+          extractedValue = get(extractedValue, path);
+          if (extractedValue === undefined) {
+            console.log(`Valor não encontrado no caminho: ${path}`);
+            if (Array.isArray(data) && data.length > 0) {
+              extractedValue = get(data[0], path);
+            }
+            break;
           }
         }
       }
@@ -122,3 +127,4 @@ export const useEndpointTesting = () => {
     isLoading
   };
 };
+
