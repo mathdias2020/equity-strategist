@@ -1,3 +1,4 @@
+
 import * as React from "react"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { useIsMobile } from "@/hooks/use-mobile"
@@ -66,11 +67,11 @@ export const SidebarProvider = React.forwardRef<
       return () => window.removeEventListener("keydown", handleKeyDown)
     }, [toggleSidebar])
 
-    const state = open ? "expanded" : "collapsed" as const
+    const state = open ? "expanded" : "collapsed"
 
     const contextValue = React.useMemo(
       () => ({
-        state,
+        state: state as "expanded" | "collapsed",
         open,
         setOpen,
         isMobile,
@@ -85,15 +86,13 @@ export const SidebarProvider = React.forwardRef<
       <SidebarContext.Provider value={contextValue}>
         <TooltipProvider delayDuration={0}>
           <div
-            style={
-              {
-                "--sidebar-width": "16rem",
-                "--sidebar-width-icon": "3rem",
-                ...style,
-              } as React.CSSProperties
-            }
-            className="group/sidebar-wrapper flex min-h-svh w-full has-[[data-variant=inset]]:bg-sidebar"
             ref={ref}
+            className="group/sidebar-wrapper flex min-h-svh w-full has-[[data-variant=inset]]:bg-sidebar"
+            style={{
+              ...style,
+              "--sidebar-width": "16rem",
+              "--sidebar-width-icon": "3rem",
+            } as React.CSSProperties}
             {...props}
           >
             {children}
