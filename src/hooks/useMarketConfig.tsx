@@ -2,6 +2,7 @@
 import { useState, ReactNode } from "react";
 import { APIConfig, ActiveFilter } from "@/types/api-config";
 import { useToast } from "@/components/ui/use-toast";
+import get from "lodash/get";
 
 export const useMarketConfig = (
   initialConfig: APIConfig,
@@ -100,15 +101,34 @@ export const useMarketConfig = (
       });
       const data = await response.json();
       
+      let value;
+      if (endpoint.jsonPath) {
+        const paths = endpoint.jsonPath.split('+').map(p => p.trim());
+        if (paths.length > 1) {
+          value = paths.reduce((acc, path) => {
+            const pathValue = get(data, path);
+            return acc !== undefined ? acc + Number(pathValue) : Number(pathValue);
+          }, undefined);
+        } else {
+          value = get(data, endpoint.jsonPath);
+        }
+      } else {
+        value = data;
+      }
+
+      console.log('API Response:', data);
+      console.log('Extracted value:', value);
+      console.log('JSON Path:', endpoint.jsonPath);
+      
       const toastDescription = (
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+          <code className="text-white">{JSON.stringify(value !== undefined ? value : data, null, 2)}</code>
         </pre>
       );
       
       toast({
         title: "Retorno do Endpoint",
-        description: toastDescription,
+        description: toastDescription as ReactNode,
       });
     } catch (error) {
       toast({
@@ -121,13 +141,22 @@ export const useMarketConfig = (
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Create a deep copy of the current config to maintain the other filter's values
     const configToSave = { ...localConfig };
+    
+    // Only update isEditing for the current filter
     Object.keys(configToSave).forEach(key => {
-      configToSave[key].dolar.isEditing = false;
-      configToSave[key].indice.isEditing = false;
+      configToSave[key][activeFilter].isEditing = false;
     });
+    
     setLocalConfig(configToSave);
     onSave(configToSave);
+
+    toast({
+      title: "Configurações salvas",
+      description: `Configurações para ${activeFilter === 'dolar' ? 'Dólar' : 'Índice'} foram salvas com sucesso.`,
+    });
   };
 
   return {
