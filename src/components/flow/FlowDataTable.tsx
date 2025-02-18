@@ -8,6 +8,13 @@ interface FlowDataTableProps {
 }
 
 export const FlowDataTable = ({ flowData }: FlowDataTableProps) => {
+  const formatValue = (value: any, placeholder: number) => {
+    if (value === undefined || value === null) {
+      return `[${placeholder}]`;
+    }
+    return value.toLocaleString('pt-BR');
+  };
+
   return (
     <Card className="bg-trader-navy border-trader-gray">
       <CardHeader>
@@ -26,8 +33,8 @@ export const FlowDataTable = ({ flowData }: FlowDataTableProps) => {
             {flowData.map((flow, index) => (
               <TableRow key={index} className="border-b border-trader-gray/20">
                 <TableCell className="py-2 text-gray-300">{flow.player}</TableCell>
-                <TableCell className="py-2 text-gray-300">{flow.position}</TableCell>
-                <TableCell className="py-2 text-gray-300">{flow.minutes30}</TableCell>
+                <TableCell className="py-2 text-gray-300">{formatValue(flow.position, (index + 1) * 2 - 1)}</TableCell>
+                <TableCell className="py-2 text-gray-300">{formatValue(flow.minutes30, (index + 1) * 2)}</TableCell>
               </TableRow>
             ))}
           </TableBody>

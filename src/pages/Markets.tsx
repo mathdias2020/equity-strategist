@@ -1,4 +1,3 @@
-
 import Layout from "@/components/Layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { marketData } from "@/mocks/data";
@@ -14,45 +13,54 @@ type MarketSectionProps = {
   }>;
 };
 
-const MarketSection = ({ title, items }: MarketSectionProps) => (
-  <Card className="bg-black border-trader-gray">
-    <CardHeader className="flex flex-row items-center justify-between pb-2 border-b-2 border-trader-gray">
-      <CardTitle className="text-lg font-bold text-trader-green">{title}</CardTitle>
-      <span className={cn(
-        "text-xs",
-        items[0]?.change >= 0 ? "text-trader-green" : "text-trader-red"
-      )}>
-        {items[0]?.change >= 0 ? "+" : ""}{items[0]?.change}%
-      </span>
-    </CardHeader>
-    <CardContent className="space-y-2 pt-4">
-      {items.map((item) => (
-        <div key={item.name} className="space-y-1">
-          <div className="flex justify-between text-xs">
-            <span className="text-gray-400">{item.name}</span>
-            <span className={cn(
-              "text-xs",
-              item.change >= 0 ? "text-trader-green" : "text-trader-red"
-            )}>
-              {item.value.toFixed(2)}
-            </span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="h-2 flex-grow bg-trader-gray/20 rounded-full overflow-hidden">
-              <div 
-                className="h-full bg-trader-green/50 rounded-full"
-                style={{ width: `${(item.percentile || 50)}%` }}
-              />
+const MarketSection = ({ title, items }: MarketSectionProps) => {
+  const formatValue = (value: any, placeholder: number) => {
+    if (value === undefined || value === null) {
+      return `[${placeholder}]`;
+    }
+    return value.toLocaleString('pt-BR');
+  };
+
+  return (
+    <Card className="bg-black border-trader-gray">
+      <CardHeader className="flex flex-row items-center justify-between pb-2 border-b-2 border-trader-gray">
+        <CardTitle className="text-lg font-bold text-trader-green">{title}</CardTitle>
+        <span className={cn(
+          "text-xs",
+          items[0]?.change >= 0 ? "text-trader-green" : "text-trader-red"
+        )}>
+          {items[0]?.change >= 0 ? "+" : ""}{formatValue(items[0]?.change, 1)}%
+        </span>
+      </CardHeader>
+      <CardContent className="space-y-2 pt-4">
+        {items.map((item, index) => (
+          <div key={item.name} className="space-y-1">
+            <div className="flex justify-between text-xs">
+              <span className="text-gray-400">{item.name}</span>
+              <span className={cn(
+                "text-xs",
+                item.change >= 0 ? "text-trader-green" : "text-trader-red"
+              )}>
+                {formatValue(item.value, index * 2 + 1)}
+              </span>
             </div>
-            <span className="text-xs text-gray-400">
-              {item.change >= 0 ? "+" : ""}{item.change}%
-            </span>
+            <div className="flex items-center gap-2">
+              <div className="h-2 flex-grow bg-trader-gray/20 rounded-full overflow-hidden">
+                <div 
+                  className="h-full bg-trader-green/50 rounded-full"
+                  style={{ width: `${(item.percentile || 50)}%` }}
+                />
+              </div>
+              <span className="text-xs text-gray-400">
+                {item.change >= 0 ? "+" : ""}{formatValue(item.change, index * 2 + 2)}%
+              </span>
+            </div>
           </div>
-        </div>
-      ))}
-    </CardContent>
-  </Card>
-);
+        ))}
+      </CardContent>
+    </Card>
+  );
+};
 
 export default function Markets() {
   const regions = [

@@ -9,6 +9,13 @@ interface PriceDataTableProps {
 }
 
 export const PriceDataTable = ({ priceData }: PriceDataTableProps) => {
+  const formatValue = (value: any, placeholder: number) => {
+    if (value === undefined || value === null) {
+      return `[${placeholder}]`;
+    }
+    return value.toLocaleString('pt-BR');
+  };
+
   return (
     <Card className="bg-trader-navy border-trader-gray">
       <CardHeader>
@@ -25,9 +32,9 @@ export const PriceDataTable = ({ priceData }: PriceDataTableProps) => {
           </TableHeader>
           <TableBody>
             <TableRow>
-              <TableCell className="py-2 text-gray-300">{priceData.mini.buy}</TableCell>
-              <TableCell className="py-2 text-gray-300">{priceData.full.buy}</TableCell>
-              <TableCell className="py-2 text-gray-300">{priceData.general.buy}</TableCell>
+              <TableCell className="py-2 text-gray-300">{formatValue(priceData.mini.buy, 1)}</TableCell>
+              <TableCell className="py-2 text-gray-300">{formatValue(priceData.full.buy, 2)}</TableCell>
+              <TableCell className="py-2 text-gray-300">{formatValue(priceData.general.buy, 3)}</TableCell>
             </TableRow>
           </TableBody>
         </Table>
@@ -35,7 +42,7 @@ export const PriceDataTable = ({ priceData }: PriceDataTableProps) => {
           "mt-2 text-center text-sm",
           priceData.distance > 10 ? "text-trader-red animate-pulse" : "text-gray-300"
         )}>
-          Distância do PM: {priceData.distance}
+          Distância do PM: {formatValue(priceData.distance, 4)}
         </div>
       </CardContent>
     </Card>
