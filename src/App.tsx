@@ -31,6 +31,7 @@ const App = () => (
           <Route path="/ai" element={<AI />} />
           <Route path="/api" element={<APIConfig />} />
           <Route path="/api-base-config" element={<APIBaseConfig />} />
+          <Route path="/api-base-config/:filter" element={<APIBaseConfig />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

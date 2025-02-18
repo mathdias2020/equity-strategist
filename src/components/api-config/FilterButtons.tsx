@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { DollarSign, TrendingUp, Settings2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ActiveFilter } from "@/types/api-config";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 interface FilterButtonsProps {
   activeFilter: ActiveFilter;
@@ -12,6 +12,12 @@ interface FilterButtonsProps {
 
 export const FilterButtons = ({ activeFilter, onFilterChange }: FilterButtonsProps) => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleFilterChange = (filter: ActiveFilter) => {
+    onFilterChange(filter);
+    navigate(`/api-base-config/${filter}`);
+  };
 
   return (
     <div className="flex gap-2">
@@ -21,7 +27,7 @@ export const FilterButtons = ({ activeFilter, onFilterChange }: FilterButtonsPro
           "gap-2",
           activeFilter === 'dolar' ? 'bg-trader-green text-black hover:bg-trader-green/90' : ''
         )}
-        onClick={() => onFilterChange('dolar')}
+        onClick={() => handleFilterChange('dolar')}
       >
         <DollarSign className="h-4 w-4" />
         Dólar
@@ -32,7 +38,7 @@ export const FilterButtons = ({ activeFilter, onFilterChange }: FilterButtonsPro
           "gap-2",
           activeFilter === 'indice' ? 'bg-trader-green text-black hover:bg-trader-green/90' : ''
         )}
-        onClick={() => onFilterChange('indice')}
+        onClick={() => handleFilterChange('indice')}
       >
         <TrendingUp className="h-4 w-4" />
         Índice
