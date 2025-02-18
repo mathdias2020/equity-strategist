@@ -18,9 +18,9 @@ export const FlowCard = ({ activeFilter }: FlowCardProps) => {
     false
   );
 
-  const formatValue = (value: any) => {
+  const formatValue = (value: any, placeholder: number) => {
     if (value === undefined || value === null) {
-      return "ERRO";
+      return `[${placeholder}]`;
     }
     return value.toLocaleString('pt-BR');
   };
@@ -41,11 +41,11 @@ export const FlowCard = ({ activeFilter }: FlowCardProps) => {
           <TableBody>
             <TableRow className="border-b border-trader-gray/20">
               <TableCell className="py-2 text-gray-300">Institucional</TableCell>
-              <TableCell className="py-2 text-gray-300">{formatValue(institutionalPosition)}</TableCell>
+              <TableCell className="py-2 text-gray-300">{formatValue(institutionalPosition, 1)}</TableCell>
             </TableRow>
             <TableRow className="border-b border-trader-gray/20">
               <TableCell className="py-2 text-gray-300">Varejo</TableCell>
-              <TableCell className="py-2 text-gray-300">{formatValue(retailPosition)}</TableCell>
+              <TableCell className="py-2 text-gray-300">{formatValue(retailPosition, 2)}</TableCell>
             </TableRow>
           </TableBody>
         </Table>
@@ -53,3 +53,4 @@ export const FlowCard = ({ activeFilter }: FlowCardProps) => {
     </Card>
   );
 };
+

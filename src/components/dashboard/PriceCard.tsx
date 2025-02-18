@@ -10,19 +10,19 @@ interface PriceCardProps {
 }
 
 export const PriceCard = ({ activeFilter }: PriceCardProps) => {
-  const miniPrice = useEndpointData(
+  const { data: miniPrice } = useEndpointData(
     activeFilter === 'dolar' ? 'price-mini-dolar' : 'price-mini-indice'
   );
-  const fullPrice = useEndpointData(
+  const { data: fullPrice } = useEndpointData(
     activeFilter === 'dolar' ? 'price-full-dolar' : 'price-full-indice'
   );
-  const generalPrice = useEndpointData(
+  const { data: generalPrice } = useEndpointData(
     activeFilter === 'dolar' ? 'price-general-dolar' : 'price-general-indice'
   );
 
-  const formatValue = (value: any) => {
+  const formatValue = (value: any, placeholder: number) => {
     if (value === undefined || value === null) {
-      return "ERRO";
+      return `[${placeholder}]`;
     }
     return value.toLocaleString('pt-BR');
   };
@@ -46,9 +46,9 @@ export const PriceCard = ({ activeFilter }: PriceCardProps) => {
           </TableHeader>
           <TableBody>
             <TableRow>
-              <TableCell className="py-2 text-gray-300">{formatValue(miniPrice)}</TableCell>
-              <TableCell className="py-2 text-gray-300">{formatValue(fullPrice)}</TableCell>
-              <TableCell className="py-2 text-gray-300">{formatValue(generalPrice)}</TableCell>
+              <TableCell className="py-2 text-gray-300">{formatValue(miniPrice, 3)}</TableCell>
+              <TableCell className="py-2 text-gray-300">{formatValue(fullPrice, 4)}</TableCell>
+              <TableCell className="py-2 text-gray-300">{formatValue(generalPrice, 5)}</TableCell>
             </TableRow>
           </TableBody>
         </Table>
