@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { useToast } from '@/components/ui/use-toast';
 import { EndpointConfig } from '@/types/api-config';
+import get from 'lodash/get';
 
 export const useEndpointTesting = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -23,6 +24,7 @@ export const useEndpointTesting = () => {
       const fullUrl = `${baseUrl}${endpoint.url}`;
       
       console.log('Tentando acessar:', fullUrl);
+      console.log('Usando jsonPath:', endpoint.jsonPath);
       
       const response = await fetch(fullUrl, {
         method: endpoint.method,
@@ -30,8 +32,8 @@ export const useEndpointTesting = () => {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         },
-        mode: 'cors', // Mudando para cors explícito
-        credentials: 'omit' // Evita envio de cookies
+        mode: 'cors',
+        credentials: 'omit'
       });
 
       if (!response.ok) {
@@ -43,43 +45,56 @@ export const useEndpointTesting = () => {
       
       let extractedValue = null;
       
-      // Extrair valor baseado no jsonPath especificado no endpoint
-      if (data.averagePrice && data.averagePrice.length > 0) {
-        const currentPrice = data.averagePrice[0];
-        
-        switch (endpoint.displayLocation) {
-          case 'price-mini-dolar':
-            extractedValue = currentPrice.averagePriceMiniDolar;
-            break;
-          case 'price-mini-indice':
-            extractedValue = currentPrice.averagePriceMiniIndice;
-            break;
-          case 'price-full-dolar':
-            extractedValue = currentPrice.averagePriceDolar;
-            break;
-          case 'price-full-indice':
-            extractedValue = currentPrice.averagePriceIndice;
-            break;
-          case 'price-general-dolar':
-            extractedValue = currentPrice.averagePriceGeneralDolar;
-            break;
-          case 'price-general-indice':
-            extractedValue = currentPrice.averagePriceGeneralIndice;
-            break;
-          case 'institutional-position':
-            extractedValue = data.position?.daily?.foreignDolar;
-            break;
-          case 'institutional-indice':
-            extractedValue = data.position?.daily?.foreignIndice;
-            break;
-          case 'retail-position':
-            extractedValue = data.position?.daily?.localDolar;
-            break;
-          case 'retail-indice':
-            extractedValue = data.position?.daily?.localIndice;
-            break;
-          default:
-            extractedValue = null;
+      if (endpoint.jsonPath) {
+        // Suporta múltiplos caminhos separados por '+'
+        const paths = endpoint.jsonPath.split('+').map(p => p.trim());
+        if (paths.length > 1) {
+          extractedValue = paths.reduce((acc, path) => {
+            const pathValue = get(data, path);
+            return acc !== undefined ? acc + Number(pathValue) : Number(pathValue);
+          }, undefined);
+        } else {
+          extractedValue = get(data, endpoint.jsonPath);
+        }
+      } else {
+        // Lógica padrão para extrair valores baseado no displayLocation
+        if (data.averagePrice && data.averagePrice.length > 0) {
+          const currentPrice = data.averagePrice[0];
+          
+          switch (endpoint.displayLocation) {
+            case 'price-mini-dolar':
+              extractedValue = currentPrice.averagePriceMiniDolar;
+              break;
+            case 'price-mini-indice':
+              extractedValue = currentPrice.averagePriceMiniIndice;
+              break;
+            case 'price-full-dolar':
+              extractedValue = currentPrice.averagePriceDolar;
+              break;
+            case 'price-full-indice':
+              extractedValue = currentPrice.averagePriceIndice;
+              break;
+            case 'price-general-dolar':
+              extractedValue = currentPrice.averagePriceGeneralDolar;
+              break;
+            case 'price-general-indice':
+              extractedValue = currentPrice.averagePriceGeneralIndice;
+              break;
+            case 'institutional-position':
+              extractedValue = data.position?.daily?.foreignDolar;
+              break;
+            case 'institutional-indice':
+              extractedValue = data.position?.daily?.foreignIndice;
+              break;
+            case 'retail-position':
+              extractedValue = data.position?.daily?.localDolar;
+              break;
+            case 'retail-indice':
+              extractedValue = data.position?.daily?.localIndice;
+              break;
+            default:
+              extractedValue = null;
+          }
         }
       }
       
@@ -88,7 +103,6 @@ export const useEndpointTesting = () => {
 
     } catch (error) {
       console.error('Erro ao fazer requisição:', error);
-      // Não mostrar toast para cada erro de API para evitar spam
       if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
         console.warn('Erro de conexão com a API - tentando novamente em breve');
       } else {
