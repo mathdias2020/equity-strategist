@@ -1,5 +1,5 @@
 
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 
 export const useEndpointData = (displayLocation: string, autoFetch: boolean = true) => {
   const [data, setData] = useState<any>(null);
@@ -8,14 +8,10 @@ export const useEndpointData = (displayLocation: string, autoFetch: boolean = tr
     return savedTime ? new Date(savedTime) : null;
   });
 
-  const fetchData = useCallback(() => {
-    console.log(`Mock data fetch for ${displayLocation}`);
+  const fetchData = () => {
+    console.log(`Mock data fetch disabled for ${displayLocation}`);
     setData(null);
-    const newTime = new Date();
-    localStorage.setItem('lastApiCallTime', newTime.toISOString());
-    setLastCallTime(newTime);
-  }, [displayLocation]);
+  };
 
   return { data, fetchData, lastCallTime };
 };
-

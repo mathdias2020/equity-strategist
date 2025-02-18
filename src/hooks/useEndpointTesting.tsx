@@ -8,30 +8,12 @@ export const useEndpointTesting = () => {
   const { toast } = useToast();
 
   const testEndpoint = async (endpoint: EndpointConfig) => {
-    if (!endpoint.url) {
-      toast({
-        title: "Erro",
-        description: "URL do endpoint não configurada.",
-        variant: "destructive",
-      });
-      return;
-    }
-    
-    setIsLoading(true);
-    try {
-      console.log('Mock endpoint test for:', endpoint.displayLocation);
-      return null;
-    } catch (error) {
-      console.error('Erro ao fazer requisição:', error);
-      toast({
-        title: "Erro na Requisição",
-        description: "Não foi possível obter os dados da API.",
-        variant: "destructive",
-      });
-      return null;
-    } finally {
-      setIsLoading(false);
-    }
+    toast({
+      title: "API Desabilitada",
+      description: "As chamadas de API foram desabilitadas.",
+      variant: "destructive",
+    });
+    return null;
   };
 
   return {
@@ -39,4 +21,3 @@ export const useEndpointTesting = () => {
     isLoading
   };
 };
-

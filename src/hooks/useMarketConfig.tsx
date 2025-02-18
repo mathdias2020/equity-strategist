@@ -2,7 +2,6 @@
 import { useState, ReactNode } from "react";
 import { APIConfig, ActiveFilter } from "@/types/api-config";
 import { useToast } from "@/components/ui/use-toast";
-import get from "lodash/get";
 
 export const useMarketConfig = (
   initialConfig: APIConfig,
@@ -84,85 +83,21 @@ export const useMarketConfig = (
   };
 
   const testEndpoint = async (key: string) => {
-    const endpoint = localConfig[key][activeFilter];
-    if (!endpoint.url) {
-      toast({
-        title: "Erro",
-        description: "URL do endpoint não configurada.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    try {
-      const baseUrl = localStorage.getItem('api-base-url') || 'http://api.traderbanqueiro.com.br/';
-      const response = await fetch(`${baseUrl}${endpoint.url}`, {
-        method: endpoint.method,
-      });
-      const data = await response.json();
-      
-      let value;
-      if (endpoint.jsonPath) {
-        const paths = endpoint.jsonPath.split('+').map(p => p.trim());
-        if (paths.length > 1) {
-          value = paths.reduce((acc, path) => {
-            const pathValue = get(data, path);
-            return acc !== undefined ? acc + Number(pathValue) : Number(pathValue);
-          }, undefined);
-        } else {
-          value = get(data, endpoint.jsonPath);
-        }
-      } else {
-        value = data;
-      }
-
-      console.log('API Response:', data);
-      console.log('Extracted value:', value);
-      console.log('JSON Path:', endpoint.jsonPath);
-      
-      const toastDescription = (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(value !== undefined ? value : data, null, 2)}</code>
-        </pre>
-      );
-      
-      toast({
-        title: "Retorno do Endpoint",
-        description: toastDescription as ReactNode,
-      });
-    } catch (error) {
-      toast({
-        title: "Erro ao testar endpoint",
-        description: `Erro: ${error instanceof Error ? error.message : 'Erro desconhecido'}`,
-        variant: "destructive",
-      });
-    }
+    toast({
+      title: "API Desabilitada",
+      description: "As chamadas de API foram desabilitadas.",
+      variant: "destructive",
+    });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Cria uma cópia profunda do estado atual
     const configToSave = JSON.parse(JSON.stringify(localConfig));
-    
-    // Reseta apenas o isEditing do filtro ativo
     Object.keys(configToSave).forEach(key => {
       configToSave[key][activeFilter].isEditing = false;
     });
-    
     setLocalConfig(configToSave);
-    
-    // Mescla as configurações existentes com as novas
-    const mergedConfig = { ...initialConfig };
-    Object.keys(configToSave).forEach(key => {
-      mergedConfig[key] = {
-        ...initialConfig[key],
-        [activeFilter]: configToSave[key][activeFilter]
-      };
-    });
-    
-    onSave(mergedConfig);
-
+    onSave(configToSave);
     toast({
       title: "Configurações salvas",
       description: `Configurações para ${activeFilter === 'dolar' ? 'Dólar' : 'Índice'} foram salvas com sucesso.`,
