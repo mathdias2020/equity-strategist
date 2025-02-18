@@ -23,7 +23,7 @@ export const FlowCard = ({ activeFilter }: FlowCardProps) => {
     if (value === 0) {
       return "0";
     }
-    return value.toString();
+    return value.toLocaleString('pt-BR');
   };
 
   return (
@@ -54,4 +54,3 @@ export const FlowCard = ({ activeFilter }: FlowCardProps) => {
     </Card>
   );
 };
-

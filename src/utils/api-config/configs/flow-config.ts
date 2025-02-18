@@ -1,3 +1,4 @@
+
 import { APIConfig } from "@/types/api-config";
 
 export const flowConfig: APIConfig = {
@@ -17,10 +18,6 @@ export const flowConfig: APIConfig = {
       isEditing: false 
     } 
   },
-  institutional30Min: { 
-    dolar: { url: '', method: 'GET', jsonPath: '', isEditing: false }, 
-    indice: { url: '', method: 'GET', jsonPath: '', isEditing: false } 
-  },
   retailPosition: { 
     dolar: { 
       url: 'flow', 
@@ -37,10 +34,6 @@ export const flowConfig: APIConfig = {
       isEditing: false 
     } 
   },
-  retail30Min: { 
-    dolar: { url: '', method: 'GET', jsonPath: '', isEditing: false }, 
-    indice: { url: '', method: 'GET', jsonPath: '', isEditing: false } 
-  },
   priceMini: { 
     dolar: { url: '', method: 'GET', jsonPath: '', isEditing: false }, 
     indice: { url: '', method: 'GET', jsonPath: '', isEditing: false } 
@@ -52,5 +45,5 @@ export const flowConfig: APIConfig = {
   priceGeneral: { 
     dolar: { url: '', method: 'GET', jsonPath: '', isEditing: false }, 
     indice: { url: '', method: 'GET', jsonPath: '', isEditing: false } 
-  },
+  }
 };
