@@ -37,17 +37,27 @@ export const useEndpointTesting = () => {
       const headers = {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Origin': window.location.origin,
       };
 
       const response = await fetch(fullUrl, {
         method: endpoint.method,
         headers,
-        mode: 'cors',
+        mode: 'no-cors', // Changed from 'cors' to 'no-cors'
         credentials: 'omit',
         cache: 'no-cache',
-        redirect: 'follow',
       });
+
+      // Due to 'no-cors' mode, we can't access the response data
+      // We'll need to rely on the success of the request itself
+      if (response.type === 'opaque') {
+        console.log('Requisição feita em modo no-cors. Não é possível acessar os dados da resposta.');
+        toast({
+          title: "Aviso",
+          description: "Requisição realizada, mas devido às restrições de CORS, não é possível visualizar a resposta. Verifique os logs do console para mais detalhes.",
+          variant: "default",
+        });
+        return null;
+      }
 
       if (!response.ok) {
         console.log('Erro na resposta:', {
@@ -60,11 +70,11 @@ export const useEndpointTesting = () => {
         console.log('Corpo do erro:', errorText);
 
         toast({
-          title: `Erro ${response.status}`,
-          description: `Falha ao acessar o endpoint. ${response.statusText}\n
-          URL: ${cleanUrl}\n
-          Status: ${response.status}\n
-          Mensagem: ${errorText || 'Sem mensagem de erro'}`,
+          title: "Erro na Requisição",
+          description: `O servidor não está configurado para permitir requisições do frontend. Por favor:\n
+          1. Verifique se o servidor está configurado com CORS\n
+          2. Configure o servidor para aceitar requisições de: ${window.location.origin}\n
+          3. Contate o administrador do sistema para habilitar CORS`,
           variant: "destructive",
         });
         return;
@@ -73,7 +83,6 @@ export const useEndpointTesting = () => {
       const data = await response.json();
       
       console.log('Dados completos da API:', data);
-      console.log('JSON Path configurado:', endpoint.jsonPath);
       
       let extractedValue = data;
       if (endpoint.jsonPath) {
@@ -107,15 +116,13 @@ export const useEndpointTesting = () => {
     } catch (error) {
       console.error('Erro ao fazer requisição:', error);
       
-      const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido';
-      
       toast({
-        title: "Erro ao testar endpoint",
-        description: `Erro ao acessar a API: ${errorMessage}\n
-        Verifique:\n
-        1. Se o servidor está online e respondendo\n
-        2. Se a URL está correta: ${endpoint.url}\n
-        3. Se o servidor permite requisições CORS de ${window.location.origin}`,
+        title: "Erro de CORS",
+        description: `O servidor não está permitindo requisições do frontend (${window.location.origin}).\n
+        Ações necessárias:\n
+        1. Configure o servidor para aceitar requisições CORS\n
+        2. Adicione ${window.location.origin} aos domínios permitidos\n
+        3. Contate o administrador do sistema para suporte`,
         variant: "destructive",
       });
     } finally {
