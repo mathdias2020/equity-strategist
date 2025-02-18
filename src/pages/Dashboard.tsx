@@ -1,8 +1,7 @@
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Layout from "@/components/Layout";
 import { marketData } from "@/mocks/data";
-import { useEndpointTesting } from "@/hooks/useEndpointTesting";
 import { FilterType } from "@/types/dashboard";
 import { PRICE_DATA } from "@/constants/dashboard";
 import { FilterButtons } from "@/components/dashboard/FilterButtons";
@@ -15,22 +14,6 @@ import { cn } from "@/lib/utils";
 export default function Dashboard() {
   const [activeFilter, setActiveFilter] = useState<FilterType>('dolar');
   const [institutionalValue, setInstitutionalValue] = useState<string>("");
-  const { testEndpoint } = useEndpointTesting();
-
-  useEffect(() => {
-    const endpoint = {
-      url: "flow/institutional/position",
-      method: "GET" as const,
-      jsonPath: "foreignDolarAcum",
-      isEditing: false
-    };
-
-    testEndpoint(endpoint).then((value) => {
-      if (value !== undefined) {
-        setInstitutionalValue(value.toString());
-      }
-    });
-  }, []);
 
   const getActiveData = () => {
     if (activeFilter === 'dolar') {
