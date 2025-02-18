@@ -2,10 +2,19 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useEndpointData } from "@/hooks/useEndpointData";
+import { FilterType } from "@/types/dashboard";
 
-export const FlowCard = () => {
-  const institutionalPosition = useEndpointData('institutional-position');
-  const retailPosition = useEndpointData('retail-position');
+interface FlowCardProps {
+  activeFilter: FilterType;
+}
+
+export const FlowCard = ({ activeFilter }: FlowCardProps) => {
+  const institutionalPosition = useEndpointData(
+    activeFilter === 'dolar' ? 'institutional-position' : 'institutional-indice'
+  );
+  const retailPosition = useEndpointData(
+    activeFilter === 'dolar' ? 'retail-position' : 'retail-indice'
+  );
 
   const formatValue = (value: any) => {
     if (value === undefined || value === null) {
@@ -45,3 +54,4 @@ export const FlowCard = () => {
     </Card>
   );
 };
+
