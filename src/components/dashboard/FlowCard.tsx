@@ -1,7 +1,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { useEndpointData } from "@/hooks/useEndpointData";
 import { FilterType } from "@/types/dashboard";
 
 interface FlowCardProps {
@@ -9,16 +8,6 @@ interface FlowCardProps {
 }
 
 export const FlowCard = ({ activeFilter }: FlowCardProps) => {
-  const { data: institutionalPosition } = useEndpointData();
-  const { data: retailPosition } = useEndpointData();
-
-  const formatValue = (value: any, placeholder: number) => {
-    if (value === undefined || value === null) {
-      return `[${placeholder}]`;
-    }
-    return value.toLocaleString('pt-BR');
-  };
-
   return (
     <Card className="col-span-3 bg-trader-navy border-trader-gray">
       <CardHeader>
@@ -35,11 +24,11 @@ export const FlowCard = ({ activeFilter }: FlowCardProps) => {
           <TableBody>
             <TableRow className="border-b border-trader-gray/20">
               <TableCell className="py-2 text-gray-300">Institucional</TableCell>
-              <TableCell className="py-2 text-gray-300">{formatValue(institutionalPosition, 1)}</TableCell>
+              <TableCell className="py-2 text-gray-300">[1]</TableCell>
             </TableRow>
             <TableRow className="border-b border-trader-gray/20">
               <TableCell className="py-2 text-gray-300">Varejo</TableCell>
-              <TableCell className="py-2 text-gray-300">{formatValue(retailPosition, 2)}</TableCell>
+              <TableCell className="py-2 text-gray-300">[2]</TableCell>
             </TableRow>
           </TableBody>
         </Table>

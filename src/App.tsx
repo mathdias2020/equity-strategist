@@ -10,8 +10,6 @@ import Dashboard from "./pages/Dashboard";
 import Flow from "./pages/Flow";
 import Markets from "./pages/Markets";
 import AI from "./pages/AI";
-import APIDolar from "./pages/APIDolar";
-import APIIndice from "./pages/APIIndice";
 
 const queryClient = new QueryClient();
 
@@ -28,8 +26,6 @@ const App = () => (
           <Route path="/flow" element={<Flow />} />
           <Route path="/markets" element={<Markets />} />
           <Route path="/ai" element={<AI />} />
-          <Route path="/api-dolar" element={<APIDolar />} />
-          <Route path="/api-indice" element={<APIIndice />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
@@ -38,3 +34,4 @@ const App = () => (
 );
 
 export default App;
+

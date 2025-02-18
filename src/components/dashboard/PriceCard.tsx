@@ -1,7 +1,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { useEndpointData } from "@/hooks/useEndpointData";
 import { FilterType } from "@/types/dashboard";
 import { cn } from "@/lib/utils";
 
@@ -10,20 +9,6 @@ interface PriceCardProps {
 }
 
 export const PriceCard = ({ activeFilter }: PriceCardProps) => {
-  const { data: miniPrice } = useEndpointData();
-  const { data: fullPrice } = useEndpointData();
-  const { data: generalPrice } = useEndpointData();
-
-  const formatValue = (value: any, placeholder: number) => {
-    if (value === undefined || value === null) {
-      return `[${placeholder}]`;
-    }
-    return value.toLocaleString('pt-BR');
-  };
-
-  // Temporary distance calculation - to be implemented with proper logic later
-  const distance = 0;
-
   return (
     <Card className="bg-trader-navy border-trader-gray">
       <CardHeader className="pb-2">
@@ -40,17 +25,14 @@ export const PriceCard = ({ activeFilter }: PriceCardProps) => {
           </TableHeader>
           <TableBody>
             <TableRow>
-              <TableCell className="py-2 text-gray-300">{formatValue(miniPrice, 3)}</TableCell>
-              <TableCell className="py-2 text-gray-300">{formatValue(fullPrice, 4)}</TableCell>
-              <TableCell className="py-2 text-gray-300">{formatValue(generalPrice, 5)}</TableCell>
+              <TableCell className="py-2 text-gray-300">[3]</TableCell>
+              <TableCell className="py-2 text-gray-300">[4]</TableCell>
+              <TableCell className="py-2 text-gray-300">[5]</TableCell>
             </TableRow>
           </TableBody>
         </Table>
-        <div className={cn(
-          "mt-2 text-center text-sm",
-          distance > 10 ? "text-trader-red animate-pulse" : "text-gray-300"
-        )}>
-          Distância do PM: {distance}
+        <div className="mt-2 text-center text-sm text-gray-300">
+          Distância do PM: [6]
         </div>
       </CardContent>
     </Card>
