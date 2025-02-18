@@ -8,16 +8,26 @@ import { useToast } from "@/components/ui/use-toast";
 
 export default function APIBaseConfigPage() {
   const { toast } = useToast();
-  const [baseUrls, setBaseUrls] = useState<{dolar: string; indice: string}>(() => ({
-    dolar: localStorage.getItem('api-base-url-dolar') || 'http://api.traderbanqueiro.com.br/',
-    indice: localStorage.getItem('api-base-url-indice') || 'http://api.traderbanqueiro.com.br/'
-  }));
+  const [dolarUrl, setDolarUrl] = useState<string>(() => 
+    localStorage.getItem('api-base-url-dolar') || 'http://api.traderbanqueiro.com.br/'
+  );
+  const [indiceUrl, setIndiceUrl] = useState<string>(() => 
+    localStorage.getItem('api-base-url-indice') || 'http://api.traderbanqueiro.com.br/'
+  );
 
-  const handleBaseUrlSave = (type: 'dolar' | 'indice') => {
-    localStorage.setItem(`api-base-url-${type}`, baseUrls[type]);
+  const handleDolarUrlSave = () => {
+    localStorage.setItem('api-base-url-dolar', dolarUrl);
     toast({
-      title: "URL Base salva",
-      description: `A URL base da API para ${type === 'dolar' ? 'Dólar' : 'Índice'} foi atualizada com sucesso.`,
+      title: "URL Base do Dólar salva",
+      description: "A URL base da API para Dólar foi atualizada com sucesso.",
+    });
+  };
+
+  const handleIndiceUrlSave = () => {
+    localStorage.setItem('api-base-url-indice', indiceUrl);
+    toast({
+      title: "URL Base do Índice salva",
+      description: "A URL base da API para Índice foi atualizada com sucesso.",
     });
   };
 
@@ -35,13 +45,13 @@ export default function APIBaseConfigPage() {
           <CardContent>
             <div className="flex gap-4">
               <Input
-                value={baseUrls.dolar}
-                onChange={(e) => setBaseUrls(prev => ({ ...prev, dolar: e.target.value }))}
+                value={dolarUrl}
+                onChange={(e) => setDolarUrl(e.target.value)}
                 className="bg-black border-trader-gray text-white flex-1"
                 placeholder="Digite a URL base da API para Dólar"
               />
               <Button 
-                onClick={() => handleBaseUrlSave('dolar')}
+                onClick={handleDolarUrlSave}
                 className="bg-trader-green text-black hover:bg-trader-green/90"
               >
                 Salvar
@@ -59,13 +69,13 @@ export default function APIBaseConfigPage() {
           <CardContent>
             <div className="flex gap-4">
               <Input
-                value={baseUrls.indice}
-                onChange={(e) => setBaseUrls(prev => ({ ...prev, indice: e.target.value }))}
+                value={indiceUrl}
+                onChange={(e) => setIndiceUrl(e.target.value)}
                 className="bg-black border-trader-gray text-white flex-1"
                 placeholder="Digite a URL base da API para Índice"
               />
               <Button 
-                onClick={() => handleBaseUrlSave('indice')}
+                onClick={handleIndiceUrlSave}
                 className="bg-trader-green text-black hover:bg-trader-green/90"
               >
                 Salvar
