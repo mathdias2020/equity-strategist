@@ -1,8 +1,10 @@
 
 import { useLocation } from "react-router-dom";
 import { SidebarProvider, Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuItem, SidebarMenuButton } from "@/components/ui/sidebar";
-import { BarChart3, Brain, LayoutDashboard, Settings2, TrendingUp } from "lucide-react";
+import { BarChart3, Brain, LayoutDashboard, PlayCircle, Settings2, TrendingUp } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useEndpointData } from "@/hooks/useEndpointData";
+import { Button } from "./ui/button";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -33,6 +35,7 @@ const menuItems = [
 
 export default function Layout({ children }: LayoutProps) {
   const location = useLocation();
+  const { fetchData } = useEndpointData('institutional-position', false);
 
   return (
     <SidebarProvider>
@@ -65,6 +68,21 @@ export default function Layout({ children }: LayoutProps) {
                         </SidebarMenuButton>
                       </SidebarMenuItem>
                     ))}
+                    <SidebarMenuItem>
+                      <SidebarMenuButton asChild>
+                        <Button
+                          onClick={fetchData}
+                          className={cn(
+                            "flex items-center gap-3 px-3 py-2 rounded-lg transition-colors w-full justify-start text-sm font-normal",
+                            "hover:bg-trader-navy/50"
+                          )}
+                          variant="ghost"
+                        >
+                          <PlayCircle className="h-5 w-5" />
+                          <span>Ativar</span>
+                        </Button>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
                   </SidebarMenu>
                 </SidebarGroupContent>
               </SidebarGroup>

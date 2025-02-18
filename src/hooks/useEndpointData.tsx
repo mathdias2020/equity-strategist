@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useEndpointTesting } from './useEndpointTesting';
 import { EndpointConfig } from '@/types/api-config';
 
-export const useEndpointData = (displayLocation: string) => {
+export const useEndpointData = (displayLocation: string, autoFetch: boolean = true) => {
   const [data, setData] = useState<any>(null);
   const { testEndpoint } = useEndpointTesting();
 
@@ -31,10 +31,12 @@ export const useEndpointData = (displayLocation: string) => {
   }, [displayLocation, testEndpoint]);
 
   useEffect(() => {
-    fetchData();
-    const interval = setInterval(fetchData, 30000);
-    return () => clearInterval(interval);
-  }, [fetchData]);
+    if (autoFetch) {
+      fetchData();
+      const interval = setInterval(fetchData, 30000);
+      return () => clearInterval(interval);
+    }
+  }, [fetchData, autoFetch]);
 
-  return data;
+  return { data, fetchData };
 };
