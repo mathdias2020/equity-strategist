@@ -21,12 +21,41 @@ export const useEndpointTesting = () => {
     setIsLoading(true);
     try {
       const baseUrl = localStorage.getItem('api-base-url') || 'http://api.traderbanqueiro.com.br/';
-      const response = await fetch(`${baseUrl}${endpoint.url}`, {
+      const fullUrl = `${baseUrl}${endpoint.url}`;
+      
+      console.log('Tentando acessar:', fullUrl);
+      console.log('Método:', endpoint.method);
+      
+      const headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      };
+
+      const response = await fetch(fullUrl, {
         method: endpoint.method,
+        headers
       });
+
+      if (!response.ok) {
+        console.log('Erro na resposta:', {
+          status: response.status,
+          statusText: response.statusText,
+          url: response.url
+        });
+
+        const errorText = await response.text();
+        console.log('Corpo do erro:', errorText);
+
+        toast({
+          title: `Erro ${response.status}`,
+          description: `Não foi possível acessar o endpoint. Verifique se a URL está correta e se o servidor está respondendo. URL: ${endpoint.url}`,
+          variant: "destructive",
+        });
+        return;
+      }
+
       const data = await response.json();
       
-      // Adiciona logs detalhados para debug
       console.log('Dados completos da API:', data);
       console.log('JSON Path configurado:', endpoint.jsonPath);
       
@@ -35,7 +64,6 @@ export const useEndpointTesting = () => {
         extractedValue = get(data, endpoint.jsonPath);
         if (extractedValue === undefined) {
           console.log('Valor não encontrado no caminho especificado. Tentando primeiro elemento se for array...');
-          // Se for um array e o valor não for encontrado, tenta pegar do primeiro elemento
           if (Array.isArray(data) && data.length > 0) {
             extractedValue = get(data[0], endpoint.jsonPath);
           }
@@ -44,7 +72,6 @@ export const useEndpointTesting = () => {
       
       console.log('Valor extraído:', extractedValue);
       
-      // Se ainda for undefined, mostra mensagem de erro
       if (extractedValue === undefined) {
         toast({
           title: "Aviso",
@@ -68,6 +95,7 @@ export const useEndpointTesting = () => {
       return extractedValue;
 
     } catch (error) {
+      console.error('Erro ao fazer requisição:', error);
       toast({
         title: "Erro ao testar endpoint",
         description: `Erro: ${error instanceof Error ? error.message : 'Erro desconhecido'}`,
