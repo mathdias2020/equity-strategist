@@ -1,12 +1,14 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { useEndpointData } from "@/hooks/useEndpointData";
 
-interface FlowCardProps {
-  institutionalValue: string;
-}
+export const FlowCard = () => {
+  const institutionalPosition = useEndpointData('institutional-position');
+  const institutional30min = useEndpointData('institutional-30min');
+  const retailPosition = useEndpointData('retail-position');
+  const retail30min = useEndpointData('retail-30min');
 
-export const FlowCard = ({ institutionalValue }: FlowCardProps) => {
   return (
     <Card className="col-span-3 bg-trader-navy border-trader-gray">
       <CardHeader>
@@ -24,13 +26,13 @@ export const FlowCard = ({ institutionalValue }: FlowCardProps) => {
           <TableBody>
             <TableRow className="border-b border-trader-gray/20">
               <TableCell className="py-2 text-gray-300">Institucional</TableCell>
-              <TableCell className="py-2 text-gray-300">{institutionalValue || "-"}</TableCell>
-              <TableCell className="py-2 text-gray-300">Vendedor</TableCell>
+              <TableCell className="py-2 text-gray-300">{institutionalPosition || "-"}</TableCell>
+              <TableCell className="py-2 text-gray-300">{institutional30min || "-"}</TableCell>
             </TableRow>
             <TableRow className="border-b border-trader-gray/20">
               <TableCell className="py-2 text-gray-300">Varejo</TableCell>
-              <TableCell className="py-2 text-gray-300">Comprado</TableCell>
-              <TableCell className="py-2 text-gray-300">Comprador</TableCell>
+              <TableCell className="py-2 text-gray-300">{retailPosition || "-"}</TableCell>
+              <TableCell className="py-2 text-gray-300">{retail30min || "-"}</TableCell>
             </TableRow>
           </TableBody>
         </Table>

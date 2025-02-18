@@ -13,7 +13,6 @@ import { cn } from "@/lib/utils";
 
 export default function Dashboard() {
   const [activeFilter, setActiveFilter] = useState<FilterType>('dolar');
-  const [institutionalValue, setInstitutionalValue] = useState<string>("");
 
   const getActiveData = useCallback(() => {
     if (activeFilter === 'dolar') {
@@ -52,7 +51,7 @@ export default function Dashboard() {
         </div>
 
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-          <FlowCard institutionalValue={institutionalValue} />
+          <FlowCard />
           <div className="col-span-4 space-y-4">
             <PriceCard priceData={PRICE_DATA} />
             <Card className="bg-trader-navy border-trader-gray">
