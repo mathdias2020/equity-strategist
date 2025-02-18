@@ -142,16 +142,26 @@ export const useMarketConfig = (
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Create a deep copy of the current config to maintain the other filter's values
-    const configToSave = { ...localConfig };
+    // Cria uma cópia profunda do estado atual
+    const configToSave = JSON.parse(JSON.stringify(localConfig));
     
-    // Only update isEditing for the current filter
+    // Reseta apenas o isEditing do filtro ativo
     Object.keys(configToSave).forEach(key => {
       configToSave[key][activeFilter].isEditing = false;
     });
     
     setLocalConfig(configToSave);
-    onSave(configToSave);
+    
+    // Mescla as configurações existentes com as novas
+    const mergedConfig = { ...initialConfig };
+    Object.keys(configToSave).forEach(key => {
+      mergedConfig[key] = {
+        ...initialConfig[key],
+        [activeFilter]: configToSave[key][activeFilter]
+      };
+    });
+    
+    onSave(mergedConfig);
 
     toast({
       title: "Configurações salvas",
