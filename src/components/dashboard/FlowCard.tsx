@@ -9,6 +9,13 @@ export const FlowCard = () => {
   const retailPosition = useEndpointData('retail-position');
   const retail30min = useEndpointData('retail-30min');
 
+  const formatValue = (value: any) => {
+    if (value === undefined || value === 0 || value === null) {
+      return "ERRO";
+    }
+    return value;
+  };
+
   return (
     <Card className="col-span-3 bg-trader-navy border-trader-gray">
       <CardHeader>
@@ -26,13 +33,13 @@ export const FlowCard = () => {
           <TableBody>
             <TableRow className="border-b border-trader-gray/20">
               <TableCell className="py-2 text-gray-300">Institucional</TableCell>
-              <TableCell className="py-2 text-gray-300">{institutionalPosition || "-"}</TableCell>
-              <TableCell className="py-2 text-gray-300">{institutional30min || "-"}</TableCell>
+              <TableCell className="py-2 text-gray-300">{formatValue(institutionalPosition)}</TableCell>
+              <TableCell className="py-2 text-gray-300">{formatValue(institutional30min)}</TableCell>
             </TableRow>
             <TableRow className="border-b border-trader-gray/20">
               <TableCell className="py-2 text-gray-300">Varejo</TableCell>
-              <TableCell className="py-2 text-gray-300">{retailPosition || "-"}</TableCell>
-              <TableCell className="py-2 text-gray-300">{retail30min || "-"}</TableCell>
+              <TableCell className="py-2 text-gray-300">{formatValue(retailPosition)}</TableCell>
+              <TableCell className="py-2 text-gray-300">{formatValue(retail30min)}</TableCell>
             </TableRow>
           </TableBody>
         </Table>
@@ -40,3 +47,4 @@ export const FlowCard = () => {
     </Card>
   );
 };
+
