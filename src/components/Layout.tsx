@@ -1,7 +1,7 @@
 
 import { useLocation } from "react-router-dom";
 import { SidebarProvider, Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuItem, SidebarMenuButton } from "@/components/ui/sidebar";
-import { BarChart3, Brain, LayoutDashboard, Settings2, TrendingUp } from "lucide-react";
+import { BarChart3, Brain, LayoutDashboard, TrendingUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface LayoutProps {
@@ -68,46 +68,6 @@ export default function Layout({ children }: LayoutProps) {
                   </SidebarMenu>
                 </SidebarGroupContent>
               </SidebarGroup>
-              <div className="mt-auto">
-                <SidebarGroup>
-                  <SidebarGroupContent>
-                    <SidebarMenu>
-                      <SidebarMenuItem>
-                        <SidebarMenuButton asChild>
-                          <a
-                            href="/api-dolar"
-                            className={cn(
-                              "flex items-center gap-3 px-3 py-2 rounded-lg transition-colors",
-                              location.pathname === "/api-dolar"
-                                ? "bg-trader-navy text-trader-green"
-                                : "hover:bg-trader-navy/50"
-                            )}
-                          >
-                            <Settings2 className="h-5 w-5" />
-                            <span>API Dólar</span>
-                          </a>
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
-                      <SidebarMenuItem>
-                        <SidebarMenuButton asChild>
-                          <a
-                            href="/api-indice"
-                            className={cn(
-                              "flex items-center gap-3 px-3 py-2 rounded-lg transition-colors",
-                              location.pathname === "/api-indice"
-                                ? "bg-trader-navy text-trader-green"
-                                : "hover:bg-trader-navy/50"
-                            )}
-                          >
-                            <Settings2 className="h-5 w-5" />
-                            <span>API Índice</span>
-                          </a>
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
-                    </SidebarMenu>
-                  </SidebarGroupContent>
-                </SidebarGroup>
-              </div>
             </div>
           </SidebarContent>
         </Sidebar>
@@ -116,3 +76,4 @@ export default function Layout({ children }: LayoutProps) {
     </SidebarProvider>
   );
 }
+
