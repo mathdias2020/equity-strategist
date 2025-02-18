@@ -1,5 +1,5 @@
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { useEndpointTesting } from './useEndpointTesting';
 import { EndpointConfig } from '@/types/api-config';
 
@@ -29,14 +29,6 @@ export const useEndpointData = (displayLocation: string, autoFetch: boolean = tr
       console.error('Erro ao buscar dados do endpoint:', error);
     }
   }, [displayLocation, testEndpoint]);
-
-  useEffect(() => {
-    if (autoFetch) {
-      fetchData();
-      const interval = setInterval(fetchData, 30000);
-      return () => clearInterval(interval);
-    }
-  }, [fetchData, autoFetch]);
 
   return { data, fetchData };
 };
