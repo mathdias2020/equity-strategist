@@ -10,10 +10,18 @@ interface PriceDataTableProps {
 
 export const PriceDataTable = ({ priceData }: PriceDataTableProps) => {
   const formatValue = (value: any, placeholder: number) => {
-    if (value === undefined || value === null) {
+    if (value === undefined || value === null || value === '') {
       return `[${placeholder}]`;
     }
     return value.toLocaleString('pt-BR');
+  };
+
+  // Criar dados de placeholder se não houver dados reais
+  const displayData = {
+    mini: { buy: priceData?.mini?.buy ?? null, sell: priceData?.mini?.sell ?? null },
+    full: { buy: priceData?.full?.buy ?? null, sell: priceData?.full?.sell ?? null },
+    general: { buy: priceData?.general?.buy ?? null, sell: priceData?.general?.sell ?? null },
+    distance: priceData?.distance ?? null
   };
 
   return (
@@ -32,17 +40,17 @@ export const PriceDataTable = ({ priceData }: PriceDataTableProps) => {
           </TableHeader>
           <TableBody>
             <TableRow>
-              <TableCell className="py-2 text-gray-300">{formatValue(priceData.mini.buy, 1)}</TableCell>
-              <TableCell className="py-2 text-gray-300">{formatValue(priceData.full.buy, 2)}</TableCell>
-              <TableCell className="py-2 text-gray-300">{formatValue(priceData.general.buy, 3)}</TableCell>
+              <TableCell className="py-2 text-gray-300">{formatValue(displayData.mini.buy, 1)}</TableCell>
+              <TableCell className="py-2 text-gray-300">{formatValue(displayData.full.buy, 2)}</TableCell>
+              <TableCell className="py-2 text-gray-300">{formatValue(displayData.general.buy, 3)}</TableCell>
             </TableRow>
           </TableBody>
         </Table>
         <div className={cn(
           "mt-2 text-center text-sm",
-          priceData.distance > 10 ? "text-trader-red animate-pulse" : "text-gray-300"
+          displayData.distance > 10 ? "text-trader-red animate-pulse" : "text-gray-300"
         )}>
-          Distância do PM: {formatValue(priceData.distance, 4)}
+          Distância do PM: {formatValue(displayData.distance, 4)}
         </div>
       </CardContent>
     </Card>

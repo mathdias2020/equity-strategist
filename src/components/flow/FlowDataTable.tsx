@@ -9,11 +9,17 @@ interface FlowDataTableProps {
 
 export const FlowDataTable = ({ flowData }: FlowDataTableProps) => {
   const formatValue = (value: any, placeholder: number) => {
-    if (value === undefined || value === null) {
+    if (value === undefined || value === null || value === '') {
       return `[${placeholder}]`;
     }
     return value.toLocaleString('pt-BR');
   };
+
+  // Se não houver dados, usar dados de placeholder
+  const displayData = flowData.length ? flowData : [
+    { player: "[1]", position: null, minutes30: null },
+    { player: "[2]", position: null, minutes30: null }
+  ];
 
   return (
     <Card className="bg-trader-navy border-trader-gray">
@@ -30,11 +36,11 @@ export const FlowDataTable = ({ flowData }: FlowDataTableProps) => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {flowData.map((flow, index) => (
+            {displayData.map((flow, index) => (
               <TableRow key={index} className="border-b border-trader-gray/20">
-                <TableCell className="py-2 text-gray-300">{flow.player}</TableCell>
-                <TableCell className="py-2 text-gray-300">{formatValue(flow.position, (index + 1) * 2 - 1)}</TableCell>
-                <TableCell className="py-2 text-gray-300">{formatValue(flow.minutes30, (index + 1) * 2)}</TableCell>
+                <TableCell className="py-2 text-gray-300">{formatValue(flow.player, (index + 1) * 3 - 2)}</TableCell>
+                <TableCell className="py-2 text-gray-300">{formatValue(flow.position, (index + 1) * 3 - 1)}</TableCell>
+                <TableCell className="py-2 text-gray-300">{formatValue(flow.minutes30, (index + 1) * 3)}</TableCell>
               </TableRow>
             ))}
           </TableBody>
