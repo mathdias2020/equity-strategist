@@ -5,7 +5,6 @@ import { marketData } from "@/mocks/data";
 import { FilterType } from "@/types/dashboard";
 import { PRICE_DATA } from "@/constants/dashboard";
 import { FilterButtons } from "@/components/dashboard/FilterButtons";
-import { FlowCard } from "@/components/dashboard/FlowCard";
 import { PriceCard } from "@/components/dashboard/PriceCard";
 import { MarketIndicators } from "@/components/dashboard/MarketIndicators";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -51,7 +50,6 @@ export default function Dashboard() {
         </div>
 
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-          <FlowCard activeFilter={activeFilter} />
           <div className="col-span-4 space-y-4">
             <PriceCard activeFilter={activeFilter} />
             <Card className="bg-trader-navy border-trader-gray">
