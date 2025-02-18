@@ -20,9 +20,6 @@ export const FlowCard = ({ activeFilter }: FlowCardProps) => {
     if (value === undefined || value === null) {
       return "ERRO";
     }
-    if (value === 0) {
-      return "0";
-    }
     return value.toLocaleString('pt-BR');
   };
 
@@ -54,3 +51,4 @@ export const FlowCard = ({ activeFilter }: FlowCardProps) => {
     </Card>
   );
 };
+

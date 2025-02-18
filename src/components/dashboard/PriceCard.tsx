@@ -24,9 +24,6 @@ export const PriceCard = ({ activeFilter }: PriceCardProps) => {
     if (value === undefined || value === null) {
       return "ERRO";
     }
-    if (value === 0) {
-      return "0";
-    }
     return value.toLocaleString('pt-BR');
   };
 
@@ -65,3 +62,4 @@ export const PriceCard = ({ activeFilter }: PriceCardProps) => {
     </Card>
   );
 };
+
