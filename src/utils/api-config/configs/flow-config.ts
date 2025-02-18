@@ -35,15 +35,51 @@ export const flowConfig: APIConfig = {
     } 
   },
   priceMini: { 
-    dolar: { url: '', method: 'GET', jsonPath: '', isEditing: false }, 
-    indice: { url: '', method: 'GET', jsonPath: '', isEditing: false } 
+    dolar: { 
+      url: 'flow', 
+      method: 'GET', 
+      jsonPath: 'price.mini.dolar',
+      displayLocation: 'price-mini-dolar',
+      isEditing: false 
+    }, 
+    indice: { 
+      url: 'flow', 
+      method: 'GET', 
+      jsonPath: 'price.mini.indice',
+      displayLocation: 'price-mini-indice',
+      isEditing: false 
+    } 
   },
   priceFull: { 
-    dolar: { url: '', method: 'GET', jsonPath: '', isEditing: false }, 
-    indice: { url: '', method: 'GET', jsonPath: '', isEditing: false } 
+    dolar: { 
+      url: 'flow', 
+      method: 'GET', 
+      jsonPath: 'price.full.dolar',
+      displayLocation: 'price-full-dolar',
+      isEditing: false 
+    }, 
+    indice: { 
+      url: 'flow', 
+      method: 'GET', 
+      jsonPath: 'price.full.indice',
+      displayLocation: 'price-full-indice',
+      isEditing: false 
+    } 
   },
   priceGeneral: { 
-    dolar: { url: '', method: 'GET', jsonPath: '', isEditing: false }, 
-    indice: { url: '', method: 'GET', jsonPath: '', isEditing: false } 
+    dolar: { 
+      url: 'flow', 
+      method: 'GET', 
+      jsonPath: 'price.general.dolar',
+      displayLocation: 'price-general-dolar',
+      isEditing: false 
+    }, 
+    indice: { 
+      url: 'flow', 
+      method: 'GET', 
+      jsonPath: 'price.general.indice',
+      displayLocation: 'price-general-indice',
+      isEditing: false 
+    } 
   }
 };

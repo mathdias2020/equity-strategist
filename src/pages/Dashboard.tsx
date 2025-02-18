@@ -53,7 +53,7 @@ export default function Dashboard() {
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
           <FlowCard activeFilter={activeFilter} />
           <div className="col-span-4 space-y-4">
-            <PriceCard priceData={PRICE_DATA} />
+            <PriceCard activeFilter={activeFilter} />
             <Card className="bg-trader-navy border-trader-gray">
               <CardHeader className="pb-2">
                 <CardTitle className="text-lg font-bold text-trader-green">Termômetro</CardTitle>

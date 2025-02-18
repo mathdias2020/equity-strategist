@@ -1,14 +1,38 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { PriceData } from "@/types/dashboard";
+import { useEndpointData } from "@/hooks/useEndpointData";
+import { FilterType } from "@/types/dashboard";
 import { cn } from "@/lib/utils";
 
 interface PriceCardProps {
-  priceData: PriceData;
+  activeFilter: FilterType;
 }
 
-export const PriceCard = ({ priceData }: PriceCardProps) => {
+export const PriceCard = ({ activeFilter }: PriceCardProps) => {
+  const miniPrice = useEndpointData(
+    activeFilter === 'dolar' ? 'price-mini-dolar' : 'price-mini-indice'
+  );
+  const fullPrice = useEndpointData(
+    activeFilter === 'dolar' ? 'price-full-dolar' : 'price-full-indice'
+  );
+  const generalPrice = useEndpointData(
+    activeFilter === 'dolar' ? 'price-general-dolar' : 'price-general-indice'
+  );
+
+  const formatValue = (value: any) => {
+    if (value === undefined || value === null) {
+      return "ERRO";
+    }
+    if (value === 0) {
+      return "0";
+    }
+    return value.toLocaleString('pt-BR');
+  };
+
+  // Temporary distance calculation - to be implemented with proper logic later
+  const distance = 0;
+
   return (
     <Card className="bg-trader-navy border-trader-gray">
       <CardHeader className="pb-2">
@@ -25,17 +49,17 @@ export const PriceCard = ({ priceData }: PriceCardProps) => {
           </TableHeader>
           <TableBody>
             <TableRow>
-              <TableCell className="py-2 text-gray-300">{priceData.mini.buy}</TableCell>
-              <TableCell className="py-2 text-gray-300">{priceData.full.buy}</TableCell>
-              <TableCell className="py-2 text-gray-300">{priceData.general.buy}</TableCell>
+              <TableCell className="py-2 text-gray-300">{formatValue(miniPrice)}</TableCell>
+              <TableCell className="py-2 text-gray-300">{formatValue(fullPrice)}</TableCell>
+              <TableCell className="py-2 text-gray-300">{formatValue(generalPrice)}</TableCell>
             </TableRow>
           </TableBody>
         </Table>
         <div className={cn(
           "mt-2 text-center text-sm",
-          priceData.distance > 10 ? "text-trader-red animate-pulse" : "text-gray-300"
+          distance > 10 ? "text-trader-red animate-pulse" : "text-gray-300"
         )}>
-          Distância do PM: {priceData.distance}
+          Distância do PM: {distance}
         </div>
       </CardContent>
     </Card>
