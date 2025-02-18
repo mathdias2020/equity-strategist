@@ -36,15 +36,14 @@ export const useEndpointTesting = () => {
       
       const headers = {
         'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Origin': window.location.origin
+        'Content-Type': 'application/json'
       };
 
       const response = await fetch(fullUrl, {
         method: endpoint.method,
         headers,
         mode: 'cors',
-        credentials: 'include'
+        credentials: 'omit' // Changed from 'include' to 'omit'
       });
 
       if (!response.ok) {
@@ -59,10 +58,11 @@ export const useEndpointTesting = () => {
 
         toast({
           title: `Erro ${response.status}`,
-          description: `Endpoint não encontrado. Por favor, verifique:\n
+          description: `Falha ao acessar o endpoint. Por favor, verifique:\n
           1. Se a URL está correta: ${cleanUrl}\n
           2. Se o servidor está online\n
-          3. Se o método ${endpoint.method} é permitido`,
+          3. Se o método ${endpoint.method} é permitido\n
+          4. Se o CORS está configurado corretamente no servidor`,
           variant: "destructive",
         });
         return;
@@ -117,7 +117,10 @@ export const useEndpointTesting = () => {
       console.error('Erro ao fazer requisição:', error);
       toast({
         title: "Erro ao testar endpoint",
-        description: `Erro: ${error instanceof Error ? error.message : 'Erro desconhecido'}. Verifique se o servidor está acessível e se as configurações de CORS estão corretas.`,
+        description: `Erro ao acessar a API. Verifique:\n
+        1. Se o servidor está online\n
+        2. Se a URL está correta\n
+        3. Se o CORS está configurado no servidor`,
         variant: "destructive",
       });
     } finally {
