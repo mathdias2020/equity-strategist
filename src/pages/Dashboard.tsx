@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import Layout from "@/components/Layout";
 import { marketData } from "@/mocks/data";
 import { FilterType } from "@/types/dashboard";
@@ -15,22 +15,29 @@ export default function Dashboard() {
   const [activeFilter, setActiveFilter] = useState<FilterType>('dolar');
   const [institutionalValue, setInstitutionalValue] = useState<string>("");
 
-  const getActiveData = () => {
+  const getActiveData = useCallback(() => {
     if (activeFilter === 'dolar') {
       return marketData.currencies.find(c => c.name === 'USD/BRL');
     } else {
       return marketData.indices.find(i => i.name === 'IBOV');
     }
-  };
+  }, [activeFilter]);
 
   const activeData = getActiveData();
+
+  const handleFilterChange = useCallback((newFilter: FilterType) => {
+    setActiveFilter(newFilter);
+  }, []);
 
   return (
     <Layout>
       <div className="grid gap-4">
         <div className="flex items-center justify-between h-12">
           <div className="flex items-center space-x-4">
-            <FilterButtons activeFilter={activeFilter} onFilterChange={setActiveFilter} />
+            <FilterButtons 
+              activeFilter={activeFilter} 
+              onFilterChange={handleFilterChange} 
+            />
             <div className="text-lg font-bold">
               {activeData?.value.toFixed(2)}
               <span className={cn(
