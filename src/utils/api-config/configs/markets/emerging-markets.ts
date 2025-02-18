@@ -1,32 +1,48 @@
 
 import { APIConfig } from "@/types/api-config";
 
-export const flowConfig: APIConfig = {
-  institutionalPosition: { 
+export const emergingMarketsConfig: APIConfig = {
+  em_usdbrl: { 
     dolar: { url: '', method: 'GET', jsonPath: '', isEditing: false }, 
     indice: { url: '', method: 'GET', jsonPath: '', isEditing: false } 
   },
-  institutional30Min: { 
+  em_usdmxn: { 
     dolar: { url: '', method: 'GET', jsonPath: '', isEditing: false }, 
     indice: { url: '', method: 'GET', jsonPath: '', isEditing: false } 
   },
-  retailPosition: { 
+  em_usdzar: { 
     dolar: { url: '', method: 'GET', jsonPath: '', isEditing: false }, 
     indice: { url: '', method: 'GET', jsonPath: '', isEditing: false } 
   },
-  retail30Min: { 
+  em_usdcny: { 
     dolar: { url: '', method: 'GET', jsonPath: '', isEditing: false }, 
     indice: { url: '', method: 'GET', jsonPath: '', isEditing: false } 
   },
-  priceMini: { 
+  em_usdtry: { 
     dolar: { url: '', method: 'GET', jsonPath: '', isEditing: false }, 
     indice: { url: '', method: 'GET', jsonPath: '', isEditing: false } 
   },
-  priceFull: { 
+  em_usdinr: { 
     dolar: { url: '', method: 'GET', jsonPath: '', isEditing: false }, 
     indice: { url: '', method: 'GET', jsonPath: '', isEditing: false } 
   },
-  priceGeneral: { 
+  em_usdrub: { 
+    dolar: { url: '', method: 'GET', jsonPath: '', isEditing: false }, 
+    indice: { url: '', method: 'GET', jsonPath: '', isEditing: false } 
+  },
+  em_usdhuf: { 
+    dolar: { url: '', method: 'GET', jsonPath: '', isEditing: false }, 
+    indice: { url: '', method: 'GET', jsonPath: '', isEditing: false } 
+  },
+  em_usdpln: { 
+    dolar: { url: '', method: 'GET', jsonPath: '', isEditing: false }, 
+    indice: { url: '', method: 'GET', jsonPath: '', isEditing: false } 
+  },
+  em_usdczk: { 
+    dolar: { url: '', method: 'GET', jsonPath: '', isEditing: false }, 
+    indice: { url: '', method: 'GET', jsonPath: '', isEditing: false } 
+  },
+  em_usdidr: { 
     dolar: { url: '', method: 'GET', jsonPath: '', isEditing: false }, 
     indice: { url: '', method: 'GET', jsonPath: '', isEditing: false } 
   },

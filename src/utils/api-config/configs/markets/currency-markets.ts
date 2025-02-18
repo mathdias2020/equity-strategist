@@ -1,32 +1,32 @@
 
 import { APIConfig } from "@/types/api-config";
 
-export const flowConfig: APIConfig = {
-  institutionalPosition: { 
+export const currencyMarketsConfig: APIConfig = {
+  dx_index: { 
     dolar: { url: '', method: 'GET', jsonPath: '', isEditing: false }, 
     indice: { url: '', method: 'GET', jsonPath: '', isEditing: false } 
   },
-  institutional30Min: { 
+  dx_usdeur: { 
     dolar: { url: '', method: 'GET', jsonPath: '', isEditing: false }, 
     indice: { url: '', method: 'GET', jsonPath: '', isEditing: false } 
   },
-  retailPosition: { 
+  dx_usdjpy: { 
     dolar: { url: '', method: 'GET', jsonPath: '', isEditing: false }, 
     indice: { url: '', method: 'GET', jsonPath: '', isEditing: false } 
   },
-  retail30Min: { 
+  dx_usdgbp: { 
     dolar: { url: '', method: 'GET', jsonPath: '', isEditing: false }, 
     indice: { url: '', method: 'GET', jsonPath: '', isEditing: false } 
   },
-  priceMini: { 
+  dx_usdcad: { 
     dolar: { url: '', method: 'GET', jsonPath: '', isEditing: false }, 
     indice: { url: '', method: 'GET', jsonPath: '', isEditing: false } 
   },
-  priceFull: { 
+  dx_usdsek: { 
     dolar: { url: '', method: 'GET', jsonPath: '', isEditing: false }, 
     indice: { url: '', method: 'GET', jsonPath: '', isEditing: false } 
   },
-  priceGeneral: { 
+  dx_usdchf: { 
     dolar: { url: '', method: 'GET', jsonPath: '', isEditing: false }, 
     indice: { url: '', method: 'GET', jsonPath: '', isEditing: false } 
   },

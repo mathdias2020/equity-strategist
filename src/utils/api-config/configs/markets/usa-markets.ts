@@ -1,32 +1,20 @@
 
 import { APIConfig } from "@/types/api-config";
 
-export const flowConfig: APIConfig = {
-  institutionalPosition: { 
+export const usaMarketsConfig: APIConfig = {
+  usa_sp500: { 
     dolar: { url: '', method: 'GET', jsonPath: '', isEditing: false }, 
     indice: { url: '', method: 'GET', jsonPath: '', isEditing: false } 
   },
-  institutional30Min: { 
+  usa_nasdaq: { 
     dolar: { url: '', method: 'GET', jsonPath: '', isEditing: false }, 
     indice: { url: '', method: 'GET', jsonPath: '', isEditing: false } 
   },
-  retailPosition: { 
+  usa_dowjones: { 
     dolar: { url: '', method: 'GET', jsonPath: '', isEditing: false }, 
     indice: { url: '', method: 'GET', jsonPath: '', isEditing: false } 
   },
-  retail30Min: { 
-    dolar: { url: '', method: 'GET', jsonPath: '', isEditing: false }, 
-    indice: { url: '', method: 'GET', jsonPath: '', isEditing: false } 
-  },
-  priceMini: { 
-    dolar: { url: '', method: 'GET', jsonPath: '', isEditing: false }, 
-    indice: { url: '', method: 'GET', jsonPath: '', isEditing: false } 
-  },
-  priceFull: { 
-    dolar: { url: '', method: 'GET', jsonPath: '', isEditing: false }, 
-    indice: { url: '', method: 'GET', jsonPath: '', isEditing: false } 
-  },
-  priceGeneral: { 
+  usa_vix: { 
     dolar: { url: '', method: 'GET', jsonPath: '', isEditing: false }, 
     indice: { url: '', method: 'GET', jsonPath: '', isEditing: false } 
   },
