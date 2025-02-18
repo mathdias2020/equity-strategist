@@ -23,25 +23,28 @@ export const useEndpointTesting = () => {
     
     setIsLoading(true);
     try {
-      const baseUrl = localStorage.getItem('api-base-url') || 'http://api.traderbanqueiro.com.br/';
-      // Ensure base URL ends with a slash
-      const normalizedBaseUrl = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`;
-      const fullUrl = `${normalizedBaseUrl}${cleanUrl}`;
+      // Get the correct base URL based on the endpoint type
+      const baseUrlKey = endpoint.url.includes('dolar') ? 'api-base-url-dolar' : 'api-base-url-indice';
+      const baseUrl = localStorage.getItem(baseUrlKey) || 'http://api.traderbanqueiro.com.br/';
+      
+      // Remove trailing slash from base URL and ensure clean concatenation
+      const normalizedBaseUrl = baseUrl.replace(/\/+$/, '');
+      const fullUrl = `${normalizedBaseUrl}/${cleanUrl}`;
       
       console.log('Tentando acessar:', fullUrl);
       console.log('Método:', endpoint.method);
-      console.log('URL limpa:', cleanUrl);
       
       const headers = {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Origin': window.location.origin
       };
 
       const response = await fetch(fullUrl, {
         method: endpoint.method,
         headers,
-        // Add credentials if needed
-        // credentials: 'include',
+        mode: 'cors',
+        credentials: 'include'
       });
 
       if (!response.ok) {
@@ -114,7 +117,7 @@ export const useEndpointTesting = () => {
       console.error('Erro ao fazer requisição:', error);
       toast({
         title: "Erro ao testar endpoint",
-        description: `Erro: ${error instanceof Error ? error.message : 'Erro desconhecido'}`,
+        description: `Erro: ${error instanceof Error ? error.message : 'Erro desconhecido'}. Verifique se o servidor está acessível e se as configurações de CORS estão corretas.`,
         variant: "destructive",
       });
     } finally {
@@ -127,4 +130,3 @@ export const useEndpointTesting = () => {
     isLoading
   };
 };
-
