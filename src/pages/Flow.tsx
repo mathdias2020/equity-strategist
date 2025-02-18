@@ -4,7 +4,6 @@ import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { DollarSign, TrendingUp, Calendar } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { flowData } from "@/mocks/data";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { format } from "date-fns";
@@ -13,13 +12,6 @@ import { FlowChart } from "@/components/flow/FlowChart";
 import { FlowDataTable } from "@/components/flow/FlowDataTable";
 import { PriceDataTable } from "@/components/flow/PriceDataTable";
 import { generateMinuteData, generateBarData } from "@/utils/flow/data-generators";
-
-const priceData = {
-  mini: { buy: 5478.50, sell: 5479.50 },
-  full: { buy: 109570, sell: 109590 },
-  general: { buy: 5478.00, sell: 5480.00 },
-  distance: 12.5
-};
 
 export default function Flow() {
   const [activeFilter, setActiveFilter] = useState<FilterType>('dolar');
@@ -30,6 +22,15 @@ export default function Flow() {
   const lineData = generateMinuteData();
   const barData = generateBarData();
   const chartData = chartType === 'line' ? lineData : barData;
+
+  // Inicializa com arrays vazios para que os placeholders sejam exibidos
+  const flowData = [];
+  const priceData = {
+    mini: { buy: null, sell: null },
+    full: { buy: null, sell: null },
+    general: { buy: null, sell: null },
+    distance: null
+  };
 
   return (
     <Layout>
