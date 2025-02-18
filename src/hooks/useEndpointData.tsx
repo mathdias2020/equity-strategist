@@ -3,11 +3,13 @@ import { useState, useCallback, useEffect } from 'react';
 import { useEndpointTesting } from './useEndpointTesting';
 import { EndpointConfig } from '@/types/api-config';
 
+// Criar uma variável global para armazenar o último timestamp
+let globalLastCallTime: string | null = localStorage.getItem('lastApiCallTime');
+
 export const useEndpointData = (displayLocation: string, autoFetch: boolean = true) => {
   const [data, setData] = useState<any>(null);
   const [lastCallTime, setLastCallTime] = useState<Date | null>(() => {
-    const savedTime = localStorage.getItem('lastApiCallTime');
-    return savedTime ? new Date(savedTime) : null;
+    return globalLastCallTime ? new Date(globalLastCallTime) : null;
   });
   const { testEndpoint } = useEndpointTesting();
 
@@ -29,26 +31,31 @@ export const useEndpointData = (displayLocation: string, autoFetch: boolean = tr
         console.log(`Resultado para ${displayLocation}:`, result);
         setData(result);
         const newTime = new Date();
+        // Atualizar tanto o localStorage quanto a variável global
+        globalLastCallTime = newTime.toISOString();
+        localStorage.setItem('lastApiCallTime', globalLastCallTime);
         setLastCallTime(newTime);
-        localStorage.setItem('lastApiCallTime', newTime.toISOString());
       }
     } catch (error) {
       console.error('Erro ao buscar dados do endpoint:', error);
     }
   }, [displayLocation, testEndpoint]);
 
-  // Efeito para atualizar o lastCallTime quando mudar em outra instância do hook
+  // Efeito para verificar mudanças na variável global
   useEffect(() => {
-    const handleStorageChange = () => {
-      const savedTime = localStorage.getItem('lastApiCallTime');
-      if (savedTime) {
-        setLastCallTime(new Date(savedTime));
+    const checkGlobalTime = () => {
+      if (globalLastCallTime) {
+        const currentLastCallTime = lastCallTime?.toISOString();
+        if (currentLastCallTime !== globalLastCallTime) {
+          setLastCallTime(new Date(globalLastCallTime));
+        }
       }
     };
 
-    window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
-  }, []);
+    // Verificar a cada segundo se houve mudança
+    const interval = setInterval(checkGlobalTime, 1000);
+    return () => clearInterval(interval);
+  }, [lastCallTime]);
 
   return { data, fetchData, lastCallTime };
 };
