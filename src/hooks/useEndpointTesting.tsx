@@ -18,13 +18,19 @@ export const useEndpointTesting = () => {
       return;
     }
 
+    // Clean up the URL by removing any leading/trailing slashes
+    const cleanUrl = endpoint.url.replace(/^\/+|\/+$/g, '');
+    
     setIsLoading(true);
     try {
       const baseUrl = localStorage.getItem('api-base-url') || 'http://api.traderbanqueiro.com.br/';
-      const fullUrl = `${baseUrl}${endpoint.url}`;
+      // Ensure base URL ends with a slash
+      const normalizedBaseUrl = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`;
+      const fullUrl = `${normalizedBaseUrl}${cleanUrl}`;
       
       console.log('Tentando acessar:', fullUrl);
       console.log('Método:', endpoint.method);
+      console.log('URL limpa:', cleanUrl);
       
       const headers = {
         'Accept': 'application/json',
@@ -33,7 +39,9 @@ export const useEndpointTesting = () => {
 
       const response = await fetch(fullUrl, {
         method: endpoint.method,
-        headers
+        headers,
+        // Add credentials if needed
+        // credentials: 'include',
       });
 
       if (!response.ok) {
@@ -48,7 +56,10 @@ export const useEndpointTesting = () => {
 
         toast({
           title: `Erro ${response.status}`,
-          description: `Não foi possível acessar o endpoint. Verifique se a URL está correta e se o servidor está respondendo. URL: ${endpoint.url}`,
+          description: `Endpoint não encontrado. Por favor, verifique:\n
+          1. Se a URL está correta: ${cleanUrl}\n
+          2. Se o servidor está online\n
+          3. Se o método ${endpoint.method} é permitido`,
           variant: "destructive",
         });
         return;
