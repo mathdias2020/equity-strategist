@@ -25,8 +25,8 @@ export const ConfigSection = ({ title, config, activeFilter, fields, onSave }: C
   };
 
   const handleTestEndpoint = (key: string) => {
-    const endpoint = localConfig[key][activeFilter];
-    testEndpoint(endpoint);
+    // Since we're removing API functionality, we just call testEndpoint without arguments
+    testEndpoint();
   };
 
   const getSection = () => {
