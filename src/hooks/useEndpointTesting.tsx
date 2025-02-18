@@ -25,7 +25,7 @@ export const useEndpointTesting = () => {
     try {
       // Get the correct base URL based on the endpoint type
       const baseUrlKey = endpoint.url.includes('dolar') ? 'api-base-url-dolar' : 'api-base-url-indice';
-      const baseUrl = localStorage.getItem(baseUrlKey) || 'http://api.traderbanqueiro.com.br/';
+      const baseUrl = localStorage.getItem(baseUrlKey) || 'https://api.traderbanqueiro.com.br/';
       
       // Remove trailing slash from base URL and ensure clean concatenation
       const normalizedBaseUrl = baseUrl.replace(/\/+$/, '');
@@ -36,14 +36,17 @@ export const useEndpointTesting = () => {
       
       const headers = {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Origin': window.location.origin,
       };
 
       const response = await fetch(fullUrl, {
         method: endpoint.method,
         headers,
         mode: 'cors',
-        credentials: 'omit' // Changed from 'include' to 'omit'
+        credentials: 'omit',
+        cache: 'no-cache',
+        redirect: 'follow',
       });
 
       if (!response.ok) {
@@ -58,11 +61,10 @@ export const useEndpointTesting = () => {
 
         toast({
           title: `Erro ${response.status}`,
-          description: `Falha ao acessar o endpoint. Por favor, verifique:\n
-          1. Se a URL está correta: ${cleanUrl}\n
-          2. Se o servidor está online\n
-          3. Se o método ${endpoint.method} é permitido\n
-          4. Se o CORS está configurado corretamente no servidor`,
+          description: `Falha ao acessar o endpoint. ${response.statusText}\n
+          URL: ${cleanUrl}\n
+          Status: ${response.status}\n
+          Mensagem: ${errorText || 'Sem mensagem de erro'}`,
           variant: "destructive",
         });
         return;
@@ -99,28 +101,21 @@ export const useEndpointTesting = () => {
         });
         return;
       }
-      
-      const toastDescription = (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(extractedValue, null, 2)}</code>
-        </pre>
-      );
-      
-      toast({
-        title: "Retorno do Endpoint",
-        description: toastDescription,
-      });
 
       return extractedValue;
 
     } catch (error) {
       console.error('Erro ao fazer requisição:', error);
+      
+      const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido';
+      
       toast({
         title: "Erro ao testar endpoint",
-        description: `Erro ao acessar a API. Verifique:\n
-        1. Se o servidor está online\n
-        2. Se a URL está correta\n
-        3. Se o CORS está configurado no servidor`,
+        description: `Erro ao acessar a API: ${errorMessage}\n
+        Verifique:\n
+        1. Se o servidor está online e respondendo\n
+        2. Se a URL está correta: ${endpoint.url}\n
+        3. Se o servidor permite requisições CORS de ${window.location.origin}`,
         variant: "destructive",
       });
     } finally {
