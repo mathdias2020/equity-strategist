@@ -1,18 +1,41 @@
-
 import { APIConfig } from "@/types/api-config";
 
 export const flowConfig: APIConfig = {
   institutionalPosition: { 
-    dolar: { url: '', method: 'GET', jsonPath: '', isEditing: false }, 
-    indice: { url: '', method: 'GET', jsonPath: '', isEditing: false } 
+    dolar: { 
+      url: 'flow', 
+      method: 'GET', 
+      jsonPath: 'position.daily.foreignDolar',
+      displayLocation: 'institutional-position',
+      isEditing: false 
+    }, 
+    indice: { 
+      url: 'flow', 
+      method: 'GET', 
+      jsonPath: 'position.daily.foreignIndice',
+      displayLocation: 'institutional-indice',
+      isEditing: false 
+    } 
   },
   institutional30Min: { 
     dolar: { url: '', method: 'GET', jsonPath: '', isEditing: false }, 
     indice: { url: '', method: 'GET', jsonPath: '', isEditing: false } 
   },
   retailPosition: { 
-    dolar: { url: '', method: 'GET', jsonPath: '', isEditing: false }, 
-    indice: { url: '', method: 'GET', jsonPath: '', isEditing: false } 
+    dolar: { 
+      url: 'flow', 
+      method: 'GET', 
+      jsonPath: 'position.daily.localDolar',
+      displayLocation: 'retail-position',
+      isEditing: false 
+    }, 
+    indice: { 
+      url: 'flow', 
+      method: 'GET', 
+      jsonPath: 'position.daily.localIndice',
+      displayLocation: 'retail-indice',
+      isEditing: false 
+    } 
   },
   retail30Min: { 
     dolar: { url: '', method: 'GET', jsonPath: '', isEditing: false }, 
