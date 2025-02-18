@@ -4,7 +4,6 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Index from "./pages/Index";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import Dashboard from "./pages/Dashboard";
@@ -13,7 +12,6 @@ import Markets from "./pages/Markets";
 import AI from "./pages/AI";
 import APIDolar from "./pages/APIDolar";
 import APIIndice from "./pages/APIIndice";
-import APIBaseConfig from "./pages/APIBaseConfig";
 
 const queryClient = new QueryClient();
 
@@ -32,7 +30,6 @@ const App = () => (
           <Route path="/ai" element={<AI />} />
           <Route path="/api-dolar" element={<APIDolar />} />
           <Route path="/api-indice" element={<APIIndice />} />
-          <Route path="/api-base-config" element={<APIBaseConfig />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

@@ -10,18 +10,9 @@ import { PriceCard } from "@/components/dashboard/PriceCard";
 import { MarketIndicators } from "@/components/dashboard/MarketIndicators";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { Bell } from "lucide-react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { useEndpointData } from "@/hooks/useEndpointData";
 
 export default function Dashboard() {
   const [activeFilter, setActiveFilter] = useState<FilterType>('dolar');
-  const { lastCallTime } = useEndpointData('institutional-position', false);
 
   const getActiveData = useCallback(() => {
     if (activeFilter === 'dolar') {
@@ -36,11 +27,6 @@ export default function Dashboard() {
   const handleFilterChange = useCallback((newFilter: FilterType) => {
     setActiveFilter(newFilter);
   }, []);
-
-  const formatLastCallTime = (date: Date | null) => {
-    if (!date) return "Nenhuma chamada realizada";
-    return date.toLocaleTimeString('pt-BR');
-  };
 
   return (
     <Layout>
@@ -62,18 +48,6 @@ export default function Dashboard() {
               </span>
             </div>
           </div>
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div className="flex items-center gap-2 text-trader-green cursor-pointer">
-                  <Bell className="h-5 w-5" />
-                </div>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p className="text-sm">Última chamada da API às {formatLastCallTime(lastCallTime)}</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
         </div>
 
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
