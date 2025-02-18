@@ -5,6 +5,7 @@ import { EndpointConfig } from '@/types/api-config';
 
 export const useEndpointData = (displayLocation: string, autoFetch: boolean = true) => {
   const [data, setData] = useState<any>(null);
+  const [lastCallTime, setLastCallTime] = useState<Date | null>(null);
   const { testEndpoint } = useEndpointTesting();
 
   const fetchData = useCallback(async () => {
@@ -24,11 +25,12 @@ export const useEndpointData = (displayLocation: string, autoFetch: boolean = tr
       if (result !== null) {
         console.log(`Resultado para ${displayLocation}:`, result);
         setData(result);
+        setLastCallTime(new Date());
       }
     } catch (error) {
       console.error('Erro ao buscar dados do endpoint:', error);
     }
   }, [displayLocation, testEndpoint]);
 
-  return { data, fetchData };
+  return { data, fetchData, lastCallTime };
 };
