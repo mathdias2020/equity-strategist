@@ -1,6 +1,6 @@
 
 import { VariantProps } from "class-variance-authority"
-import * as React from "react"
+import { sidebarMenuButtonVariants } from "./components/sidebar-menu"
 
 export type SidebarContext = {
   state: "expanded" | "collapsed"
@@ -13,4 +13,3 @@ export type SidebarContext = {
 }
 
 export type SidebarMenuButtonVariants = VariantProps<typeof sidebarMenuButtonVariants>
-
