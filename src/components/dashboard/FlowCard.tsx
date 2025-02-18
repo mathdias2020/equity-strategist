@@ -14,7 +14,7 @@ export const FlowCard = () => {
     if (value === 0) {
       return "0";
     }
-    return value;
+    return value.toString();
   };
 
   return (
@@ -45,4 +45,3 @@ export const FlowCard = () => {
     </Card>
   );
 };
-
