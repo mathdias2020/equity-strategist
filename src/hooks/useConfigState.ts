@@ -11,12 +11,14 @@ export const useConfigState = (initialConfig: APIConfig) => {
           url: initialConfig[key]?.dolar?.url || '', 
           method: initialConfig[key]?.dolar?.method || 'GET',
           jsonPath: initialConfig[key]?.dolar?.jsonPath || '',
+          displayLocation: initialConfig[key]?.dolar?.displayLocation || '',
           isEditing: false 
         },
         indice: { 
           url: initialConfig[key]?.indice?.url || '', 
           method: initialConfig[key]?.indice?.method || 'GET',
           jsonPath: initialConfig[key]?.indice?.jsonPath || '',
+          displayLocation: initialConfig[key]?.indice?.displayLocation || '',
           isEditing: false 
         }
       };
@@ -63,6 +65,19 @@ export const useConfigState = (initialConfig: APIConfig) => {
     }));
   };
 
+  const handleDisplayLocationChange = (key: string, activeFilter: ActiveFilter, value: string) => {
+    setLocalConfig(prev => ({
+      ...prev,
+      [key]: {
+        ...prev[key],
+        [activeFilter]: {
+          ...prev[key][activeFilter],
+          displayLocation: value
+        }
+      }
+    }));
+  };
+
   const toggleEditing = (key: string, activeFilter: ActiveFilter) => {
     setLocalConfig(prev => ({
       ...prev,
@@ -91,7 +106,9 @@ export const useConfigState = (initialConfig: APIConfig) => {
     handleUrlChange,
     handleJsonPathChange,
     handleMethodChange,
+    handleDisplayLocationChange,
     toggleEditing,
     prepareConfigForSave
   };
 };
+

@@ -11,7 +11,8 @@ export const ConfigSection = ({ title, config, activeFilter, fields, onSave }: C
     localConfig, 
     handleUrlChange, 
     handleJsonPathChange, 
-    handleMethodChange, 
+    handleMethodChange,
+    handleDisplayLocationChange,
     toggleEditing, 
     prepareConfigForSave 
   } = useConfigState(config);
@@ -26,6 +27,14 @@ export const ConfigSection = ({ title, config, activeFilter, fields, onSave }: C
   const handleTestEndpoint = (key: string) => {
     const endpoint = localConfig[key][activeFilter];
     testEndpoint(endpoint);
+  };
+
+  const getSection = () => {
+    if (title.toLowerCase().includes('dashboard')) return 'dashboard';
+    if (title.toLowerCase().includes('fluxo')) return 'flow';
+    if (title.toLowerCase().includes('mercados')) return 'markets';
+    if (title.toLowerCase().includes('inteligência')) return 'ai';
+    return 'dashboard';
   };
 
   return (
@@ -46,12 +55,15 @@ export const ConfigSection = ({ title, config, activeFilter, fields, onSave }: C
               jsonPath={localConfig[key]?.[activeFilter]?.jsonPath || ''}
               method={localConfig[key]?.[activeFilter]?.method || 'GET'}
               isEditing={localConfig[key]?.[activeFilter]?.isEditing || false}
+              displayLocation={localConfig[key]?.[activeFilter]?.displayLocation}
               onUrlChange={(value) => handleUrlChange(key, activeFilter, value)}
               onJsonPathChange={(value) => handleJsonPathChange(key, activeFilter, value)}
               onMethodChange={(value) => handleMethodChange(key, activeFilter, value)}
+              onDisplayLocationChange={(value) => handleDisplayLocationChange(key, activeFilter, value)}
               onToggleEdit={() => toggleEditing(key, activeFilter)}
               onTest={() => handleTestEndpoint(key)}
               filterType={activeFilter}
+              section={getSection()}
             />
           ))}
           <Button 
@@ -65,3 +77,4 @@ export const ConfigSection = ({ title, config, activeFilter, fields, onSave }: C
     </Card>
   );
 };
+

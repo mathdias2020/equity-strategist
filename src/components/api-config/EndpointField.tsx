@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/select";
 import { EndpointActions } from "./EndpointActions";
 import { useState } from "react";
+import { displayLocations } from "@/types/api-config";
 
 interface EndpointFieldProps {
   label: string;
@@ -26,6 +27,9 @@ interface EndpointFieldProps {
   onToggleEdit: () => void;
   onTest: () => void;
   filterType: string;
+  section: 'dashboard' | 'flow' | 'markets' | 'ai';
+  displayLocation?: string;
+  onDisplayLocationChange: (value: string) => void;
 }
 
 export const EndpointField = ({
@@ -41,6 +45,9 @@ export const EndpointField = ({
   onToggleEdit,
   onTest,
   filterType,
+  section,
+  displayLocation,
+  onDisplayLocationChange,
 }: EndpointFieldProps) => {
   const [jsonPaths, setJsonPaths] = useState<string[]>(jsonPath ? jsonPath.split('+').map(p => p.trim()) : ['']);
 
@@ -110,17 +117,35 @@ export const EndpointField = ({
                   <Plus className="h-4 w-4" />
                 </Button>
               )}
-              {index === jsonPaths.length - 1 && (
-                <EndpointActions
-                  url={url}
-                  method={method}
-                  isEditing={isEditing}
-                  onToggleEdit={onToggleEdit}
-                  onTest={onTest}
-                />
-              )}
             </div>
           ))}
+          <div className="flex gap-2">
+            <div className="flex-1">
+              <Select
+                value={displayLocation}
+                onValueChange={onDisplayLocationChange}
+                disabled={!isEditing}
+              >
+                <SelectTrigger className="w-full bg-black border-trader-gray text-white">
+                  <SelectValue placeholder="Selecione onde exibir o valor" />
+                </SelectTrigger>
+                <SelectContent>
+                  {displayLocations[section].map((location) => (
+                    <SelectItem key={location.value} value={location.value}>
+                      {location.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <EndpointActions
+              url={url}
+              method={method}
+              isEditing={isEditing}
+              onToggleEdit={onToggleEdit}
+              onTest={onTest}
+            />
+          </div>
         </div>
       </div>
     </div>

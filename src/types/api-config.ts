@@ -4,6 +4,7 @@ export type EndpointConfig = {
   method: 'GET' | 'POST';
   jsonPath: string;
   isEditing: boolean;
+  displayLocation?: string; // Campo para armazenar o local de exibição
 };
 
 export type FilterConfig = {
@@ -46,3 +47,42 @@ export type AIOperation = {
   alvo: number;
   resultado: string;
 };
+
+// Mapeamento dos locais de exibição por seção
+export const displayLocations = {
+  dashboard: [
+    { value: 'institutional-position', label: 'Fluxo Institucional - Posição' },
+    { value: 'institutional-30min', label: 'Fluxo Institucional - 30 minutos' },
+    { value: 'retail-position', label: 'Fluxo Varejo - Posição' },
+    { value: 'retail-30min', label: 'Fluxo Varejo - 30 minutos' },
+    { value: 'price-mini', label: 'Preço Médio - Mini' },
+    { value: 'price-full', label: 'Preço Médio - Cheio' },
+    { value: 'price-general', label: 'Preço Médio - Geral' }
+  ],
+  flow: [
+    { value: 'institutional-position', label: 'Fluxo Institucional - Posição' },
+    { value: 'institutional-30min', label: 'Fluxo Institucional - 30 minutos' },
+    { value: 'retail-position', label: 'Fluxo Varejo - Posição' },
+    { value: 'retail-30min', label: 'Fluxo Varejo - 30 minutos' },
+    { value: 'price-mini', label: 'Preço Médio - Mini' },
+    { value: 'price-full', label: 'Preço Médio - Cheio' },
+    { value: 'price-general', label: 'Preço Médio - Geral' }
+  ],
+  markets: [
+    { value: 'usa-sp500', label: 'S&P 500' },
+    { value: 'usa-nasdaq', label: 'Nasdaq' },
+    { value: 'usa-dowjones', label: 'Dow Jones' },
+    { value: 'usa-vix', label: 'VIX' },
+    // ... outros mercados
+  ],
+  ai: [
+    { value: 'operation-type', label: 'Tipo de Operação' },
+    { value: 'operation-asset', label: 'Ativo' },
+    { value: 'operation-time', label: 'Horário' },
+    { value: 'operation-price', label: 'Preço' },
+    { value: 'operation-target', label: 'Alvo' },
+    { value: 'operation-result', label: 'Resultado' },
+    { value: 'analysis', label: 'Análise de Mercado' }
+  ]
+};
+
