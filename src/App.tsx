@@ -7,7 +7,6 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import Dashboard from "./pages/Dashboard";
-import Flow from "./pages/Flow";
 import Markets from "./pages/Markets";
 import AI from "./pages/AI";
 
@@ -23,7 +22,6 @@ const App = () => (
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/flow" element={<Flow />} />
           <Route path="/markets" element={<Markets />} />
           <Route path="/ai" element={<AI />} />
           <Route path="*" element={<NotFound />} />
@@ -34,4 +32,3 @@ const App = () => (
 );
 
 export default App;
-

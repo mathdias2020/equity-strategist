@@ -1,7 +1,7 @@
 
 import { useLocation } from "react-router-dom";
 import { SidebarProvider, Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuItem, SidebarMenuButton } from "@/components/ui/sidebar";
-import { BarChart3, Brain, LayoutDashboard, TrendingUp } from "lucide-react";
+import { BarChart3, Brain, LayoutDashboard } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface LayoutProps {
@@ -13,11 +13,6 @@ const menuItems = [
     title: "Dashboard",
     icon: LayoutDashboard,
     href: "/dashboard",
-  },
-  {
-    title: "Fluxo",
-    icon: TrendingUp,
-    href: "/flow",
   },
   {
     title: "Mercados",
@@ -76,4 +71,3 @@ export default function Layout({ children }: LayoutProps) {
     </SidebarProvider>
   );
 }
-
